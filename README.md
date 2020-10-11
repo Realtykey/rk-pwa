@@ -6,6 +6,8 @@
 
 - [ ] boton mostrar agente en barra de herramientas del match
 
+- [ ] etiqueta con nombre de cada herramienta
+
 - [ ] footer "Realty Key 2020 V&M HOME"
 
 - [ ] agregar features de propiedad en la vista
