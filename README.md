@@ -2,10 +2,18 @@
 
 ## Correcciones
 
-### Vista de propiedad
+- [ ] descripción desplegable
 
-- [X] 
+- [ ] boton mostrar agente en barra de herramientas del match
 
-- [X] 
+- [ ] footer "Realty Key 2020 V&M HOME"
 
-- [X] 
+- [ ] agregar features de propiedad en la vista
+
+- [ ] corregir calculo de valores de propiedad en item del match
+
+- [ ] colores de etiquetas de valores
+
+- [ ] picker de comisión en caso de alquiler vaores 5,10,15...100
+
+- [ ] formato de moneda en valores de propiedad
