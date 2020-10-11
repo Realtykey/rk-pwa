@@ -14,6 +14,6 @@
 
 - [ ] colores de etiquetas de valores
 
-- [ ] picker de comisión en caso de alquiler vaores 5,10,15...100
+- [ ] picker de comisión en caso de alquiler. Valores 5,10,15...100
 
 - [ ] formato de moneda en valores de propiedad
