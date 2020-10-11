@@ -1,0 +1,64 @@
+import React from 'react'
+
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
+import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
+
+//redux imports
+import { useSelector } from 'react-redux'
+
+const Message = ({ content }) => {
+    return (
+        <h1 style={{ color: 'gray' }}>{content}</h1>
+    );
+}
+
+export default function ({ name, list, detail, iterable }) {
+
+    const { loading, details } = useSelector(state => state.general)
+
+    const container = {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        paddingTop: '200px'
+    }
+    const root = { paddingTop: 30};
+    return (
+        <div style={root}>
+            {iterable.length > 0 ? <>
+                <Hidden only={['xs']}>
+                    <Grid justify="center" container>
+                        <Grid align="center" sm={5} md={4} lg={4} item>
+                            {list}
+                        </Grid>
+                        <Grid container sm={7} md={8} lg={8} item>
+                            <Grid container item align="center">{detail}</Grid>
+                        </Grid>
+                    </Grid>
+                </Hidden>
+
+                <Hidden only={['sm', 'md', 'lg']}>
+                    <Grid justify="center" container>
+                        <Box display={details ? 'inline' : 'none'}>
+                            <Grid container item xs={12} align="center">{detail}</Grid>
+                        </Box>
+                        <Box display={details ? 'none' : 'inline'}>
+                            <Grid container item xs={12} align="center">{list}</Grid>
+                        </Box>
+                    </Grid>
+                </Hidden>
+
+            </> :
+                <Container style={container}>
+                    {loading ?
+                        <CircularProgress size={100} color="secondary" /> :
+                        <Message content={`No hay ${name} para mostrar`} />
+                    }
+                </Container>
+            }
+        </div>
+    )
+}
