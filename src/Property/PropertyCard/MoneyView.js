@@ -46,7 +46,7 @@ export default function MoneyView(props) {
                     <Chip
                         style={highlighted}
                         variant="outlined"
-                        label={"Tu Ganas $ " + Number.parseFloat(data.comission.percent).toFixed(2)}
+                        label={"Tu Ganas $ " + Number.parseFloat(data.comission.value).toFixed(2)}
                     />
                 </Grid>
             </Grid>
