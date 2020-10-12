@@ -56,8 +56,6 @@ export default function MatchDetails() {
     const { currentUser } = useContext(AuthContext);
     const dispatch = useDispatch();
     const classes = useStyles();
-    const selectedMatch = useSelector(state => state.general.selectedMatch);
-    const propData = useSelector(state => state.general.selectedMatch.prop);
 
     // modal
     const [modalStyle] = React.useState(getModalStyle);
@@ -72,42 +70,27 @@ export default function MatchDetails() {
             <AgentCard agent={userPreview} style={{ paddingLeft: '30px' }}></AgentCard>
         </div>
     );
+    const { selectedMatch, userData } = useSelector(state => state.general);
 
-    const agent = useSelector((state) => {
-        if (selectedMatch.prop) {
-            return state.general.selectedMatch.requesterData.uid == currentUser.uid ? state.general.selectedMatch.ownerData : state.general.selectedMatch.requesterData;
-        } else {
-            return null;
+    const { requesterData, prop, ownerData } = selectedMatch;
 
-        }
-    })
+    const partnerData = userData?.uid == requesterData?.uid ? ownerData : requesterData;
 
     return (
 
         <Grid aligh="center" className={classes.root}>
-            {selectedMatch.prop && <div>
 
-                <ToolsBar complete={() => showComplete(!complete)} selectedMatch={selectedMatch}></ToolsBar>
+            <ToolsBar complete={() => showComplete(!complete)} selectedMatch={selectedMatch}></ToolsBar>
 
-                {complete ? <>
-                    {/* <Carousel photos={propData.photos} /> */}
-                    <ImagesPreview urls={propData.photos}/>
-                    <ProfileAvatar uid={agent.uid} />
+            {complete ? <>
+                <ImagesPreview urls={prop.photos} />
+                <ProfileAvatar uid={partnerData.uid} />
 
-                    <Divider className={classes.margin} />
+                <Divider className={classes.margin} />
 
-                    <PropertyDetails propData={selectedMatch.prop}></PropertyDetails>
+                <PropertyDetails propData={prop}></PropertyDetails>
 
-                    {/* <div>
-                        <img alt="mapa del request" style={{ width: '80vh', borderRadius: 20 }} src={propData.map.snapUrl}>
-                        </img>
-                    </div> */}
-                </> : <MatchCompletion/>
-                
-                }
-
-            </div>
-
+            </> : <MatchCompletion />
             }
             <Modal
                 open={!!userPreview}

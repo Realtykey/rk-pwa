@@ -21,7 +21,7 @@ const initialState = {
   //publish stepper
   activeStep: 0,
   //matches view
-  selectedMatch: {},
+  selectedMatch: null,
   matches: [],
   details: false,
   //search

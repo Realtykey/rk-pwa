@@ -37,9 +37,8 @@ const MatchView = function () {
     const fetchMatches = (uid) => dispatch(fetchMatchesThunk(uid));
 
 
-    const details = useSelector(state => state.general.details)
     const matches = useSelector(state => state.general.matches)
-    const loading = useSelector(state => state.general.loading)
+    const { selectedMatch } = useSelector(state => state.general)
 
     useEffect(
         () => {
@@ -64,7 +63,11 @@ const MatchView = function () {
     )
 
     return (
-        <ViewLayout list={<MatchesList />} detail={<MatchDetails/>} name="matches" iterable={matches}/>
+        <ViewLayout 
+        list={<MatchesList />} 
+        detail={selectedMatch ? <MatchDetails /> : <></>} 
+        name="matches" 
+        iterable={matches} />
     );
 }
 
