@@ -1,21 +1,30 @@
 # Realty Key
 
-## Correcciones
+## Correcciones QA2
 
-- [ ] descripción desplegable
+1. - [ ] descripción desplegable
 
-- [ ] boton mostrar agente en barra de herramientas del match
+2. - [X] boton mostrar agente en barra de herramientas del match
 
-- [ ] etiqueta con nombre de cada herramienta
+3. - [ ] Nombres en las barras de herramientas
+    - - [ ]  propiedades
+    - - [ ]  requests
+    - - [x]  matches
 
-- [ ] footer "Realty Key 2020 V&M HOME"
 
-- [ ] agregar features de propiedad en la vista
 
-- [ ] corregir calculo de valores de propiedad en item del match
+4. - [ ] footer "Realty Key 2020 V&M HOME"
 
-- [ ] colores de etiquetas de valores
+5. - [ ] agregar features de propiedad en vista detallada
+    - - [ ]  propiedades
+    - - [ ]  requests
+    - - [ ]  matches
 
-- [ ] picker de comisión en caso de alquiler. Valores 5,10,15...100
 
-- [ ] formato de moneda en valores de propiedad
+6. - [x] corregir valores monetarios de propiedad en item del match
+
+7. - [x] colores en etiquetas de valores monetarios
+
+8. - [ ] picker de comisión en caso de alquiler. Valores 5,10,15...100
+
+9. - [ ] formato de moneda en valores de propiedad
