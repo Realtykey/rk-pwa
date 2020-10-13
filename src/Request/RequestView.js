@@ -1,9 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-//
-import Hidden from '@material-ui/core/Hidden';
-import Box from '@material-ui/core/Box';
+import ViewLayout from "../utils/ViewLayout";
 
 //custom comps
 import { AuthContext } from "./../Auth";
@@ -37,9 +34,7 @@ const RequestView = function () {
 
     const fetchRequests = (uid) => dispatch(fetchReqsThunk(uid));
 
-    const requests = useSelector(state => state.request.requests)
-    const loading = useSelector(state => state.general.loading)
-    const rdetails = useSelector(state => state.request.rdetails)
+    const {requests, selectedRequest} = useSelector(state => state.request)
 
     useEffect(
         () => {
@@ -57,44 +52,18 @@ const RequestView = function () {
             };
             const unsubscribe = load().then(unsubscribe => unsubscribe);
 
-            return async () => unsubscribe; 
+            return async () => unsubscribe;
         },
         []
     )
 
     return (
         <div>
-            {requests.length > 0 ?
-                <div className={classes.root}>
-                    <Hidden smDown>
-                        <Grid justify="center" container
-                        >
-                            <Grid xs={12} sm={4} item>
-                                <RequestsList />
-                            </Grid>
-                            <Grid container xs={12} sm={6} item>
-                                <Grid align="center"><RequestDet /></Grid>
-                            </Grid>
-                        </Grid>
-                    </Hidden>
-                    <Hidden only={['lg']}>
-                        <Grid justify="center" container>
-                            <Box display={rdetails ? "none" : "block"}>
-                                {/* <Grid item md={12} xs={12} align="center"><RequestsList /></Grid> */}
-                            </Box>
-
-                            <Box display={rdetails ? "block" : "none"}>
-                                <Grid item md={12} xs={12} align="center"><RequestDet /></Grid>
-                            </Box>
-
-                        </Grid>
-                    </Hidden>
-
-                </div> :
-                <Container style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingTop: '200px' }}>
-                    {loading == false ? <h1 style={{ color: 'gray' }}>No hay requerimientos para mostrar</h1> : <CircularProgress size={100} color="secondary" />}
-                </Container>
-            }
+            <ViewLayout
+                list={<RequestsList />}
+                detail={selectedRequest ? <RequestDet /> : <></>}
+                name="requerimientos"
+                iterable={requests} />
         </div>
     )
 }

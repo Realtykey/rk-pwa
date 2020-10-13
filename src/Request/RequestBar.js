@@ -15,7 +15,7 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 //redux imports
 import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux'
-import { reqsDetailsAction } from './request-reducer';
+import { switchDetailsAction } from '../redux';
 
 import { useHistory } from "react-router-dom";
 
@@ -59,13 +59,9 @@ export default function RequestBar(props) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const reqsDetails = () => dispatch(reqsDetailsAction());
     const selectedRequest = useSelector(state => state.request.selectedRequest);
+    const switchDetails = () => dispatch(switchDetailsAction());
 
-    useEffect(
-        () => { },
-        [selectedRequest]
-    );
 
     const deleteReq = async () => {
         const { app } = await import('./../base');
@@ -74,7 +70,7 @@ export default function RequestBar(props) {
             .doc(selectedRequest.id)
             .delete()
             .then(
-                () => reqsDetails()
+                () => switchDetailsAction()
             );
     }
 
@@ -93,7 +89,7 @@ export default function RequestBar(props) {
             <Grid container alignItems="center" className={classes.root}>
 
                 <Hidden only={['lg']}>
-                    <Tool icon={<ArrowBackIosIcon/>} onClick={reqsDetails} aria-label="volver"/>
+                    <Tool icon={<ArrowBackIosIcon/>} onClick={switchDetails} aria-label="volver"/>
                     <CustomDivider/>
                 </Hidden>
 

@@ -1,5 +1,5 @@
 const initialState = {
-  selectedRequest: {},
+  selectedRequest: null,
   requests: [],
   rdetails: false,
 }
