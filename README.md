@@ -15,7 +15,7 @@
 
 4. - [ ] footer "Realty Key 2020 V&M HOME"
 
-5. - [ ] agregar features de propiedad en vista detallada
+5. - [ ] agregar features de propiedad en detalle de vista
     - - [ ]  propiedades
     - - [ ]  requests
     - - [ ]  matches
