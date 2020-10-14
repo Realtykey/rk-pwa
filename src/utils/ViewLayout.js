@@ -29,24 +29,24 @@ export default function ({ name, list, detail, iterable }) {
     return (
         <div style={root}>
             {iterable.length > 0 ? <>
-                <Hidden only={['xs']}>
+                <Hidden only={['xs','sm']}>
                     <Grid justify="center" container>
-                        <Grid align="center" sm={5} md={4} lg={4} item>
+                        <Grid align="center" md={4} lg={4} item>
                             {list}
                         </Grid>
-                        <Grid container sm={7} md={8} lg={8} item>
+                        <Grid container md={8} lg={8} item>
                             <Grid container item align="center">{detail}</Grid>
                         </Grid>
                     </Grid>
                 </Hidden>
 
-                <Hidden only={['sm', 'md', 'lg']}>
+                <Hidden only={['md', 'lg']}>
                     <Grid justify="center" container>
                         <Box display={details ? 'inline' : 'none'}>
-                            <Grid container item xs={12} align="center">{detail}</Grid>
+                            <Grid container item xs={12} sm={12} align="center">{detail}</Grid>
                         </Box>
                         <Box display={details ? 'none' : 'inline'}>
-                            <Grid container item xs={12} align="center">{list}</Grid>
+                            <Grid container item xs={12} sm={12} align="center">{list}</Grid>
                         </Box>
                     </Grid>
                 </Hidden>
