@@ -1,6 +1,6 @@
 const initialState = {
     //properties view (personal area)
-    selectedProperty: {},
+    selectedProperty: null,
     properties: [],
     pdetails: false,
 }
