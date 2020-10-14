@@ -6,6 +6,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import PropertyMoney from './PropertyMoney.js'
 
+//redux
+import { useDispatch } from 'react-redux'
+import { switchDetailsAction } from '../../redux';
+
 import '../../App.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -33,10 +37,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PropertyItem({ prop, index, setProp }) {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
+    const switchDetails = () => dispatch(switchDetailsAction());
 
     return (
-        <ListItem onClick={()=>console.log('item clicked')} className={classes.root} onClick={() => { setProp(prop, index) }} selected={prop.selected} alignItems="flex-start">
+        <ListItem className={classes.root} onClick={() => { setProp(prop, index); switchDetails();}} selected={prop.selected} alignItems="flex-start">
 
             <ListItemText style={{ maxHeight: '20px' }} secondary={prop.date??""} />
 

@@ -39,7 +39,6 @@ export const propertyReducer = (state = initialState, action) => {
                 ...state,
                 selectedProperty: action.payload.prop,
                 properties: properties,
-                pdetails: true
             };
         default:
             return state;

@@ -1,15 +1,26 @@
 import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 
 //redux imports
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { switchDetailsAction } from '../../redux';
 
 //custom comps 
 import Divider from '@material-ui/core/Divider';
-import PropertyBar from './PropertyBar.js'
 import Carousel from './Carousel'
 import PropertyDetails from './../PropertyCard/PropertyDetails'
+
+//font awesome icons
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+
+import { useHistory } from "react-router-dom";
+
+import ToolsBar,{ Tool }from '../../utils/ToolsBar';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,6 +42,10 @@ const map = { width: '100%',borderRadius:20 }
 
 export default function PropertyDet() {
     const classes = useStyles();
+    const history = useHistory();
+    const dispatch = useDispatch();
+
+    const switchDetails = () => dispatch(switchDetailsAction());
 
     const selectedProperty = useSelector(state => state.property.selectedProperty);
     
@@ -39,13 +54,47 @@ export default function PropertyDet() {
         [selectedProperty]
     );
 
+    const resetSelected = () => dispatch({ type: 'RESET_SELECTED' });
+
+    const deleteProp = async () => {
+        const { app } = await import('./../../base');
+
+        app.firestore().collection('properties')
+            .doc(selectedProperty.id)
+            .delete()
+            .then(
+                (doc) => {
+                    console.log(selectedProperty.id + " deleted")
+                    resetSelected();
+                }
+            );
+    }
+
+    const pushEditForm = () => {
+        history.push(
+            {
+                pathname: `/Home/propform`,
+                propData: selectedProperty
+            });
+    }
+
+    const tools = [
+        <>
+            <Hidden only={['md', 'lg']}>
+                <Tool icon={faArrowLeft} label={'Volver'} onClick={switchDetails} />
+                <Divider style={{ margin: 0 }} orientation="vertical" flexItem />
+            </Hidden>
+        </>,
+        <Tool icon={faEdit} label={'Editar'} onClick={pushEditForm} />,
+        <Tool icon={faBookmark} label={'Marcar'} onClick={() => console.log('marked')} />,
+        <Tool icon={faTrash} label={'Borrar'} onClick={deleteProp} />,
+    ];
     return (
         <Grid className={classes.root}>
 
                 {selectedProperty.map && <Grid item sm ={12} md ={12} xs ={12}>
 
-                    <PropertyBar/>
-
+                    <ToolsBar tools={tools}/>
                     <Carousel photos = {selectedProperty.photos}/>
 
                     <Divider className={classes.margin} />
