@@ -23,7 +23,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary">
       {'Copyright © '}
       <Link color="inherit" href="#">
-        Valeria
+        2020 V&M HOME
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -48,8 +48,9 @@ const useStyles = makeStyles((theme) => ({
   footer: {
     padding: theme.spacing(3, 2),
     marginTop: 'auto',
+    color:'white',
     backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[800],
+      theme.palette.type === 'light' ?  'white': theme.palette.background.default,
   },
   search: {
     padding: theme.spacing(3, 2),
@@ -113,7 +114,7 @@ export default function PublicArea() {
       </Modal>
       <footer className={classes.footer}>
         <Container align="center" maxWidth="sm">
-          <Typography variant="body1"> Realty key</Typography>
+          <Typography variant="body1">Realty Key</Typography>
           <Copyright />
         </Container>
       </footer>
