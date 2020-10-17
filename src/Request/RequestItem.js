@@ -8,6 +8,10 @@ import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 
+//redux
+import { useDispatch } from 'react-redux'
+import { switchDetailsAction } from '../redux';
+import { format } from '../apis/date_api';
 
 import './../App.css';
 
@@ -36,12 +40,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RequestItem({ req, index, setReq }) {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
+    const switchDetails = () => dispatch(switchDetailsAction());
 
     return (
-        <ListItem className={classes.root} onClick={() => { setReq(req, index) }} selected={req.selected} alignItems="flex-start">
+        <ListItem className={classes.root} onClick={() => { setReq(req, index); switchDetails(); }} selected={req.selected} alignItems="flex-start">
 
-            <ListItemText style={{ maxHeight: '20px' }} secondary="Domingo 26 de Julio 2020" />
+            <ListItemText style={{ maxHeight: '20px' }} secondary={req.date? format(req.date.toDate()) : ""} />
 
             <div className={classes.info}>
                 <Typography
