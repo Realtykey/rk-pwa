@@ -142,9 +142,9 @@ export function RequestForm(props) {
 
     data['price'] = Number(data.price);
 
-    var request = { ...data, map, propType, operation, uid };
+    const { app, firebase } = await import('./../base');
 
-    const { app } = await import('./../base');
+    var request = { ...data, map, propType, operation, uid , date:firebase.firestore.Timestamp.now()};
 
     let ref = app.firestore().collection('requests');
 
