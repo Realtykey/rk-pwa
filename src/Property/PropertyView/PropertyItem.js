@@ -9,6 +9,7 @@ import PropertyMoney from './PropertyMoney.js'
 //redux
 import { useDispatch } from 'react-redux'
 import { switchDetailsAction } from '../../redux';
+import { format } from '../../apis/date_api';
 
 import '../../App.css';
 
@@ -44,7 +45,7 @@ export default function PropertyItem({ prop, index, setProp }) {
     return (
         <ListItem className={classes.root} onClick={() => { setProp(prop, index); switchDetails();}} selected={prop.selected} alignItems="flex-start">
 
-            <ListItemText style={{ maxHeight: '20px' }} secondary={prop.date??""} />
+        <ListItemText style={{ maxHeight: '20px' }} secondary={prop.date? format(prop.date.toDate()) : ""} />
 
             <div className={classes.info}>
                 <Typography
