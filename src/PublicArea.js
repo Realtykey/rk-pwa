@@ -23,7 +23,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary">
       {'Copyright © '}
       <Link color="inherit" href="#">
-        2020 V&M HOME
+        V&M HOME
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
