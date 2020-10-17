@@ -221,7 +221,7 @@ export function PropertyForm(props) {
             return;
         }
 
-        const { app } = await import('./../../base');
+        const { app, firebase } = await import('./../../base');
 
         let ref = app.firestore().collection('properties');
         //comission
@@ -231,7 +231,7 @@ export function PropertyForm(props) {
         }
         delete data.percent;
         //edit and create
-        var property = { ...data, map, comission, propType, operation, uid, date: actualDate() };
+        var property = { ...data, map, comission, propType, operation, uid, date:firebase.firestore.Timestamp.now()};
 
         if (props.location) {//on edit
             ref = ref.doc(props.location.propData.id);
