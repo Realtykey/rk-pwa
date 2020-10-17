@@ -6,16 +6,16 @@
 
 2. - [X] boton mostrar agente en barra de herramientas del match
 
-3. - [ ] Nombres en las barras de herramientas
+3. - [x] Nombres en las barras de herramientas
     - - [x]  propiedades
-    - - [ ]  requests
+    - - [x]  requests
     - - [x]  matches
 4. - [x] footer "Realty Key 2020 V&M HOME"
 
 5. - [x] agregar features de propiedad en vista detallada
-    - - [ ]  propiedades
-    - - [ ]  requests
-    - - [ ]  matches
+    - - [x]  propiedades
+    - - [x]  requests
+    - - [x]  matches
 6. - [x] corregir valores monetarios de propiedad en item del match
 
 7. - [x] colores en etiquetas de valores monetarios
@@ -23,6 +23,8 @@
 8. - [ ] picker de comisión en caso de alquiler. Valores 5,10,15...100
 
 9. - [ ] Márgen features en vista previa.
+
+10. - [ ] Probar calculo de comissión.
 
 ## Correcciones 3
 
