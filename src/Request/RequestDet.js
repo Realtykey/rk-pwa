@@ -3,9 +3,11 @@ import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 
 //redux imports
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { switchDetailsAction } from '../redux';
 
 import PropertyDetails from './../Property/PropertyCard/PropertyDetails'
 //custom comps 
@@ -15,6 +17,15 @@ import loadable from '@loadable/component';
 import Modal from '@material-ui/core/Modal';
 import Features from '../Property/Features';
 
+//font awesome icons
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+
+import { useHistory } from "react-router-dom";
+
+import ToolsBar,{ Tool } from '../utils/ToolsBar';
 
 const RequestForm = loadable(() => import('./RequestForm'));
 const useStyles = makeStyles((theme) => ({
@@ -47,7 +58,7 @@ function getModalStyle() {
     const left = 50;
 
     return {
-        background:'#272331',
+        background: '#272331',
         outline: 'none',
         top: `${top}%`,
         left: `${left}%`,
@@ -60,13 +71,50 @@ function getModalStyle() {
 
 export default function RequestDet() {
     const classes = useStyles();
+    const history = useHistory();
+    const dispatch = useDispatch();
+
+    const switchDetails = () => dispatch(switchDetailsAction());
+
     const selectedRequest = useSelector(state => state.request.selectedRequest);
+
+    const deleteReq = async () => {
+        const { app } = await import('./../base');
+    
+        app.firestore().collection('requests')
+            .doc(selectedRequest.id)
+            .delete()
+            .then(
+                () => switchDetailsAction()
+            );
+    }
+    
+    const pushEditForm = () => {
+        history.push(
+            {
+                pathname: `/Home/reqform`,
+                propData: selectedRequest
+            });
+    }
+    
+    const tools = [
+        <>
+            <Hidden only={['md', 'lg']}>
+                <Tool icon={faArrowLeft} label={'Volver'} onClick={switchDetails} />
+                <Divider style={{ margin: 0 }} orientation="vertical" flexItem />
+            </Hidden>
+        </>,
+        <Tool icon={faEdit} label={'Editar'} onClick={pushEditForm} />,
+        <Tool icon={faBookmark} label={'Marcar'} onClick={() => console.log('marked')} />,
+        <Tool icon={faTrash} label={'Borrar'} onClick={deleteReq} />,
+    
+    ]
 
     return (
         <Grid className={classes.root}>
 
             {selectedRequest.map && <Grid item sm={12} md={12} xs={12}>
-                <RequestBar/>
+            <ToolsBar tools={tools}/>
 
                 <div>
                     <img alt="mapa del request" style={{ width: '100%', borderRadius: 20 }} src={selectedRequest.map.snapUrl}>
