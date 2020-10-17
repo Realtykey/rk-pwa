@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Typography from '@material-ui/core/Typography';
+import ShowMore from '../../ShowMore';
 
 import HomeIcon from '@material-ui/icons/Home';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -59,11 +60,7 @@ function PropertyDetails(props) {
         <Detail stretch={false} detail={data.operation} icon={<BusinessCenterIcon />} />
       </div>
 
-      {data.description && <Typography style={{ margin: '20px 0' }} variant="body2">
-        {data.description}
-      </Typography>
-      }
-
+      <ShowMore text={data.description}/>
     </div>
 
   )

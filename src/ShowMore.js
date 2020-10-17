@@ -10,8 +10,20 @@ export default function ShowMore({text}) {
     
     return (
         <div>
-            {hidden ? <p>{text.slice(0, 75) + " ..."}</p> : <p>{text}</p>}
-            <Button onClick = {handleShowMore}>{hidden ? 'Ver más' : 'Ver menos'}</Button>
+            {hidden ?
+            <> 
+            <div style={{ margin: '20px 0',textAlign:'left' }}>
+                {text.slice(0, 75) + " ..."}
+                <a onClick = {handleShowMore}>{hidden ? '  Ver más' : '  Ver menos'}</a>
+            </div> 
+            </>: 
+            <>
+            <div style={{ margin: '20px 0',textAlign:'left' }}>
+                {text}
+                <a onClick = {handleShowMore}>{hidden ? '  Ver más' : '  Ver menos'}</a>
+            </div>
+            </>
+            }
         </div>
     )
 }
