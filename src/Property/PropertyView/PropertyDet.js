@@ -11,6 +11,7 @@ import { switchDetailsAction } from '../../redux';
 import Divider from '@material-ui/core/Divider';
 import Carousel from './Carousel'
 import PropertyDetails from './../PropertyCard/PropertyDetails'
+import Features from '../Features';
 
 //font awesome icons
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -101,6 +102,9 @@ export default function PropertyDet() {
 
                     <PropertyDetails propData={selectedProperty}></PropertyDetails>
 
+
+                    <Features propData={selectedProperty} />
+                    
                     <div>
                         <img style={map} src={selectedProperty.map.snapUrl}>
                         </img>

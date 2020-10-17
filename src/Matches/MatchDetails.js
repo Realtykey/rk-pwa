@@ -16,8 +16,7 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Modal from '@material-ui/core/Modal';
 import ImagesPreview from '../Property/PropertyForm/ImagesPreview';
-import { AuthContext } from "../Auth.js";
-
+import Features from '../Property/Features';
 import ToolsBar,{ Tool }from '../utils/ToolsBar';
 
 import MatchCompletion from './MatchCompletion.js';
@@ -114,6 +113,8 @@ export default function MatchDetails() {
                 <Divider className={classes.margin} />
 
                 <PropertyDetails propData={prop}></PropertyDetails>
+
+                <Features propData={prop}/>
 
             </> : <MatchCompletion />
             }

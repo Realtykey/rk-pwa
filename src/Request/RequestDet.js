@@ -13,6 +13,7 @@ import Divider from '@material-ui/core/Divider';
 import RequestBar from './RequestBar'
 import loadable from '@loadable/component';
 import Modal from '@material-ui/core/Modal';
+import Features from '../Property/Features';
 
 
 const RequestForm = loadable(() => import('./RequestForm'));
@@ -79,6 +80,8 @@ export default function RequestDet() {
                 <Divider className={classes.margin} />
 
                 <PropertyDetails propData={selectedRequest}></PropertyDetails>
+
+                <Features propData={selectedRequest} />
 
             </Grid>
             }
