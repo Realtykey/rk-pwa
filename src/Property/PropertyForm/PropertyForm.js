@@ -516,7 +516,7 @@ export default function PropertyForm(props) {
                             id="percent"
                             name="percent"
                             label={(operation === 'Venta') ? ' % Comisión' : ' % del canon (ejm:10,20...) '}
-                            type="text"
+                            type="number"
                             InputLabelProps={{
                                 shrink: true,
                             }}

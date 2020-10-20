@@ -7,8 +7,8 @@ function getPercentages() {
 
     return Array(20).fill(null).map(
         (item, index) => {
-            const value = Number.parseFloat(index * 0.05).toFixed(2);
-            const label = Number.parseFloat(value * 100).toFixed(0);
+            const value = Number.parseFloat(index * 5).toFixed(2);
+            const label = Number.parseFloat(value).toFixed(0);
             return ({
                 label: `${label}%`,
                 value: value
@@ -25,8 +25,9 @@ const Option = ({ item, pickPercent, hidePicker }) => {
         padding: 10,
         border: '1px solid rgba(255, 255, 255, 0.12)'
     }
+    const formatted = Number.parseInt(value);
     return (
-        <ButtonBase style={root} onClick={() => { pickPercent('percent', value); hidePicker(true); }}>{label}</ButtonBase>
+        <ButtonBase style={root} onClick={() => { pickPercent('percent', formatted); hidePicker(true); }}>{label}</ButtonBase>
     );
 }
 
