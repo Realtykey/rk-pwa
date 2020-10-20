@@ -106,8 +106,11 @@ export default function MatchDetails() {
 
             <ToolsBar tools={tools}/>
 
-            {complete ? <>
+            {complete ? <MatchCompletion />
+            
+            :   <>
                 <ImagesPreview urls={prop.photos} />
+                
                 <ProfileAvatar uid={partnerData.uid} />
 
                 <Divider className={classes.margin} />
@@ -115,8 +118,8 @@ export default function MatchDetails() {
                 <PropertyDetails propData={prop}></PropertyDetails>
 
                 <Features propData={prop}/>
-
-            </> : <MatchCompletion />
+            </>
+            
             }
             <Modal
                 open={!!userPreview}
