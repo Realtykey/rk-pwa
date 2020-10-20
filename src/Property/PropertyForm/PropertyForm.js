@@ -14,6 +14,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormLayout from '../../FormLayout';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import ImagesPicker from '../ImagesPicker';
+import ComissionPicker from '../../utils/ComissionPicker';
+import Modal from '@material-ui/core/Modal';
 
 //ios switch
 import Switch from '@material-ui/core/Switch';
@@ -60,30 +62,52 @@ const useStyles = makeStyles((theme) => ({
     ,
     placeholder: {
         color: "gray"
+    },
+    picker:{
+        color: 'white',
+        position: 'absolute',
+        overflow: 'scroll',
+        padding:10
     }
 }));
 
 const Map = lazy(() => import('../../Map'));
 
-const actualDate = () => {
-
-    var today = new Date();
-    var dd = today.getDate();
-
-    var mm = today.getMonth() + 1;
-    var yyyy = today.getFullYear();
-    if (dd < 10) {
-        dd = '0' + dd;
-    }
-
-    if (mm < 10) {
-        mm = '0' + mm;
-    }
-
-    return `${mm} / ${dd} / ${yyyy}`
+function getModalStyle() {
+    const top = 50;
+    const left = 50;
+  
+    return {
+      borderRadius:8,
+      background: '#272331',
+      outline: 'none',
+      top: `${top}%`,
+      left: `${left}%`,
+      transform: `translate(-${top}%, -${left}%)`,
+      border: 'none'
+    };
 }
 
-export function PropertyForm(props) {
+export default function PropertyForm(props) {
+    const classes = useStyles();
+
+    //forms hook
+    const { register, errors, handleSubmit, setValue } = useForm();
+
+    const [modalStyle] = React.useState(getModalStyle);
+
+    const pickPercent = (name,value) => {
+        setValue(name,value);
+    }
+    const [pickerHidden, hidePicker] = useState(true);
+
+    const pickerBody = (
+        <div style={modalStyle} className={classes.picker}>
+            <ComissionPicker pickPercent={pickPercent} hidePicker={hidePicker}/>
+        </div>
+    );
+
+
     const setProp = (prop, index) => { dispatch(setPropAction(prop, index)) }
 
     const history = useHistory();
@@ -95,8 +119,6 @@ export function PropertyForm(props) {
     //mapbox map
     const map = useSelector((state) => state.general.map);
     const setMap = map => dispatch(setMapAction(map));
-    //forms hook
-    const { register, errors, handleSubmit } = useForm();
     //error
     const showAlert = (errorMessage) => dispatch(showAlertAction(errorMessage));
 
@@ -268,7 +290,6 @@ export function PropertyForm(props) {
         );
     }
 
-    const classes = useStyles();
 
     return (
         <FormLayout>
@@ -488,6 +509,7 @@ export function PropertyForm(props) {
 
                     <Grid item xs={12} md={6}>
                         <TextField
+                            onClick={() => hidePicker(false)}
                             inputRef={register({ required: true })}
                             helperText={errors.percent && "valor obligatorio"}
                             defaultValue={props.location ? props.location.propData.comission.percent : null}
@@ -497,6 +519,9 @@ export function PropertyForm(props) {
                             type="text"
                             InputLabelProps={{
                                 shrink: true,
+                            }}
+                            InputProps={{
+                                readOnly: true
                             }}
                             variant="outlined"
                         />
@@ -527,9 +552,13 @@ export function PropertyForm(props) {
                     </Grid>
 
                 </Grid>
+                <Modal
+                    open={!pickerHidden}
+                    onClose={()=>hidePicker(true)}
+                >
+                    {pickerBody}
+                </Modal>
             </form>
         </FormLayout>
     );
 }
-
-export default PropertyForm
