@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { ButtonBase } from '@material-ui/core';
 import './styles.css';
-import StaticGrid, { StaticItem } from './StaticGrid';
+import Grid from '@material-ui/core/Grid';
 
 function getPercentages() {
 
@@ -20,31 +20,31 @@ function getPercentages() {
 const Option = ({ item, pickPercent, hidePicker }) => {
     const { label, value } = item;
     const root = {
-        width:52,
-        height:52,
+        width: 52,
+        height: 52,
         padding: 10,
         border: '1px solid rgba(255, 255, 255, 0.12)'
     }
     return (
-        <ButtonBase style={root} onClick={() => {pickPercent('percent',value); hidePicker(true);}}>{label}</ButtonBase>
+        <ButtonBase style={root} onClick={() => { pickPercent('percent', value); hidePicker(true); }}>{label}</ButtonBase>
     );
 }
 
-export default function ComissionPicker({pickPercent,hidePicker}) {
+export default function ComissionPicker({ pickPercent, hidePicker }) {
 
     const percentages = getPercentages();
 
     return (
-        <StaticGrid>
+        <Grid container justify="center">
             {
                 percentages.map(item => {
                     return (
-                        <StaticItem key={item.label}>
+                        <Grid item key={item.label} >
                             <Option pickPercent={pickPercent} hidePicker={hidePicker} item={item} />
-                        </StaticItem>
+                        </Grid>
                     );
                 })
             }
-        </StaticGrid>
+        </Grid>
     );
 }
