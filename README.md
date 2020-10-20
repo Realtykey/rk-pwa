@@ -20,7 +20,9 @@
 
 7. - [x] colores en etiquetas de valores monetarios
 
-8. - [ ] picker de comisión en caso de alquiler. Valores 5,10,15...100
+8. - [x] picker de comisión en caso de alquiler. Valores 5,10,15...100
+
+9. - [x] validación del formulario con el nuevo picker
 
 9. - [ ] Márgen features en vista previa.
 
