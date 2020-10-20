@@ -32,7 +32,7 @@ import { useSelector } from 'react-redux'
 import { setStepAction, showAlertAction, setMapAction } from '../../redux.js';
 import { setPropAction } from './../property-reducer'
 //form hook
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 
 import Box from '@material-ui/core/Box';
@@ -92,7 +92,7 @@ export default function PropertyForm(props) {
     const classes = useStyles();
 
     //forms hook
-    const { register, errors, handleSubmit, setValue } = useForm();
+    const { register, errors, handleSubmit, setValue, control } = useForm();
 
     const [modalStyle] = React.useState(getModalStyle);
 
@@ -301,22 +301,22 @@ export default function PropertyForm(props) {
                 <Grid container spacing={3}>
 
                     <Grid item xs={12} sm={12}>
-                        <TextField
-                            type="text"
-                            defaultValue={props.location ? props.location.propData.title : ''}
-                            inputRef={register({
-                                required: true,
-                            })}
-                            helperText={errors.title?.type === "maxLength" && "título olbigatorio"}
-                            id="title"
-                            name="title"
-                            inputProps={{ maxLength: 60 }}
-                            fullWidth
-                            label="Título de publicación"
-                            autoComplete="billing address-line1"
-                            variant="outlined"
+                        <Controller 
+                        as={<TextField 
+                        inputProps={{ maxLength: 60 }}
+                        fullWidth 
+                        label="Título de publicación" 
+                        variant="outlined"
+                        helperText={
+                                errors.title?.type === "minLength" ? "mínimo 30 caracteres" : ""+
+                                errors.title?.type === "required" ? "título obligatorio" : ""
+                            }    
+                        />} 
+                        name="title" 
+                        control={control} 
+                        defaultValue={props.location ? props.location.propData.title : ''}
+                        rules={{ required: true, minLength:30 }}
                         />
-
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
@@ -434,7 +434,7 @@ export default function PropertyForm(props) {
                     <Grid item xs={12} sm={6}>
                         <TextField
                             inputRef={register({ required: true })}
-                            helperText={errors.area && "área obligatorio"}
+                            helperText={errors.area && "área obligatoria"}
                             defaultValue={props.location ? props.location.propData.area : ''}
                             id="area"
                             name="area"
@@ -536,6 +536,7 @@ export default function PropertyForm(props) {
                                 defaultValue={props.location ? props.location.propData.price : ''}
                                 id="price"
                                 name="price"
+                                type="number"
                                 startAdornment={<InputAdornment position="start">$</InputAdornment>}
                             />
                         </FormControl>

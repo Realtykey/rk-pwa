@@ -22,9 +22,11 @@
 
 8. - [x] picker de comisión en caso de alquiler. Valores 5,10,15...100
 
-9. - [ ] Márgen features en vista previa.
+9. - [x] validación del formulario con el nuevo picker
 
-10. - [ ] Probar calculo de comissión.
+10. - [ ] Márgen features en vista previa.
+
+11. - [ ] Probar calculo de comissión.
 
 ## Correcciones 3
 
