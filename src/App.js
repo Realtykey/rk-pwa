@@ -84,6 +84,7 @@ function getModalStyle() {
   const left = 50;
 
   return {
+    borderRadius:8,
     background: '#272331',
     outline: 'none',
     top: `${top}%`,
