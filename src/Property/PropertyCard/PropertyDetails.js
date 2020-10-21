@@ -35,7 +35,6 @@ const Detail = ({ detail, icon, stretch }) => {
 
 const root = {
   padding: '0 20px',
-  width: '85%',
   margin: '20px 0px',
   overflowWrap: 'anywhere',
 }
@@ -45,7 +44,7 @@ function PropertyDetails(props) {
 
   return (
     <div style={root}>
-      <Typography style={{color:'white', minHeight: 64 ,margin:'20px 0px'}} variant="h5">
+      <Typography style={{color:'white', height: 'auto' ,margin:'20px 0px'}} variant="h5">
         {data.title}
       </Typography>
 
