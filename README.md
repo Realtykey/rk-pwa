@@ -24,15 +24,15 @@
 
 9. - [x] validación del formulario con el nuevo picker
 
-10. - [ ] Márgen features en vista previa.
+10. - [x] Márgen en detalles de propiedad en vista previa.
 
 11. - [x] Probar calculo de comissión.
 
 ## Correcciones 3
 
-1. - [ ] Cambiar components (vista delmatch).
+1. - [ ] Cambiar componente (vista delmatch).
 
-2. - [ ] Agrandar foto cuando hay mas de una foto.
+2. - [ ] Agrandar foto al darle click en vista collage de propiedad.
 
 3. - [ ] Margen del titulo en tarjetas (Propiedad,Request)
 

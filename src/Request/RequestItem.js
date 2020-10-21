@@ -23,10 +23,9 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 20
     },
     title: {
-        width: 315,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
+        whiteSpace: 'normal',
         padding: '10px 0 10px 0',
         color: theme.palette.primary.contrastText
     },
