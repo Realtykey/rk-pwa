@@ -26,7 +26,7 @@
 
 10. - [ ] Márgen features en vista previa.
 
-11. - [ ] Probar calculo de comissión.
+11. - [x] Probar calculo de comissión.
 
 ## Correcciones 3
 
