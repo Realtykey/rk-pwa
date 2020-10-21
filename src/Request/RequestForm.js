@@ -362,19 +362,21 @@ export function RequestForm(props) {
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <FormControl fullWidth className={classes.margin} variant="outlined"
-            >
-              <InputLabel htmlFor="price">Precio</InputLabel>
-              <OutlinedInput
-                inputRef={register({ required: true })}
-                defaultValue={props.location ? props.location.propData.price : ''}
-                id="price"
-                name="price"
-                type="number"
-                startAdornment={<InputAdornment position="start">$</InputAdornment>}
-              />
+            <FormControl fullWidth className={classes.margin} variant="outlined">
+                <InputLabel htmlFor="price">Precio</InputLabel>
+                <OutlinedInput
+                    inputRef={register({ required: true})}
+                    defaultValue={props.location ? props.location.propData.price : ''}
+                    id="price"
+                    name="price"
+                    type="number"
+                    inputProps={{
+                    step:0.1
+                    }}
+                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                />
             </FormControl>
-          </Grid>
+        </Grid>
 
           <Grid item xs={12}>
             {/* {(imgFiles.length > 0) && */}

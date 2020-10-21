@@ -509,8 +509,8 @@ export default function PropertyForm(props) {
 
                     <Grid item xs={12} md={6}>
                         <TextField
-                            onClick={() => hidePicker(false)}
-                            inputRef={register({ required: true })}
+                            onClick={operation=='Alquiler'?() => hidePicker(false) : () => console.log('venta')}
+                            inputRef={register({ required:true})}
                             helperText={errors.percent && "valor obligatorio"}
                             defaultValue={props.location ? props.location.propData.comission.percent : null}
                             id="percent"
@@ -521,7 +521,10 @@ export default function PropertyForm(props) {
                                 shrink: true,
                             }}
                             InputProps={{
-                                readOnly: true
+                                readOnly: operation=='Alquiler',
+                            }}
+                            inputProps={{
+                                step:0.1
                             }}
                             variant="outlined"
                         />
@@ -532,11 +535,14 @@ export default function PropertyForm(props) {
                         >
                             <InputLabel htmlFor="price">Precio</InputLabel>
                             <OutlinedInput
-                                inputRef={register({ required: true })}
+                                inputRef={register({ required: true})}
                                 defaultValue={props.location ? props.location.propData.price : ''}
                                 id="price"
                                 name="price"
                                 type="number"
+                                inputProps={{
+                                step:0.1
+                                }}
                                 startAdornment={<InputAdornment position="start">$</InputAdornment>}
                             />
                         </FormControl>
