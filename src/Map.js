@@ -55,21 +55,7 @@ export default function Map() {
             }
         );
 
-        //add address field to map 
-        const featureCollection = await geocode(map);
 
-        if (featureCollection.features.length > 0) {
-            console.log(featureCollection);
-            console.log(featureCollection.features[0].properties);
-
-            const city = featureCollection.features[0].context[0].text;
-            const province = featureCollection.features[0].context[1].text;
-            const country = featureCollection.features[0].context[2].text;
-            const address = featureCollection.features[0].properties.address;
-            setMap({
-                address: `${city}, ${province}${address ? ', ' + address : ""}`
-            })
-        }
 
     }
 
