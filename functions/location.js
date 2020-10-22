@@ -17,21 +17,21 @@ const getAddress = (featureCollection) => {
     return 'empty results';
 }
 
-export const updateAddress = async data => {
+exports.updateAddress = async data => {
     const { id, map } = data;
     const { lat, lng } = map;
 
     const MAPBOX_TOKEN = "pk.eyJ1Ijoic3RlYWx0aDE0IiwiYSI6ImNrNGhvY3hkdjFjY2kza283eDhzcGRnYmkifQ.mZXxhWd9yvNen0-qpoEnsg";
     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?types=poi&access_token=${MAPBOX_TOKEN}`;
-
+    
+    const fetch = require('node-fetch');
     const response = await fetch(url);
     const featureCollection = await response.json();
+    const admin = require('firebase-admin');
 
     const address = getAddress(featureCollection);
-
+    console.log(` ${id} address : `,address);
     const db = admin.firestore();
-
     return db.collection('requests').doc(id).update({"map.address":address});
 
 }
-

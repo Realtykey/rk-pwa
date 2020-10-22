@@ -1,4 +1,4 @@
-import { updateAddress } from './location';
+const {updateAddress} = require('./location.js');
 
 const turf = require('@turf/turf');
 
@@ -120,6 +120,7 @@ exports.createMatch = functions.firestore
     return matchedProp(snap);
   });
 
+  
 exports.geocodeRequestLocation = functions.firestore
   .document(`requests/{id}`)
   .onWrite(async (change, context) => {
