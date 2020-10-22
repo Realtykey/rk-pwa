@@ -243,6 +243,10 @@ export default function PropertyForm(props) {
             return;
         }
 
+        if(!map.lat){
+            alert('Seleccionar una ubicación en el mapa.')
+            return;
+        }
         const { app, firebase } = await import('./../../base');
 
         let ref = app.firestore().collection('properties');
@@ -515,7 +519,7 @@ export default function PropertyForm(props) {
                             defaultValue={props.location ? props.location.propData.comission.percent : null}
                             id="percent"
                             name="percent"
-                            label={(operation === 'Venta') ? ' % Comisión' : ' % del canon (ejm:10,20...) '}
+                            label={(operation === 'Venta') ? ' % Comisión' : ' % del canon '}
                             type="number"
                             InputLabelProps={{
                                 shrink: true,
