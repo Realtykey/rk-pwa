@@ -172,7 +172,7 @@ export function RequestForm(props) {
           tab: 1
         }
       );
-      setReq({});
+      setReq(null);
     }
     setStep(activeStep + 1);
   }

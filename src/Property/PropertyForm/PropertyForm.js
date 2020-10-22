@@ -287,7 +287,7 @@ export default function PropertyForm(props) {
                             tab: 0
                         }
                     );
-                    setProp({});
+                    setProp(null);
                 }
 
             }
