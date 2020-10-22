@@ -31,7 +31,6 @@ export default function Carousel({photos}) {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = photos.length;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -42,29 +41,32 @@ export default function Carousel({photos}) {
   };
 
   return (
-    <div className={classes.root}>
+    <>
+    { photos && <div className={classes.root}>
       <img
         className={classes.img}
         src={photos[activeStep]}
       />
       <MobileStepper
-        steps={maxSteps}
+        steps={photos.length}
         position="static"
         variant="text"
         activeStep={activeStep}
         nextButton={
-          <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-            Next
+          <Button size="small" onClick={handleNext} disabled={activeStep === photos.length - 1}>
+            Siguiente
             {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
           </Button>
         }
         backButton={
           <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
             {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-            Back
+            Anterior
           </Button>
         }
       />
     </div>
+    }
+    </>
   );
 }
