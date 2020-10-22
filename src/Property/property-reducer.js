@@ -40,6 +40,12 @@ export const propertyReducer = (state = initialState, action) => {
                 selectedProperty: action.payload.prop,
                 properties: properties,
             };
+        
+        case 'SET_SELECTED':
+            return {
+                ...state,
+                selectedProperty: action.payload
+            }
         default:
             return state;
     }
