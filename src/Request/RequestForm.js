@@ -160,6 +160,10 @@ export function RequestForm(props) {
     //create or update firestore doc
     await ref.set(request, { merge: true });
 
+    if(!map.lat){
+      alert('Seleccionar una ubicación en el mapa.')
+      return;
+    }
     //redirect to mypanel, reset selected prop (forces list refresh)
     if (props.location?.propData) {
       history.push(
