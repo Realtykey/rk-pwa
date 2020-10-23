@@ -24,18 +24,15 @@
 
 9. - [x] validación del formulario con el nuevo picker
 
-10. - [ ] Márgen features en vista previa.
+10. - [x] Márgen features en vista previa.
 
 11. - [x] Probar calculo de comissión.
 
 ## Correcciones 3
 
-1. - [ ] Cambiar components (vista delmatch).
-
+1. - [x] Carousel en vista individual, en busquedas el mas liviano.
 2. - [ ] Agrandar foto cuando hay mas de una foto.
 
-3. - [ ] Margen del titulo en tarjetas (Propiedad,Request)
+3. - [x] Margen del titulo en tarjetas (Propiedad,Request)
 
-4. - [ ] Ojo con dejar address(ubi) vacía 
-
-5. - [ ] Carousel en vista individual, en busquedas el mas liviano.
+4. - [x] Ojo con dejar address(ubi) vacía 
