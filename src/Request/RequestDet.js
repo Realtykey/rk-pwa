@@ -26,6 +26,7 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 
 import ToolsBar,{ Tool } from '../utils/ToolsBar';
+import { db } from '../base';
 
 const RequestForm = loadable(() => import('./RequestForm'));
 const useStyles = makeStyles((theme) => ({
@@ -109,6 +110,27 @@ export default function RequestDet() {
         <Tool icon={faTrash} label={'Borrar'} onClick={deleteReq} />,
     
     ]
+
+    useEffect(
+        () => {
+                const unregister = null
+                if(selectedRequest){
+                    db.collection('requests').doc(selectedRequest.id).onSnapshot(
+                        doc => {
+                            
+                            dispatch({type:'SET_SELECTED',payload:doc.data()})
+                        },
+                        function(error) {
+                            console.log(error.message);
+                        }
+                    );    
+                }
+
+                return unregister? unregister : () => console.log("");
+        },
+        []
+    );
+
 
     return (
         <Grid className={classes.root}>
