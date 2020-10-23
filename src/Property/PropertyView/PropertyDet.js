@@ -6,7 +6,6 @@ import Hidden from '@material-ui/core/Hidden';
 //redux imports
 import { useSelector, useDispatch } from 'react-redux'
 import { switchDetailsAction } from '../../redux';
-
 //custom comps 
 import Divider from '@material-ui/core/Divider';
 import Carousel from './Carousel'
@@ -22,6 +21,7 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 
 import ToolsBar,{ Tool }from '../../utils/ToolsBar';
+import { db } from '../../base';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -51,8 +51,22 @@ export default function PropertyDet() {
     const selectedProperty = useSelector(state => state.property.selectedProperty);
     
     useEffect(
-        ()=>{},
-        [selectedProperty]
+        () => {
+            var unregister = null
+                if(selectedProperty){
+                    unregister = db.collection('properties').doc(selectedProperty.id).onSnapshot(
+                        doc => {
+                            dispatch({type:'SET_SELECTED_PROPERTY',payload:{...doc.data()}});
+                        },
+                        function(error) {
+                            console.log(error.message);
+                        }
+                    );    
+                }
+
+                return unregister? unregister : () => console.log("");
+        },
+        []
     );
 
     const resetSelected = () => dispatch({ type: 'RESET_SELECTED' });
@@ -93,7 +107,7 @@ export default function PropertyDet() {
     return (
         <Grid className={classes.root}>
 
-                {selectedProperty.map && <Grid item sm ={12} md ={12} xs ={12}>
+                {selectedProperty && <Grid item sm ={12} md ={12} xs ={12}>
 
                     <ToolsBar tools={tools}/>
                     <Carousel photos = {selectedProperty.photos}/>
@@ -106,7 +120,7 @@ export default function PropertyDet() {
                     <Features propData={selectedProperty} />
                     
                     <div>
-                        <img style={map} src={selectedProperty.map.snapUrl}>
+                        <img style={map} src={selectedProperty.map?.snapUrl}>
                         </img>
                     </div>
 

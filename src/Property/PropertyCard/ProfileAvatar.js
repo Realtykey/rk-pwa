@@ -9,14 +9,14 @@ import Chip from '@material-ui/core/Chip';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
-
+import '../../Property/PropertyCard/styles.css'
 //redux imports
 import { useDispatch } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     color:'white !important',
-    padding: '20px 0',
+    padding: '20px 10px',
     width: '100%',
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
@@ -94,8 +94,9 @@ export default function ProfileAvatar(props) {
             </div>
           </div>
 
-          <div style={{ width: '20%' }}>
+          <div style={{display:'flex', width: '20%' }}>
             <Chip
+              classes={{root:'root'}}
               label={data.status}
               style={data.status == 'Miembro' ? member : premium}
             />

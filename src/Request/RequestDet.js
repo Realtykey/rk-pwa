@@ -26,6 +26,7 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 
 import ToolsBar,{ Tool } from '../utils/ToolsBar';
+import { db } from '../base';
 
 const RequestForm = loadable(() => import('./RequestForm'));
 const useStyles = makeStyles((theme) => ({
@@ -110,10 +111,30 @@ export default function RequestDet() {
     
     ]
 
+    useEffect(
+        () => {
+                var unregister = null
+                if(selectedRequest){
+                    unregister = db.collection('requests').doc(selectedRequest.id).onSnapshot(
+                        doc => {
+                            dispatch({type:'SET_SELECTED_REQUEST',payload:{...doc.data()}})
+                        },
+                        function(error) {
+                            console.log(error.message);
+                        }
+                    );    
+                }
+
+                return unregister? unregister : () => console.log("");
+        },
+        []
+    );
+
+
     return (
         <Grid className={classes.root}>
 
-            {selectedRequest.map && <Grid item sm={12} md={12} xs={12}>
+            {selectedRequest && <Grid item sm={12} md={12} xs={12}>
             <ToolsBar tools={tools}/>
 
                 <div>

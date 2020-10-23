@@ -1,3 +1,5 @@
+const {updateAddress} = require('./location.js');
+
 const turf = require('@turf/turf');
 
 const functions = require('firebase-functions');
@@ -44,12 +46,12 @@ const matchedProp = async (reqDoc) => {
         .filter(doc => doc.data().area >= reqData.area)
         .filter(doc => doc.data().price <= reqData.price)
         .filter(doc => {
-          let fromCoords = [doc.data().map.lng,doc.data().map.lat];
-          let toCoords = [reqData.map.lng,reqData.map.lat];
+          let fromCoords = [doc.data().map.lng, doc.data().map.lat];
+          let toCoords = [reqData.map.lng, reqData.map.lat];
 
-          let distance = getDistance(fromCoords,toCoords);
+          let distance = getDistance(fromCoords, toCoords);
           console.log(distance);
-          
+
           return distance < 2;
         });
 
@@ -87,13 +89,13 @@ const createMatch = async (reqData, propDoc, suggestion) => {
 
   //distance variables
 
-  let fromCoords = [reqData.map.lng,reqData.map.lat];
-  let toCoords = [propData.map.lng,propData.map.lat];
+  let fromCoords = [reqData.map.lng, reqData.map.lat];
+  let toCoords = [propData.map.lng, propData.map.lat];
 
   let match = {
     suggestion: suggestion,
     uid: uid,
-    distance : getDistance(fromCoords,toCoords),
+    distance: getDistance(fromCoords, toCoords),
     // key: 9, <= se agrega en el cliente
     // selected: false, <= se agrega en el cliente
     requesterData: requesterData,
@@ -118,3 +120,23 @@ exports.createMatch = functions.firestore
     return matchedProp(snap);
   });
 
+  
+exports.geocodeRequestLocation = functions.firestore
+  .document(`requests/{id}`)
+  .onWrite(async (change, context) => {
+    if (change.after.exists) {
+      const data = change.after.data();
+      return await updateAddress(data,'requests');
+    }
+    //no olvidar retornar promesa
+  });
+
+exports.geocodePropertyLocation = functions.firestore
+.document(`properties/{id}`)
+.onWrite(async (change, context) => {
+  if (change.after.exists) {
+    const data = change.after.data();
+    return await updateAddress(data,'properties');
+  }
+  //no olvidar retornar promesa
+});
