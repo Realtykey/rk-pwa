@@ -21,7 +21,7 @@ export const propertyReducer = (state = initialState, action) => {
         case 'RESET_SELECTED':
             return{
                 ...state,
-                selectedProperty:{}
+                selectedProperty:null
             }
         case 'SELECT_PROP':
             const properties = state.properties.map((prop, index) => {
@@ -41,7 +41,7 @@ export const propertyReducer = (state = initialState, action) => {
                 properties: properties,
             };
         
-        case 'SET_SELECTED':
+        case 'SET_SELECTED_PROPERTY':
             return {
                 ...state,
                 selectedProperty: action.payload

@@ -113,12 +113,11 @@ export default function RequestDet() {
 
     useEffect(
         () => {
-                const unregister = null
+                var unregister = null
                 if(selectedRequest){
-                    db.collection('requests').doc(selectedRequest.id).onSnapshot(
+                    unregister = db.collection('requests').doc(selectedRequest.id).onSnapshot(
                         doc => {
-                            
-                            dispatch({type:'SET_SELECTED',payload:doc.data()})
+                            dispatch({type:'SET_SELECTED_REQUEST',payload:{...doc.data()}})
                         },
                         function(error) {
                             console.log(error.message);
@@ -135,7 +134,7 @@ export default function RequestDet() {
     return (
         <Grid className={classes.root}>
 
-            {selectedRequest.map && <Grid item sm={12} md={12} xs={12}>
+            {selectedRequest && <Grid item sm={12} md={12} xs={12}>
             <ToolsBar tools={tools}/>
 
                 <div>

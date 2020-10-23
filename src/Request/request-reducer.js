@@ -35,7 +35,7 @@ export const requestReducer = (state = initialState, action) => {
         requests: requests,
         rdetails: true
       };
-    case 'SET_SELECTED':
+    case 'SET_SELECTED_REQUEST':
       return {
           ...state,
           selectedRequest: action.payload

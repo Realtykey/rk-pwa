@@ -52,12 +52,11 @@ export default function PropertyDet() {
     
     useEffect(
         () => {
-                const unregister = null
+            var unregister = null
                 if(selectedProperty){
-                    db.collection('properties').doc(selectedProperty.id).onSnapshot(
+                    unregister = db.collection('properties').doc(selectedProperty.id).onSnapshot(
                         doc => {
-                            
-                            dispatch({type:'SET_SELECTED',payload:doc.data()})
+                            dispatch({type:'SET_SELECTED_PROPERTY',payload:{...doc.data()}});
                         },
                         function(error) {
                             console.log(error.message);
