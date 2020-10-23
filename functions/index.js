@@ -126,7 +126,17 @@ exports.geocodeRequestLocation = functions.firestore
   .onWrite(async (change, context) => {
     if (change.after.exists) {
       const data = change.after.data();
-      return await updateAddress(data);
+      return await updateAddress(data,'requests');
     }
     //no olvidar retornar promesa
   });
+
+exports.geocodePropertyLocation = functions.firestore
+.document(`properties/{id}`)
+.onWrite(async (change, context) => {
+  if (change.after.exists) {
+    const data = change.after.data();
+    return await updateAddress(data,'properties');
+  }
+  //no olvidar retornar promesa
+});

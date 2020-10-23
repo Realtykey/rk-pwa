@@ -17,7 +17,7 @@ const getAddress = (featureCollection) => {
     return 'empty results';
 }
 
-exports.updateAddress = async data => {
+exports.updateAddress = async (data,collectionName) => {
     const { id, map } = data;
     const { lat, lng } = map;
 
@@ -32,6 +32,6 @@ exports.updateAddress = async data => {
     const address = getAddress(featureCollection);
     console.log(` ${id} address : `,address);
     const db = admin.firestore();
-    return db.collection('requests').doc(id).update({"map.address":address});
+    return db.collection(collectionName).doc(id).update({"map.address":address});
 
 }
