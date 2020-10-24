@@ -33,7 +33,7 @@ const PropertyView = function () {
     const fetchProperties = (uid) => dispatch(fetchPropsThunk(uid));
 
     const properties = useSelector(state => state.property.properties)
-    const selectedProperty = useSelector(state => state.property.selectedProperty);
+    const {selectedProperty,showDetails} = useSelector(state => state.property);
 
     useEffect(
          () => {
@@ -61,6 +61,7 @@ const PropertyView = function () {
         list={<PropertiesList />}
         detail={selectedProperty ? <PropertyDet /> : <></>}
         name="propiedades"
+        showDetails={showDetails}
         iterable={properties} />
     );
 }

@@ -39,10 +39,10 @@ export default function PropertyItem({ prop, index, setProp }) {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const switchDetails = () => dispatch(switchDetailsAction());
+    const showDetails = show => dispatch({type:'SHOW_DETAILS',payload:show});
 
     return (
-        <ListItem className={classes.root} onClick={() => { setProp(prop, index); switchDetails();}} selected={prop.selected} alignItems="flex-start">
+        <ListItem className={classes.root} onClick={() => { setProp(prop, index); showDetails(true);}} selected={prop.selected} alignItems="flex-start">
 
         <ListItemText style={{ maxHeight: '20px' }} secondary={prop.date? format(prop.date.toDate()) : ""} />
 

@@ -46,7 +46,7 @@ export default function PropertyDet() {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const switchDetails = () => dispatch(switchDetailsAction());
+    const showDetails = show => dispatch({type:'SHOW_DETAILS',payload:show});
 
     const selectedProperty = useSelector(state => state.property.selectedProperty);
     
@@ -96,7 +96,7 @@ export default function PropertyDet() {
     const tools = [
         <>
             <Hidden only={['md', 'lg']}>
-                <Tool icon={faArrowLeft} label={'Volver'} onClick={switchDetails} />
+                <Tool icon={faArrowLeft} label={'Volver'} onClick={() => showDetails(false)} />
                 <Divider style={{ margin: 0 }} orientation="vertical" flexItem />
             </Hidden>
         </>,
