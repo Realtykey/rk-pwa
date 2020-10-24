@@ -203,7 +203,7 @@ export function RequestForm(props) {
             name="title" 
             control={control} 
             defaultValue={props.location ? props.location.propData.title : ''}
-            rules={{ required: true, minLength:30 }}
+            rules={{ required: true, minLength:30, maxLength:60 }}
             />
           </Grid>
 

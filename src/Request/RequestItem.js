@@ -5,8 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
-import Chip from '@material-ui/core/Chip';
-import Grid from '@material-ui/core/Grid';
+import PropertyMoney from '../Property/PropertyView/PropertyMoney';
 
 //redux
 import { useDispatch } from 'react-redux'
@@ -23,10 +22,9 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 20
     },
     title: {
-        width: 315,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
+        whiteSpace: 'normal',
         padding: '10px 0 10px 0',
         color: theme.palette.primary.contrastText
     },
@@ -59,12 +57,7 @@ export default function RequestItem({ req, index, setReq }) {
 
             </div>
 
-            <Grid item>
-                <Chip
-
-                    label={"precio $ " + req.price}
-                />
-            </Grid>
+            <PropertyMoney style={{ paddingTop: '7px' }} propData={req} />
 
             {/* <ListItemText style={{ paddingTop: '7px' }} secondary={"A " + Number.parseFloat(prop.distance).toFixed(3) + " km de tí."} /> */}
 

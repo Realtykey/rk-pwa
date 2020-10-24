@@ -10,11 +10,10 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
     title: {
-        width: 315,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        padding : '10px 0 10px 0',
+        whiteSpace: 'normal',
+        padding: '10px 0 10px 0',
         color: theme.palette.primary.contrastText
     },
     root: {
