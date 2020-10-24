@@ -2,12 +2,17 @@ const initialState = {
     //properties view (personal area)
     selectedProperty: null,
     properties: [],
-    pdetails: false,
+    showDetails: false,
 }
 
 export const propertyReducer = (state = initialState, action) => {
     switch (action.type) {
         //PROP VIEW ACTIONS
+        case 'SHOW_DETAILS':
+            return {
+                ...state,
+                showDetails:action.payload
+            }
         case 'LOAD_PROPS':
             return {
                 ...state,
@@ -16,7 +21,7 @@ export const propertyReducer = (state = initialState, action) => {
         case 'PROPS_DETAILS':
             return {
                 ...state,
-                pdetails: !state.pdetails
+                showDetails: !state.showDetails
             }
         case 'RESET_SELECTED':
             return{
