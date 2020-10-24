@@ -18,11 +18,6 @@ export const propertyReducer = (state = initialState, action) => {
                 ...state,
                 properties: action.payload
             }
-        case 'PROPS_DETAILS':
-            return {
-                ...state,
-                showDetails: !state.showDetails
-            }
         case 'RESET_SELECTED':
             return{
                 ...state,
@@ -59,7 +54,6 @@ export const propertyReducer = (state = initialState, action) => {
 //PropertiesView
 
 export const setPropAction = (prop, index) => { return { type: 'SELECT_PROP', payload: { prop: prop, index: index } } }
-export const propsDetailsAction = () => { return { type: 'PROPS_DETAILS' } }
 const loadPropsAction = (properties) => { return { type: 'LOAD_PROPS', payload: properties } }
 //prop view
 export const fetchPropsThunk = (uid) => {
