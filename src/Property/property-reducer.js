@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 const initialState = {
     //properties view (personal area)
     selectedProperty: null,
@@ -24,9 +26,9 @@ export const propertyReducer = (state = initialState, action) => {
                 selectedProperty:null
             }
         case 'SELECT_PROP':
-            const properties = state.properties.map((prop, index) => {
+            const properties = state.properties.map(prop => {
                 //prop seleccionado
-                if (index === action.payload.index) {
+                if (prop.key === action.payload.prop.key) {
                     return { ...prop, selected: true }
                 }
                 //resto de prop
@@ -53,7 +55,7 @@ export const propertyReducer = (state = initialState, action) => {
 
 //PropertiesView
 
-export const setPropAction = (prop, index) => { return { type: 'SELECT_PROP', payload: { prop: prop, index: index } } }
+export const setPropAction = prop => { return { type: 'SELECT_PROP', payload: {prop: prop} } }
 const loadPropsAction = (properties) => { return { type: 'LOAD_PROPS', payload: properties } }
 //prop view
 export const fetchPropsThunk = (uid) => {
@@ -69,7 +71,7 @@ export const fetchPropsThunk = (uid) => {
                             snap.docs.forEach(
                                 (doc, index) => {
 
-                                    let prop = { ...doc.data(), key: doc.id, selected: false };
+                                    let prop = { ...doc.data(), key: uuidv4(), selected: false };
 
                                     properties.push(prop);
                                 }
