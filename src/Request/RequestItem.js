@@ -40,7 +40,7 @@ export default function RequestItem({ req, index, setReq }) {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const showDetails = show => dispatch({type:'SHOW_DETAILS',payload:show});
+    const showDetails = show => dispatch({type:'SHOWR_DETAILS',payload:show});
 
     return (
         <ListItem className={classes.root} onClick={() => { setReq(req, index); showDetails(true); }} selected={req.selected} alignItems="flex-start">

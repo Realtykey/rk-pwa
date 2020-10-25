@@ -75,7 +75,7 @@ export default function RequestDet() {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const showDetails = show => dispatch({type:'SHOW_DETAILS',payload:show});
+    const showDetails = show => dispatch({type:'SHOWR_DETAILS',payload:show});
 
     const selectedRequest = useSelector(state => state.request.selectedRequest);
 

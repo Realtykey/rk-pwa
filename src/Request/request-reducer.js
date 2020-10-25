@@ -7,7 +7,7 @@ const initialState = {
 export const requestReducer = (state = initialState, action) => {
   switch (action.type) {
     //PROP VIEW ACTIONS
-    case 'SHOW_DETAILS':
+    case 'SHOWR_DETAILS':
       return {
           ...state,
           showDetails:action.payload
