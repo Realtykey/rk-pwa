@@ -75,7 +75,7 @@ export default function RequestDet() {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const switchDetails = () => dispatch(switchDetailsAction());
+    const showDetails = show => dispatch({type:'SHOW_DETAILS',payload:show});
 
     const selectedRequest = useSelector(state => state.request.selectedRequest);
 
@@ -101,7 +101,7 @@ export default function RequestDet() {
     const tools = [
         <>
             <Hidden only={['md', 'lg']}>
-                <Tool icon={faArrowLeft} label={'Volver'} onClick={switchDetails} />
+                <Tool icon={faArrowLeft} label={'Volver'} onClick={() => showDetails(false)} />
                 <Divider style={{ margin: 0 }} orientation="vertical" flexItem />
             </Hidden>
         </>,
