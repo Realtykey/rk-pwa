@@ -62,7 +62,7 @@ export default function MyPanel({location}) {
     const classes = useStyles();
 
     // results tabs managment
-    const [actualTab, setActualTab] = useState(location.tab?0:1);
+    const [actualTab, setActualTab] = useState(location.tab??0);
     const theme = useTheme();
 
     const handleTab = (event, newValue) => {
