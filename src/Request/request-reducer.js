@@ -1,12 +1,17 @@
 const initialState = {
   selectedRequest: null,
   requests: [],
-  rdetails: false,
+  showDetails: false,
 }
 
 export const requestReducer = (state = initialState, action) => {
   switch (action.type) {
     //PROP VIEW ACTIONS
+    case 'SHOW_DETAILS':
+      return {
+          ...state,
+          showDetails:action.payload
+      }
     case 'LOAD_REQS':
       return {
         ...state,
@@ -15,7 +20,7 @@ export const requestReducer = (state = initialState, action) => {
     case 'REQS_DETAILS':
       return {
         ...state,
-        rdetails: !state.rdetails
+        showDetails: !state.showDetails
       }
     case 'SELECT_REQ':
       const requests = state.requests.map((req, index) => {
@@ -33,7 +38,7 @@ export const requestReducer = (state = initialState, action) => {
         ...state,
         selectedRequest: action.payload.req,
         requests: requests,
-        rdetails: true
+        showDetails: true
       };
     case 'SET_SELECTED_REQUEST':
       return {
