@@ -36,14 +36,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function RequestItem({ req, index, setReq }) {
+export default function RequestItem({ req, setReq }) {
     const classes = useStyles();
     const dispatch = useDispatch();
 
     const showDetails = show => dispatch({type:'SHOWR_DETAILS',payload:show});
 
     return (
-        <ListItem className={classes.root} onClick={() => { setReq(req, index); showDetails(true); }} selected={req.selected} alignItems="flex-start">
+        <ListItem className={classes.root} onClick={() => { setReq(req); showDetails(true); }} selected={req.selected} alignItems="flex-start">
 
             <ListItemText style={{ maxHeight: '20px' }} secondary={req.date? format(req.date.toDate()) : ""} />
 

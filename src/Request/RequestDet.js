@@ -89,7 +89,18 @@ export default function RequestDet() {
                 () => switchDetailsAction()
             );
     }
-    
+
+    const check = async checked => {
+        const { app } = await import('./../base');
+
+        app.firestore().collection('requests')
+            .doc(selectedRequest.id)
+            .set({
+                bookmarked:checked
+            },{merge:true});
+            dispatch({type:'SET_SELECTED_REQUEST',payload:{...selectedRequest,bookmarked:checked}});
+    }
+
     const pushEditForm = () => {
         history.push(
             {
@@ -106,7 +117,7 @@ export default function RequestDet() {
             </Hidden>
         </>,
         <Tool icon={faEdit} label={'Editar'} onClick={pushEditForm} />,
-        <Tool icon={faBookmark} label={'Marcar'} onClick={() => console.log('marked')} />,
+        <Tool icon={faBookmark} label={selectedRequest.bookmarked?'Desmarcar':'Marcar'} onClick={selectedRequest.bookmarked? () => check(false) : () => check(true)} />,
         <Tool icon={faTrash} label={'Borrar'} onClick={deleteReq} />,
     
     ]
@@ -138,7 +149,7 @@ export default function RequestDet() {
             <ToolsBar tools={tools}/>
 
                 <div>
-                    <img alt="mapa del request" style={{ width: '100%', borderRadius: 20 }} src={selectedRequest.map.snapUrl}>
+                    <img alt="mapa del request" style={{ width: '100%', borderRadius: 20 }} src={selectedRequest.map?.snapUrl}>
                     </img>
                 </div>
 

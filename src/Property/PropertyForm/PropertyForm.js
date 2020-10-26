@@ -30,7 +30,6 @@ import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux'
 
 import { setStepAction, showAlertAction, setMapAction } from '../../redux.js';
-import { setPropAction } from './../property-reducer'
 //form hook
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom";
@@ -108,7 +107,7 @@ export default function PropertyForm(props) {
     );
 
 
-    const setProp = (prop, index) => { dispatch(setPropAction(prop, index)) }
+    const setProp = prop => { dispatch({type:'SET_SELECTED_PROPERTY',prop}) }
 
     const history = useHistory();
 
@@ -287,7 +286,6 @@ export default function PropertyForm(props) {
                             tab: 0
                         }
                     );
-                    setProp(null);
                 }
 
             }

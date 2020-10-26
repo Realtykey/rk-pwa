@@ -56,7 +56,7 @@ export default function PropertyDet() {
                 if(selectedProperty){
                     unregister = db.collection('properties').doc(selectedProperty.id).onSnapshot(
                         doc => {
-                            dispatch({type:'SET_SELECTED_PROPERTY',payload:{...doc.data()}});
+                            dispatch({type:'SET_SELECTED_PROPERTY',payload:{...selectedProperty,...doc.data()}});
                         },
                         function(error) {
                             console.log(error.message);
@@ -85,6 +85,16 @@ export default function PropertyDet() {
             );
     }
 
+    const check = async checked => {
+        const { app } = await import('./../../base');
+
+        app.firestore().collection('properties')
+            .doc(selectedProperty.id)
+            .set({
+                bookmarked:checked
+            },{merge:true});
+            dispatch({type:'SET_SELECTED_PROPERTY',payload:{...selectedProperty,bookmarked:checked}});
+    }
     const pushEditForm = () => {
         history.push(
             {
@@ -101,7 +111,7 @@ export default function PropertyDet() {
             </Hidden>
         </>,
         <Tool icon={faEdit} label={'Editar'} onClick={pushEditForm} />,
-        <Tool icon={faBookmark} label={'Marcar'} onClick={() => console.log('marked')} />,
+        <Tool icon={faBookmark} label={selectedProperty.bookmarked?'Desmarcar':'Marcar'} onClick={selectedProperty.bookmarked? () => check(false) : () => check(true)} />,
         <Tool icon={faTrash} label={'Borrar'} onClick={deleteProp} />,
     ];
     return (

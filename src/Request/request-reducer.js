@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 const initialState = {
   selectedRequest: null,
   requests: [],
@@ -23,9 +25,9 @@ export const requestReducer = (state = initialState, action) => {
         showDetails: !state.showDetails
       }
     case 'SELECT_REQ':
-      const requests = state.requests.map((req, index) => {
-        //prop seleccionado
-        if (index === action.payload.index) {
+      const requests = state.requests.map(req => {
+        //req seleccionado
+        if (req.key === action.payload.req.key) {
           return { ...req, selected: true }
         }
         //resto de prop
@@ -52,7 +54,7 @@ export const requestReducer = (state = initialState, action) => {
 
 //RequestsView
 
-export const setReqAction = (req, index) => { return { type: 'SELECT_REQ', payload: { req: req, index: index } } }
+export const setReqAction = req => { return { type: 'SELECT_REQ', payload: { req: req } } }
 export const reqsDetailsAction = () => { return { type: 'REQS_DETAILS' } }
 const loadReqsAction = (requests) => { return { type: 'LOAD_REQS', payload: requests } }
 
@@ -70,7 +72,7 @@ export const fetchReqsThunk = (uid) => {
               snap.docs.forEach(
                 (doc, index) => {
 
-                  let req = { ...doc.data(), key: doc.id, selected: false };
+                  let req = { ...doc.data(), key: uuidv4(), selected: false };
 
                   requests.push(req);
                 }

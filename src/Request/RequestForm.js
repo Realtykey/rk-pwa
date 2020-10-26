@@ -21,7 +21,6 @@ import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux'
 
 import { setStepAction, showAlertAction, setMapAction } from '../redux.js';
-import { setReqAction } from './request-reducer';
 //form hook
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom";
@@ -77,7 +76,7 @@ const actualDate = () => {
 }
 
 export function RequestForm(props) {
-  const setReq = (prop, index) => { dispatch(setReqAction(prop, index)) }
+  const setReq = req => { dispatch({type:'SET_SELECTED_REQUEST',req}) }
 
   const history = useHistory();
 
@@ -172,7 +171,6 @@ export function RequestForm(props) {
           tab: 1
         }
       );
-      setReq(null);
     }
     setStep(activeStep + 1);
   }
