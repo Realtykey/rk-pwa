@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 //redux imports
 import { useDispatch } from "react-redux";
@@ -55,15 +57,32 @@ export default function PropertiesList() {
     const setProp = (prop, index) => { dispatch(setPropAction(prop, index)) }
 
     return (
-        <List className={classes.root}>
-            {properties.map(
-                (prop, index) => {
-                    return (
-                        <PropertyItem key={prop.key} prop={prop} setProp={setProp} index={index} />
-                    )
+        <div style={{
+            height:'calc(100vh - 180px)',
+            overflow:'scroll'
+        }}>
+            {properties.some(prop => prop.bookmarked) && <List className={classes.root}>
+            <Typography style={{margin:'6px 0'}} color="textSecondary" variant="subtitle1" >Ver primero</Typography>
+                {properties.filter(prop => prop.bookmarked).map(
+                    prop => {
+                        return (
+                            <PropertyItem key={prop.key} prop={prop} setProp={setProp} />
+                        );
+                    }
+                )
                 }
-            )
-            }
-        </List>
+        </List>}
+            <Divider style={{ margin: '5px 20px' }} flexItem />
+            <List style={{marginTop:20}} className={classes.root}>
+               {properties.filter(prop => !prop.bookmarked).map(
+                    (prop, index) => {
+                        return (
+                            <PropertyItem key={prop.key} prop={prop} setProp={setProp} index={index} />
+                    );
+                    }
+                )
+                }
+            </List>
+        </div>
     );
 }

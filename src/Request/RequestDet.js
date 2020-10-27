@@ -31,6 +31,8 @@ import { db } from '../base';
 const RequestForm = loadable(() => import('./RequestForm'));
 const useStyles = makeStyles((theme) => ({
     root: {
+        height:'calc(100vh - 64px)',
+        overflow:'scroll',
         backgroundColor: theme.palette.background.paper,
         color: theme.palette.primary.contrastText,
         borderRadius: 20,

@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 //redux imports
 import { useDispatch } from "react-redux";
@@ -54,7 +56,12 @@ export default function RequestList() {
     const setReq = (req, index) => { dispatch(setReqAction(req, index)) }
 
     return (
-        <List className={classes.root}>
+        <div style={{
+            height:'100vh',
+            overflow:'scroll'
+        }}>
+        {requests.some(req => req.bookmarked) && <List className={classes.root}>
+            <Typography style={{margin:'6px 0'}} color="textSecondary" variant="subtitle1" >Ver primero</Typography>
             {requests.map(
                 (req, index) => {
                     return (
@@ -64,5 +71,17 @@ export default function RequestList() {
             )
             }
         </List>
+        }
+        <List style={{marginTop:20}} className={classes.root}>
+            {requests.filter(req => !req.bookmarked).map(
+                req => {
+                    return (
+                        <RequestItem key={req.key} req={req} setReq={setReq} />
+                );
+                }
+            )
+            }
+        </List>
+        </div>
     );
 }

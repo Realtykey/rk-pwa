@@ -25,6 +25,8 @@ import { db } from '../../base';
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        height:'calc(100vh - 180px)',
+        overflow:'scroll',
         backgroundColor: theme.palette.background.paper,
         color: theme.palette.primary.contrastText,
         borderRadius : 20,

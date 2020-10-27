@@ -28,6 +28,8 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        height:'calc(100vh - 64px)',
+        overflow:'scroll',
         width:'inherit',
         margin:'0 auto',
         backgroundColor: theme.palette.background.paper,
