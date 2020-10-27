@@ -5,8 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
-import Chip from '@material-ui/core/Chip';
-import Grid from '@material-ui/core/Grid';
+import PropertyMoney from '../Property/PropertyView/PropertyMoney';
 
 //redux
 import { useDispatch } from 'react-redux'
@@ -37,14 +36,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function RequestItem({ req, index, setReq }) {
+export default function RequestItem({ req, setReq }) {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const switchDetails = () => dispatch(switchDetailsAction());
+    const showDetails = show => dispatch({type:'SHOWR_DETAILS',payload:show});
 
     return (
-        <ListItem className={classes.root} onClick={() => { setReq(req, index); switchDetails(); }} selected={req.selected} alignItems="flex-start">
+        <ListItem className={classes.root} onClick={() => { setReq(req); showDetails(true); }} selected={req.selected} alignItems="flex-start">
 
             <ListItemText style={{ maxHeight: '20px' }} secondary={req.date? format(req.date.toDate()) : ""} />
 
@@ -58,12 +57,7 @@ export default function RequestItem({ req, index, setReq }) {
 
             </div>
 
-            <Grid item>
-                <Chip
-
-                    label={"precio $ " + req.price}
-                />
-            </Grid>
+            <PropertyMoney style={{ paddingTop: '7px' }} propData={req} />
 
             {/* <ListItemText style={{ paddingTop: '7px' }} secondary={"A " + Number.parseFloat(prop.distance).toFixed(3) + " km de tí."} /> */}
 

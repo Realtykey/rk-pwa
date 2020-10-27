@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
@@ -15,7 +15,7 @@ import ProfileAvatar from '../Property/PropertyCard/ProfileAvatar'
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Modal from '@material-ui/core/Modal';
-import ImagesPreview from '../Property/PropertyForm/ImagesPreview';
+import Carousel from '../Property/PropertyView/Carousel';
 import Features from '../Property/Features';
 import ToolsBar,{ Tool }from '../utils/ToolsBar';
 
@@ -28,6 +28,8 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        height:'calc(100vh - 64px)',
+        overflow:'scroll',
         width:'inherit',
         margin:'0 auto',
         backgroundColor: theme.palette.background.paper,
@@ -109,7 +111,7 @@ export default function MatchDetails() {
             {complete ? <MatchCompletion />
             
             :   <>
-                <ImagesPreview urls={prop.photos} />
+                <Carousel photos = {prop.photos}/>
                 
                 <ProfileAvatar uid={partnerData.uid} />
 

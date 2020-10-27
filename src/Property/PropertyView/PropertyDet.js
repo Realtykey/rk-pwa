@@ -6,7 +6,6 @@ import Hidden from '@material-ui/core/Hidden';
 //redux imports
 import { useSelector, useDispatch } from 'react-redux'
 import { switchDetailsAction } from '../../redux';
-
 //custom comps 
 import Divider from '@material-ui/core/Divider';
 import Carousel from './Carousel'
@@ -22,9 +21,12 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 
 import ToolsBar,{ Tool }from '../../utils/ToolsBar';
+import { db } from '../../base';
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        height:'calc(100vh - 180px)',
+        overflow:'scroll',
         backgroundColor: theme.palette.background.paper,
         color: theme.palette.primary.contrastText,
         borderRadius : 20,
@@ -46,13 +48,27 @@ export default function PropertyDet() {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const switchDetails = () => dispatch(switchDetailsAction());
+    const showDetails = show => dispatch({type:'SHOW_DETAILS',payload:show});
 
     const selectedProperty = useSelector(state => state.property.selectedProperty);
     
     useEffect(
-        ()=>{},
-        [selectedProperty]
+        () => {
+            var unregister = null
+                if(selectedProperty){
+                    unregister = db.collection('properties').doc(selectedProperty.id).onSnapshot(
+                        doc => {
+                            dispatch({type:'SET_SELECTED_PROPERTY',payload:{...selectedProperty,...doc.data()}});
+                        },
+                        function(error) {
+                            console.log(error.message);
+                        }
+                    );    
+                }
+
+                return unregister? unregister : () => console.log("");
+        },
+        []
     );
 
     const resetSelected = () => dispatch({ type: 'RESET_SELECTED' });
@@ -71,6 +87,16 @@ export default function PropertyDet() {
             );
     }
 
+    const check = async checked => {
+        const { app } = await import('./../../base');
+
+        app.firestore().collection('properties')
+            .doc(selectedProperty.id)
+            .set({
+                bookmarked:checked
+            },{merge:true});
+            dispatch({type:'SET_SELECTED_PROPERTY',payload:{...selectedProperty,bookmarked:checked}});
+    }
     const pushEditForm = () => {
         history.push(
             {
@@ -82,18 +108,18 @@ export default function PropertyDet() {
     const tools = [
         <>
             <Hidden only={['md', 'lg']}>
-                <Tool icon={faArrowLeft} label={'Volver'} onClick={switchDetails} />
+                <Tool icon={faArrowLeft} label={'Volver'} onClick={() => showDetails(false)} />
                 <Divider style={{ margin: 0 }} orientation="vertical" flexItem />
             </Hidden>
         </>,
         <Tool icon={faEdit} label={'Editar'} onClick={pushEditForm} />,
-        <Tool icon={faBookmark} label={'Marcar'} onClick={() => console.log('marked')} />,
+        <Tool icon={faBookmark} label={selectedProperty.bookmarked?'Desmarcar':'Marcar'} onClick={selectedProperty.bookmarked? () => check(false) : () => check(true)} />,
         <Tool icon={faTrash} label={'Borrar'} onClick={deleteProp} />,
     ];
     return (
         <Grid className={classes.root}>
 
-                {selectedProperty.map && <Grid item sm ={12} md ={12} xs ={12}>
+                {selectedProperty && <Grid item sm ={12} md ={12} xs ={12}>
 
                     <ToolsBar tools={tools}/>
                     <Carousel photos = {selectedProperty.photos}/>
@@ -106,7 +132,7 @@ export default function PropertyDet() {
                     <Features propData={selectedProperty} />
                     
                     <div>
-                        <img style={map} src={selectedProperty.map.snapUrl}>
+                        <img style={map} src={selectedProperty.map?.snapUrl}>
                         </img>
                     </div>
 

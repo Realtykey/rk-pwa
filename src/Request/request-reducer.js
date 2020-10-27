@@ -1,12 +1,19 @@
+import { v4 as uuidv4 } from 'uuid';
+
 const initialState = {
   selectedRequest: null,
   requests: [],
-  rdetails: false,
+  showDetails: false,
 }
 
 export const requestReducer = (state = initialState, action) => {
   switch (action.type) {
     //PROP VIEW ACTIONS
+    case 'SHOWR_DETAILS':
+      return {
+          ...state,
+          showDetails:action.payload
+      }
     case 'LOAD_REQS':
       return {
         ...state,
@@ -15,12 +22,12 @@ export const requestReducer = (state = initialState, action) => {
     case 'REQS_DETAILS':
       return {
         ...state,
-        rdetails: !state.rdetails
+        showDetails: !state.showDetails
       }
     case 'SELECT_REQ':
-      const requests = state.requests.map((req, index) => {
-        //prop seleccionado
-        if (index === action.payload.index) {
+      const requests = state.requests.map(req => {
+        //req seleccionado
+        if (req.key === action.payload.req.key) {
           return { ...req, selected: true }
         }
         //resto de prop
@@ -33,16 +40,21 @@ export const requestReducer = (state = initialState, action) => {
         ...state,
         selectedRequest: action.payload.req,
         requests: requests,
-        rdetails: true
+        showDetails: true
       };
-    default:
+    case 'SET_SELECTED_REQUEST':
+      return {
+          ...state,
+          selectedRequest: action.payload
+      }    
+      default:
       return state;
   }
 }
 
 //RequestsView
 
-export const setReqAction = (req, index) => { return { type: 'SELECT_REQ', payload: { req: req, index: index } } }
+export const setReqAction = req => { return { type: 'SELECT_REQ', payload: { req: req } } }
 export const reqsDetailsAction = () => { return { type: 'REQS_DETAILS' } }
 const loadReqsAction = (requests) => { return { type: 'LOAD_REQS', payload: requests } }
 
@@ -60,7 +72,7 @@ export const fetchReqsThunk = (uid) => {
               snap.docs.forEach(
                 (doc, index) => {
 
-                  let req = { ...doc.data(), key: doc.id, selected: false };
+                  let req = { ...doc.data(), key: uuidv4(), selected: false };
 
                   requests.push(req);
                 }

@@ -21,7 +21,6 @@ import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux'
 
 import { setStepAction, showAlertAction, setMapAction } from '../redux.js';
-import { setReqAction } from './request-reducer';
 //form hook
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom";
@@ -77,7 +76,7 @@ const actualDate = () => {
 }
 
 export function RequestForm(props) {
-  const setReq = (prop, index) => { dispatch(setReqAction(prop, index)) }
+  const setReq = req => { dispatch({type:'SET_SELECTED_REQUEST',req}) }
 
   const history = useHistory();
 
@@ -104,6 +103,7 @@ export function RequestForm(props) {
 
   const handleOperation = (event) => {
     setOperation(event.target.value);
+    setValue('percent',5);
   };
 
   //stepper state 
@@ -160,6 +160,10 @@ export function RequestForm(props) {
     //create or update firestore doc
     await ref.set(request, { merge: true });
 
+    if(!map.lat){
+      alert('Seleccionar una ubicación en el mapa.')
+      return;
+    }
     //redirect to mypanel, reset selected prop (forces list refresh)
     if (props.location?.propData) {
       history.push(
@@ -168,7 +172,6 @@ export function RequestForm(props) {
           tab: 1
         }
       );
-      setReq({});
     }
     setStep(activeStep + 1);
   }

@@ -48,7 +48,7 @@ function PropertyDetails(props) {
         {data.title}
       </Typography>
 
-      <Detail stretch={true} detail={data.map.address} icon={<LocationOnIcon />} />
+      {data.map&&<Detail stretch={true} detail={data.map.address} icon={<LocationOnIcon />} />}
 
       <div style={{
         display: 'flex',

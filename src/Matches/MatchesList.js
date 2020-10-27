@@ -56,7 +56,10 @@ export default function MatchesList() {
     const setMatch = (match, index) => { dispatch(setMatchAction(match, index)) }
 
     return (
-        <Grid item align="center">
+        <Grid style={{
+            height:'calc(100vh - 180px)',
+            overflow:'scroll'
+        }} item align="center">
             <List className={classes.root}>
                 {matches.map(
                     (match, index) => {

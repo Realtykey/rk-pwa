@@ -30,7 +30,6 @@ import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux'
 
 import { setStepAction, showAlertAction, setMapAction } from '../../redux.js';
-import { setPropAction } from './../property-reducer'
 //form hook
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom";
@@ -108,7 +107,7 @@ export default function PropertyForm(props) {
     );
 
 
-    const setProp = (prop, index) => { dispatch(setPropAction(prop, index)) }
+    const setProp = prop => { dispatch({type:'SET_SELECTED_PROPERTY',prop}) }
 
     const history = useHistory();
 
@@ -133,6 +132,7 @@ export default function PropertyForm(props) {
 
     const handleOperation = (event) => {
         setOperation(event.target.value);
+        setValue('percent',5);
     };
 
     //image local files
@@ -243,6 +243,10 @@ export default function PropertyForm(props) {
             return;
         }
 
+        if(!map.lat){
+            alert('Seleccionar una ubicación en el mapa.')
+            return;
+        }
         const { app, firebase } = await import('./../../base');
 
         let ref = app.firestore().collection('properties');
@@ -283,7 +287,6 @@ export default function PropertyForm(props) {
                             tab: 0
                         }
                     );
-                    setProp({});
                 }
 
             }
@@ -515,7 +518,7 @@ export default function PropertyForm(props) {
                             defaultValue={props.location ? props.location.propData.comission.percent : null}
                             id="percent"
                             name="percent"
-                            label={(operation === 'Venta') ? ' % Comisión' : ' % del canon (ejm:10,20...) '}
+                            label={(operation === 'Venta') ? ' % Comisión' : ' % del canon '}
                             type="number"
                             InputLabelProps={{
                                 shrink: true,

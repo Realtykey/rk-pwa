@@ -34,7 +34,7 @@ const RequestView = function () {
 
     const fetchRequests = (uid) => dispatch(fetchReqsThunk(uid));
 
-    const {requests, selectedRequest} = useSelector(state => state.request)
+    const {requests, selectedRequest,showDetails} = useSelector(state => state.request)
 
     useEffect(
         () => {
@@ -63,6 +63,7 @@ const RequestView = function () {
                 list={<RequestsList />}
                 detail={selectedRequest ? <RequestDet /> : <></>}
                 name="requerimientos"
+                showDetails={showDetails}
                 iterable={requests} />
         </div>
     )

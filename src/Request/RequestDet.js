@@ -26,10 +26,13 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 
 import ToolsBar,{ Tool } from '../utils/ToolsBar';
+import { db } from '../base';
 
 const RequestForm = loadable(() => import('./RequestForm'));
 const useStyles = makeStyles((theme) => ({
     root: {
+        height:'calc(100vh - 64px)',
+        overflow:'scroll',
         backgroundColor: theme.palette.background.paper,
         color: theme.palette.primary.contrastText,
         borderRadius: 20,
@@ -74,7 +77,7 @@ export default function RequestDet() {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const switchDetails = () => dispatch(switchDetailsAction());
+    const showDetails = show => dispatch({type:'SHOWR_DETAILS',payload:show});
 
     const selectedRequest = useSelector(state => state.request.selectedRequest);
 
@@ -88,7 +91,18 @@ export default function RequestDet() {
                 () => switchDetailsAction()
             );
     }
-    
+
+    const check = async checked => {
+        const { app } = await import('./../base');
+
+        app.firestore().collection('requests')
+            .doc(selectedRequest.id)
+            .set({
+                bookmarked:checked
+            },{merge:true});
+            dispatch({type:'SET_SELECTED_REQUEST',payload:{...selectedRequest,bookmarked:checked}});
+    }
+
     const pushEditForm = () => {
         history.push(
             {
@@ -100,24 +114,44 @@ export default function RequestDet() {
     const tools = [
         <>
             <Hidden only={['md', 'lg']}>
-                <Tool icon={faArrowLeft} label={'Volver'} onClick={switchDetails} />
+                <Tool icon={faArrowLeft} label={'Volver'} onClick={() => showDetails(false)} />
                 <Divider style={{ margin: 0 }} orientation="vertical" flexItem />
             </Hidden>
         </>,
         <Tool icon={faEdit} label={'Editar'} onClick={pushEditForm} />,
-        <Tool icon={faBookmark} label={'Marcar'} onClick={() => console.log('marked')} />,
+        <Tool icon={faBookmark} label={selectedRequest.bookmarked?'Desmarcar':'Marcar'} onClick={selectedRequest.bookmarked? () => check(false) : () => check(true)} />,
         <Tool icon={faTrash} label={'Borrar'} onClick={deleteReq} />,
     
     ]
 
+    useEffect(
+        () => {
+                var unregister = null
+                if(selectedRequest){
+                    unregister = db.collection('requests').doc(selectedRequest.id).onSnapshot(
+                        doc => {
+                            dispatch({type:'SET_SELECTED_REQUEST',payload:{...doc.data()}})
+                        },
+                        function(error) {
+                            console.log(error.message);
+                        }
+                    );    
+                }
+
+                return unregister? unregister : () => console.log("");
+        },
+        []
+    );
+
+
     return (
         <Grid className={classes.root}>
 
-            {selectedRequest.map && <Grid item sm={12} md={12} xs={12}>
+            {selectedRequest && <Grid item sm={12} md={12} xs={12}>
             <ToolsBar tools={tools}/>
 
                 <div>
-                    <img alt="mapa del request" style={{ width: '100%', borderRadius: 20 }} src={selectedRequest.map.snapUrl}>
+                    <img alt="mapa del request" style={{ width: '100%', borderRadius: 20 }} src={selectedRequest.map?.snapUrl}>
                     </img>
                 </div>
 

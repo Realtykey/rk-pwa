@@ -15,9 +15,9 @@ const Message = ({ content }) => {
     );
 }
 
-export default function ({ name, list, detail, iterable }) {
+export default function ({ name, list, detail, iterable, showDetails }) {
 
-    const { loading, details } = useSelector(state => state.general)
+    const { loading } = useSelector(state => state.general)
 
     const container = {
         width: '100%',
@@ -25,7 +25,7 @@ export default function ({ name, list, detail, iterable }) {
         justifyContent: 'center',
         paddingTop: '200px'
     }
-    const root = { paddingTop: 30};
+    const root = { paddingTop: 10};
     return (
         <div style={root}>
             {iterable.length > 0 ? <>
@@ -42,10 +42,10 @@ export default function ({ name, list, detail, iterable }) {
 
                 <Hidden only={['md', 'lg']}>
                     <Grid justify="center" container>
-                        <Box display={details ? 'inline' : 'none'}>
+                        <Box display={showDetails ? 'inline' : 'none'}>
                             <Grid container item xs={12} sm={12} align="center">{detail}</Grid>
                         </Box>
-                        <Box display={details ? 'none' : 'inline'}>
+                        <Box display={showDetails ? 'none' : 'inline'}>
                             <Grid container item xs={12} sm={12} align="center">{list}</Grid>
                         </Box>
                     </Grid>

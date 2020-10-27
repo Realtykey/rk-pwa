@@ -25,8 +25,8 @@ export default function Map() {
     const [viewport, setViewport] = useState({
         width: '100%',
         height: 400,
-        latitude: 37.7577,
-        longitude: -122.4376,
+        latitude: -0.175698,
+        longitude: -78.485593,
         zoom: 15,
     });
 
@@ -55,58 +55,11 @@ export default function Map() {
             }
         );
 
-        //add address field to map 
-        const featureCollection = await geocode(map);
 
-        if (featureCollection.features.length > 0) {
-            console.log(featureCollection);
-            console.log(featureCollection.features[0].properties);
-
-            const city = featureCollection.features[0].context[0].text;
-            const province = featureCollection.features[0].context[1].text;
-            const country = featureCollection.features[0].context[2].text;
-            const address = featureCollection.features[0].properties.address;
-            setMap({
-                address: `${city}, ${province}${address ? ', ' + address : ""}`
-            })
-        }
 
     }
 
-    useEffect(() => {
-        const watchId = navigator.geolocation.watchPosition(
-            //sucesss
-            position => {
-                setViewport(
-                    {
-                        ...viewport,
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude
-                    }
-                )
-            },
-            (error) => {
-                switch (error.code) {
-                    case error.PERMISSION_DENIED:
-                        alert("User denied the request for Geolocation.");
-                        break;
-                    case error.POSITION_UNAVAILABLE:
-                        alert("Location information is unavailable.");
-                        break;
-                    case error.TIMEOUT:
-                        alert("The request to get user location timed out.")
-                        break;
-                    case error.UNKNOWN_ERROR:
-                        alert("An unknown error occurred.")
-                        break;
-                }
-            }
-            //options
-        );
-
-        return () => navigator.geolocation.clearWatch(watchId);
-    }, [])
-
+   
     return (
         <div>
             <ReactMapGL

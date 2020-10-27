@@ -1,32 +1,34 @@
+import { v4 as uuidv4 } from 'uuid';
+
 const initialState = {
     //properties view (personal area)
     selectedProperty: null,
     properties: [],
-    pdetails: false,
+    showDetails: false,
 }
 
 export const propertyReducer = (state = initialState, action) => {
     switch (action.type) {
         //PROP VIEW ACTIONS
+        case 'SHOW_DETAILS':
+            return {
+                ...state,
+                showDetails:action.payload
+            }
         case 'LOAD_PROPS':
             return {
                 ...state,
                 properties: action.payload
             }
-        case 'PROPS_DETAILS':
-            return {
-                ...state,
-                pdetails: !state.pdetails
-            }
         case 'RESET_SELECTED':
             return{
                 ...state,
-                selectedProperty:{}
+                selectedProperty:null
             }
         case 'SELECT_PROP':
-            const properties = state.properties.map((prop, index) => {
+            const properties = state.properties.map(prop => {
                 //prop seleccionado
-                if (index === action.payload.index) {
+                if (prop.key === action.payload.prop.key) {
                     return { ...prop, selected: true }
                 }
                 //resto de prop
@@ -40,6 +42,12 @@ export const propertyReducer = (state = initialState, action) => {
                 selectedProperty: action.payload.prop,
                 properties: properties,
             };
+        
+        case 'SET_SELECTED_PROPERTY':
+            return {
+                ...state,
+                selectedProperty: action.payload
+            }
         default:
             return state;
     }
@@ -47,8 +55,7 @@ export const propertyReducer = (state = initialState, action) => {
 
 //PropertiesView
 
-export const setPropAction = (prop, index) => { return { type: 'SELECT_PROP', payload: { prop: prop, index: index } } }
-export const propsDetailsAction = () => { return { type: 'PROPS_DETAILS' } }
+export const setPropAction = prop => { return { type: 'SELECT_PROP', payload: {prop: prop} } }
 const loadPropsAction = (properties) => { return { type: 'LOAD_PROPS', payload: properties } }
 //prop view
 export const fetchPropsThunk = (uid) => {
@@ -64,7 +71,7 @@ export const fetchPropsThunk = (uid) => {
                             snap.docs.forEach(
                                 (doc, index) => {
 
-                                    let prop = { ...doc.data(), key: doc.id, selected: false };
+                                    let prop = { ...doc.data(), key: uuidv4(), selected: false };
 
                                     properties.push(prop);
                                 }

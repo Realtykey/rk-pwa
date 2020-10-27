@@ -46,21 +46,24 @@ export default function PropertyMoney(props) {
                         label={"Precio $ " + data.price}
                     />
                 </Grid>
-
+                {data.comission && 
                 <Grid item>
                     <Chip
                         style={chip}
                         label={" Te comparto "+Number.parseFloat(data.comission.percent)+"%"}
                     />
                 </Grid>
+                }
 
-                <Grid item>
-                    <Chip
-                        style={highlighted}
-                        variant="outlined"
-                        label={"Tu Ganas $ " +  Number.parseFloat(data.comission.value)}
-                    />
-                </Grid>
+                {data.comission && 
+                    <Grid item>
+                        <Chip
+                            style={highlighted}
+                            variant="outlined"
+                            label={"Tu Ganas $ " +  Number.parseFloat(data.comission.value)}
+                        />
+                    </Grid>
+                }
 
             </Grid>
 
