@@ -57,7 +57,10 @@ export default function PropertiesList() {
     const setProp = prop => { dispatch(setPropAction(prop)) }
 
     return (
-        <>
+        <div style={{
+            height:'calc(100vh - 180px)',
+            overflow:'scroll'
+        }}>
             {properties.some(prop => prop.bookmarked) && <List className={classes.root}>
             <Typography style={{margin:'6px 0'}} color="textSecondary" variant="subtitle1" >Ver primero</Typography>
                 {properties.filter(prop => prop.bookmarked).map(
@@ -81,6 +84,6 @@ export default function PropertiesList() {
                 )
                 }
             </List>
-        </>
+        </div>
     );
 }

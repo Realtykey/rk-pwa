@@ -56,7 +56,10 @@ export default function RequestList() {
     const setReq = req => { dispatch(setReqAction(req)) }
 
     return (
-        <>
+        <div style={{
+            height:'100vh',
+            overflow:'scroll'
+        }}>
         {requests.some(req => req.bookmarked) && <List className={classes.root}>
             <Typography style={{margin:'6px 0'}} color="textSecondary" variant="subtitle1" >Ver primero</Typography>
             {requests.map(
@@ -79,6 +82,6 @@ export default function RequestList() {
             )
             }
         </List>
-        </>
+        </div>
     );
 }

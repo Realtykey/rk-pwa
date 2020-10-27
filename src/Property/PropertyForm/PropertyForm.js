@@ -132,6 +132,7 @@ export default function PropertyForm(props) {
 
     const handleOperation = (event) => {
         setOperation(event.target.value);
+        setValue('percent',5);
     };
 
     //image local files

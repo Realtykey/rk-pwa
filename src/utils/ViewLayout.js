@@ -25,7 +25,7 @@ export default function ({ name, list, detail, iterable, showDetails }) {
         justifyContent: 'center',
         paddingTop: '200px'
     }
-    const root = { paddingTop: 30};
+    const root = { paddingTop: 10};
     return (
         <div style={root}>
             {iterable.length > 0 ? <>

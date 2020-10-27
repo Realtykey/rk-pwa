@@ -103,6 +103,7 @@ export function RequestForm(props) {
 
   const handleOperation = (event) => {
     setOperation(event.target.value);
+    setValue('percent',5);
   };
 
   //stepper state 
