@@ -101,12 +101,13 @@ const createMatch = async (reqData, propDoc, suggestion) => {
     prop: propData,
   }
   //guarda match en subcolección de owner
+  const id = `${uid}_${propDoc.id}_${ownerDoc.id}`;
   db.collection('users').doc(ownerDoc.data().uid).collection('matches')
-    .doc(`${uid}_${propDoc.id}_${ownerDoc.id}`).set(match, { merge: true });
+    .doc(`${uid}_${propDoc.id}_${ownerDoc.id}`).set({...match,id}, { merge: true });
 
   //guarda match en subcolección de requester
   db.collection('users').doc(uid).collection('matches')
-    .doc(`${uid}_${propDoc.id}_${ownerDoc.id}`).set(match, { merge: true });
+    .doc(`${uid}_${propDoc.id}_${ownerDoc.id}`).set({...match,id}, { merge: true });
 
   //retorna doc de match
 }
