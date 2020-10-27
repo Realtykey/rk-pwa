@@ -3,6 +3,7 @@ import reduxThunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { requestReducer } from './Request/request-reducer';
 import { propertyReducer } from './Property/property-reducer';
+import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
   //general
@@ -135,6 +136,16 @@ const generalReducer = (state = initialState, action) => {
         loading: false,
         matches: action.payload
       }
+    case 'SET_SELECTED_MATCH':
+      return {
+          ...state,
+          selectedMatch: action.payload
+      }
+    case 'SHOW_DETAILS':
+      return {
+        ...state,
+        details:action.payload
+      }
     default:
       return state;
   }
@@ -178,7 +189,7 @@ export const fetchMatchesThunk = (uid) => {
             snap.docs.forEach(
               (doc, index) => {
 
-                let match = { ...doc.data(), key: doc.id, selected: false };
+                let match = { ...doc.data(), key: uuidv4(), selected: false };
 
                 matches.push(match);
               }

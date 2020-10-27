@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
 //redux imports
 import { useDispatch } from "react-redux";
@@ -56,21 +57,33 @@ export default function MatchesList() {
     const setMatch = (match, index) => { dispatch(setMatchAction(match, index)) }
 
     return (
-        <Grid style={{
-            height:'calc(100vh - 180px)',
+        <div style={{
+            height:'100vh',
             overflow:'scroll'
-        }} item align="center">
-            <List className={classes.root}>
-                {matches.map(
-                    (match, index) => {
-                        return (
-                            <MatchItem key={index} currentUser={currentUser} match={match} setMatch={setMatch} index={index} />
-                        )
-                    }
+        }}>
+        {matches.some(match => match.bookmarked) && <List className={classes.root}>
+            <Typography style={{margin:'6px 0'}} color="textSecondary" variant="subtitle1" >Ver primero</Typography>
+            {matches.map(
+                (match,index) => {
+                    return (
+                        <MatchItem key={match.key} currentUser={currentUser} match={match} setMatch={setMatch} index={index} />
 
-                )
+                    )
                 }
-            </List>
-        </Grid>
-    );
+            )
+            }
+        </List>
+        }
+        <List style={{marginTop:20}} className={classes.root}>
+            {matches.filter(match => !match.bookmarked).map(
+                (match,index) => {
+                    return (
+                        <MatchItem key={match.key} currentUser={currentUser} match={match} setMatch={setMatch} index={index} />
+                );
+                }
+            )
+            }
+        </List>
+        </div>
+   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
@@ -25,6 +25,8 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { db } from '../base';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -65,10 +67,29 @@ export default function MatchDetails() {
     const dispatch = useDispatch();
     const classes = useStyles();
 
+    useEffect(
+        () => {
+            var unregister = null
+                if(selectedMatch){
+                    unregister = db.collection('matches').doc(selectedMatch.id).onSnapshot(
+                        doc => {
+                            dispatch({type:'SET_SELECTED_MATCH',payload:{...selectedMatch,...doc.data()}});
+                        },
+                        function(error) {
+                            console.log(error.message);
+                        }
+                    );    
+                }
+
+                return unregister? unregister : () => console.log("");
+
+        },[]
+    )
+
     const switchDetails = () => dispatch(switchDetailsAction());
     // modal
     const [modalStyle] = React.useState(getModalStyle);
-    const userPreview = useSelector(state => state.general.userPreview);
+    const {userPreview,currentUser} = useSelector(state => state.general);
     const setUserPreview = userPreview => dispatch({ type: 'USER_PREVIEW', payload: userPreview });
 
     //show completion form 
@@ -84,6 +105,20 @@ export default function MatchDetails() {
     const { requesterData, prop, ownerData } = selectedMatch;
 
     const partnerData = userData?.uid == requesterData?.uid ? ownerData : requesterData;
+    
+    const check = async checked => {
+        const { app } = await import('./../base');
+
+        app.firestore().collection('users')
+            .doc(userData.uid)
+            .collection('matches')
+            .doc(selectedMatch.id)
+            .set({
+                bookmarked:checked
+            },{merge:true});
+            dispatch({type:'SET_SELECTED_MATCH',payload:{...selectedMatch,bookmarked:checked}});
+    }
+
     //actions
     const deleteMatch = async selectedMatch => {
         const { app } = await import('../base');
@@ -99,6 +134,7 @@ export default function MatchDetails() {
         </>,
         <Tool icon={faUser} label={'Ver Agente'} onClick={() => setUserPreview(partnerData)} />,
         <Tool icon={faTrash} label={'Borrar'} onClick={() => deleteMatch(selectedMatch)} />,
+        <Tool icon={faEye} label={selectedMatch.bookmarked?'Siguiendo':'Seguir'} onClick={selectedMatch.bookmarked? () => check(false) : () => check(true)} />,
         <Tool icon={faCheck} label={'Finalizar'} onClick={() => showComplete(!complete)} />,
     ];
 

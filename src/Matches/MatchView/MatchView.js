@@ -38,7 +38,7 @@ const MatchView = function () {
 
 
     const matches = useSelector(state => state.general.matches)
-    const { selectedMatch } = useSelector(state => state.general)
+    const { selectedMatch, details } = useSelector(state => state.general)
 
     useEffect(
         () => {
@@ -67,6 +67,7 @@ const MatchView = function () {
         list={<MatchesList />} 
         detail={selectedMatch ? <MatchDetails /> : <></>} 
         name="matches" 
+        showDetails={details}
         iterable={matches} />
     );
 }
