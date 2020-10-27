@@ -130,13 +130,6 @@ export default function Publish(props) {
 
   return (
     <div className={classes.root}>
-      <Button
-        disabled={activeStep === 0}
-        onClick={() => { setStep(activeStep-1) }}
-        className={classes.backButton}
-      >
-        Volver
-    </Button>
 
       <Stepper activeStep={activeStep} orientation="vertical">
         {steps.map((label, index) => (
