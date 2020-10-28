@@ -102,8 +102,8 @@ const generalReducer = (state = initialState, action) => {
     case 'SELECT_MATCH':
       const matches = state.matches.map((match, index) => {
         //match seleccionado
-        if (index === action.payload.index) {
-          return { ...match, selected: !match.selected }
+        if (match.key === action.payload.match.key) {
+          return { ...match, selected: true }
         }
         //resto de matches
         return {

@@ -63,7 +63,7 @@ export default function MatchesList() {
         }}>
         {matches.some(match => match.bookmarked) && <List className={classes.root}>
             <Typography style={{margin:'6px 0'}} color="textSecondary" variant="subtitle1" >Ver primero</Typography>
-            {matches.map(
+            {matches.filter(req => req.bookmarked).map(
                 (match,index) => {
                     return (
                         <MatchItem key={match.key} currentUser={currentUser} match={match} setMatch={setMatch} index={index} />
@@ -74,16 +74,19 @@ export default function MatchesList() {
             }
         </List>
         }
-        <List style={{marginTop:20}} className={classes.root}>
-            {matches.filter(match => !match.bookmarked).map(
+
+        <List className={classes.root}>
+            {matches.filter(req => !req.bookmarked).map(
                 (match,index) => {
                     return (
                         <MatchItem key={match.key} currentUser={currentUser} match={match} setMatch={setMatch} index={index} />
-                );
+
+                    )
                 }
             )
             }
         </List>
+        
         </div>
    );
 }

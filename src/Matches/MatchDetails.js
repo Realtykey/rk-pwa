@@ -71,7 +71,7 @@ export default function MatchDetails() {
         () => {
             var unregister = null
                 if(selectedMatch){
-                    unregister = db.collection('matches').doc(selectedMatch.id).onSnapshot(
+                    unregister = db.collection('users').doc(userData.uid).collection('matches').doc(selectedMatch.id).onSnapshot(
                         doc => {
                             dispatch({type:'SET_SELECTED_MATCH',payload:{...selectedMatch,...doc.data()}});
                         },
@@ -123,7 +123,7 @@ export default function MatchDetails() {
     const deleteMatch = async selectedMatch => {
         const { app } = await import('../base');
         app.firestore().collection('users').doc(userData.uid)
-            .collection('matches').doc(selectedMatch.key).delete()
+            .collection('matches').doc(selectedMatch.id).delete()
     }
     const tools = [
         <>
@@ -134,7 +134,7 @@ export default function MatchDetails() {
         </>,
         <Tool icon={faUser} label={'Ver Agente'} onClick={() => setUserPreview(partnerData)} />,
         <Tool icon={faTrash} label={'Borrar'} onClick={() => deleteMatch(selectedMatch)} />,
-        <Tool icon={faEye} label={selectedMatch.bookmarked?'Siguiendo':'Seguir'} onClick={selectedMatch.bookmarked? () => check(false) : () => check(true)} />,
+        <Tool icon={faEye} label={selectedMatch.bookmarked?'Dejar de seguir':'Seguir'} onClick={selectedMatch.bookmarked? () => check(false) : () => check(true)} />,
         <Tool icon={faCheck} label={'Finalizar'} onClick={() => showComplete(!complete)} />,
     ];
 
