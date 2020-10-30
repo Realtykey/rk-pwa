@@ -359,7 +359,6 @@ export function RequestForm(props) {
 
           <Grid item xs={12} sm={12}>
             <Suspense fallback={<div>cargando mapa</div>}>
-              <div>{map.address}</div>
               <Map />
             </Suspense>
           </Grid>
