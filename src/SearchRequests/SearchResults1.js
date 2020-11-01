@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 // custom comps
-import PropertyCard from '../PropertyCard/PropertyCard.js'
+import PropertyCard from '../Property/PropertyCard/PropertyCard';
 
 
 
