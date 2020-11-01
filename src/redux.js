@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
   //general
+  photoPreview:null,
   errorMessage: '',
   currentUser: '',
   userData: null,
@@ -36,6 +37,11 @@ const initialState = {
 // Reducer
 const generalReducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'SET_PHOTO_PREVIEW':
+      return {
+        ...state,
+        photoPreview:action.payload
+      }
     case 'USER_PREVIEW':
       return {
         ...state,
