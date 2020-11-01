@@ -44,7 +44,7 @@ export default function Carousel({photos,setPhotoPreview}) {
     <>
     { photos && <div className={classes.root}>
       <img
-        onClick={() => setPhotoPreview(photos[activeStep])}
+        onClick={setPhotoPreview ? () => setPhotoPreview(photos[activeStep]) : () => console.log('photo preview triggered')}
         className={classes.img}
         src={photos[activeStep]}
       />
