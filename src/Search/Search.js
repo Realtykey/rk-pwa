@@ -1,7 +1,7 @@
 import React, { useState , useEffect} from 'react';
 import { Button, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
+import Box from '@material-ui/core/Box';
 
 import clsx from 'clsx';
 import SearchResults from './SearchResults'
@@ -154,7 +154,7 @@ export default function Search(props) {
         </Button>
       </div>
 
-      {!hiddenFilter && (<div>
+      <Box display={hiddenFilter? "none" : "inline"}>
         <Grid className={classes.chipsContainer} spacing={3} container >
 
           <Grid item>
@@ -191,10 +191,8 @@ export default function Search(props) {
           </Grid>
 
         </Grid>
-      </div>
-      )
-
-      }
+      </Box>
+      
       <SearchResults properties={properties} />
 
     </div>
