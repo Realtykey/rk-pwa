@@ -89,8 +89,10 @@ export default function MatchDetails() {
     const switchDetails = () => dispatch(switchDetailsAction());
     // modal
     const [modalStyle] = React.useState(getModalStyle);
-    const {userPreview,currentUser} = useSelector(state => state.general);
+    const [photoModalStyle] = React.useState(getModalStyle);
+    const {userPreview,currentUser,photoPreview} = useSelector(state => state.general);
     const setUserPreview = userPreview => dispatch({ type: 'USER_PREVIEW', payload: userPreview });
+    const setPhotoPreview = photoPreview => dispatch({ type: 'SET_PHOTO_PREVIEW', payload: photoPreview });
 
     //show completion form 
     const [complete,showComplete] = useState(false);
@@ -98,6 +100,12 @@ export default function MatchDetails() {
     const body = (
         <div style={modalStyle} className={classes.paper}>
             <AgentCard agent={userPreview} style={{ paddingLeft: '30px' }}></AgentCard>
+        </div>
+    );
+
+    const photoBody = (
+        <div style={photoModalStyle} className={classes.paper}>
+            <img src={photoPreview} style={{ paddingLeft: '30px' }}/>
         </div>
     );
     const { selectedMatch, userData } = useSelector(state => state.general);
@@ -147,7 +155,7 @@ export default function MatchDetails() {
             {complete ? <MatchCompletion />
             
             :   <>
-                <Carousel photos = {prop.photos}/>
+                <Carousel setPhotoPreview={setPhotoPreview} photos = {prop.photos}/>
                 
                 <ProfileAvatar uid={partnerData.uid} />
 
@@ -165,6 +173,14 @@ export default function MatchDetails() {
             >
                 {body}
             </Modal>
+
+            <Modal
+                open={!!photoPreview}
+                onClose={() => setPhotoPreview(null)}
+            >
+                {photoBody}
+            </Modal>
+
 
         </Grid>
     )

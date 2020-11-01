@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Carousel({photos}) {
+export default function Carousel({photos,setPhotoPreview}) {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -44,6 +44,7 @@ export default function Carousel({photos}) {
     <>
     { photos && <div className={classes.root}>
       <img
+        onClick={() => setPhotoPreview(photos[activeStep])}
         className={classes.img}
         src={photos[activeStep]}
       />
