@@ -175,9 +175,9 @@ export function AgentForm() {
 
   return (
     <Container className={classes.root}>
-      <Typography variant="h6" gutterBottom>
-        Ingresa tus datos
-    </Typography>
+      <Typography color="inherit" variant="h6" gutterBottom>
+        Información personal
+      </Typography>
       <form onSubmit={handleSubmit(submit)}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
