@@ -365,7 +365,7 @@ export function RequestForm(props) {
 
           <Grid item xs={12} md={6}>
             <FormControl fullWidth className={classes.margin} variant="outlined">
-                <InputLabel htmlFor="price">Precio</InputLabel>
+                <InputLabel htmlFor="price">Presupuesto</InputLabel>
                 <OutlinedInput
                     inputRef={register({ required: true})}
                     defaultValue={props.location ? props.location.propData.price : ''}
