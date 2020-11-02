@@ -12,6 +12,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../styles.css'
 const useStyles = makeStyles((theme) => ({
     root: {
+        display: 'flex',
+        justifyContent: 'center',
         marginLeft: '20px',
         marginBottom: '25px',
         width: 'fit-content',
