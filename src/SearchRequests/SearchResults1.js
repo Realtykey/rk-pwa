@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 // custom comps
-import PropertyCard from '../Property/PropertyCard/PropertyCard';
+import RequestCard from '../Request/RequestCard';
 
 
 
@@ -43,9 +43,8 @@ export default function SearchResults({ properties }) {
 
                     <Grid container justify="center" item key={prop.id} xs={12} sm={12}>
 
-                        <PropertyCard align="center" private={false} doc={prop}>
+                        <RequestCard align="center" private={false} doc={prop}/>
 
-                        </PropertyCard>
                     </Grid>
 
                 ))}

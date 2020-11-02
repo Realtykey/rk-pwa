@@ -34,21 +34,23 @@ export default function MoneyView(props) {
                         label={"Precio $ " + data.price}
                     />
                 </Grid>
-
+                {data.comission &&<>
                 <Grid item>
                     <Chip
                         style={chip}
                         label={" Te Comparto "+Number.parseFloat(data.comission.percent) + "%"}
                     />
                 </Grid>
-
+                
                 <Grid item>
                     <Chip
                         style={highlighted}
                         variant="outlined"
                         label={"Tu Ganas $ " + Number.parseFloat(data.comission.value)}
                     />
-                </Grid>
+                </Grid> </>
+                }
+
             </Grid>
 
 

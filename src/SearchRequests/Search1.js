@@ -96,7 +96,7 @@ export default function Search(props) {
   const loadFilteredProps = async () => {
     const db = firebase.firestore();
     let uid = currentUser.uid;
-    let ref = db.collection('properties');
+    let ref = db.collection('requests');
     //store modified
     setLoading(true);
 
@@ -137,16 +137,20 @@ export default function Search(props) {
 
       <div className={classes.controllers}>
         <Button
-          variant="smooth"
           onClick={loadFilteredProps}
-          style={{ color: 'rgb(64	100	205)', backgroundColor: 'rgb(236	241	254)', borderRadius: '50px', marginRight: '5px' }} variant="contained"
+          variant="contained"
+          color="primary"
         >
           buscar
         </Button>
 
-        <Button style={{ color: '#8f6512', backgroundColor: !hiddenFilter ? '#ffefd1' : 'inherit', borderRadius: '25px', marginLeft: '5px' }}
+        <Button
+          style={{ marginLeft: 20 }}
+          color="secondary"
           onClick={() => hideFilter(!hiddenFilter)}
-          variant="contained">
+          variant="contained"
+
+        >
           mostrar filtros
         </Button>
       </div>

@@ -56,6 +56,8 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    marginBottom: 30,
+    backgroundColor: theme.palette.background.custom,
     fontSize: '14px',
     maxWidth: window.screen.width < 600 ? window.screen.width : 600,
     transition: "0.3s",
@@ -65,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   media: {
+    width: 600,
     height: 0,
     paddingTop: '56.25%', // 16:9
   },
