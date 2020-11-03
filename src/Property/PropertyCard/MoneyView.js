@@ -31,7 +31,7 @@ export default function MoneyView(props) {
                 <Grid item>
                     <Chip
                         style={chip}
-                        label={"Precio $ " + data.price}
+                        label={data.comission? "Precio $ ":"Presupuesto $ " + data.price}
                     />
                 </Grid>
                 {data.comission &&<>

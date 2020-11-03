@@ -35,7 +35,6 @@ const Detail = ({ detail, icon, stretch }) => {
 
 const root = {
   padding: '0 20px',
-  margin: '20px 0px',
   overflowWrap: 'anywhere',
 }
 function PropertyDetails(props) {
