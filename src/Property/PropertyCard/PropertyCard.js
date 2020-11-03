@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import CardMedia from '@material-ui/core/CardMedia';
 
 import { red } from '@material-ui/core/colors';
 
@@ -75,9 +76,17 @@ export default function PropertyCard(props) {
     <Card className={classes.root}>
       <ProfileAvatar uid={data.uid} />
 
+      {data.comission? 
       <CardContent>
         <ImagesPreview urls={data.photos} />
       </CardContent>
+      :
+      <CardMedia
+        className={classes.media}
+        image={data.map.snapUrl}
+        title="Paella dish"
+      />
+      }
 
       <CardActions >
 
