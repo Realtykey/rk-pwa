@@ -162,14 +162,14 @@ exports.addToIndex = functions.firestore
   return index.saveObject({ ...data, objectID });
 });
 
-exports.updateIndex = functions.firestore.document('customers/{customerId}')
+exports.updateIndex = functions.firestore.document('properties/{id}')
 .onUpdate((change) => {
   const newData = change.after.data();
   const objectID = change.after.id;
   return index.saveObject({ ...newData, objectID });
 });
 
-exports.deleteFromIndex = functions.firestore.document('customers/{customerId}')
+exports.deleteFromIndex = functions.firestore.document('properties/{id}')
 .onDelete(snapshot => 
   index.deleteObject(snapshot.id)
 );
