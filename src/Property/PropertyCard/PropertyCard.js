@@ -20,6 +20,7 @@ import ImagesPreview from '../PropertyForm/ImagesPreview.js'
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    margin: 'auto',
     marginBottom: 30,
     backgroundColor: theme.palette.background.custom,
     fontSize: '14px',
@@ -69,22 +70,21 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function PropertyCard(props) {
+export default function PropertyCard({hit}) {
   const classes = useStyles();
-  let data = props.doc.data();
 
   return (
     <Card className={classes.root}>
-      <ProfileAvatar uid={data.uid} />
+      <ProfileAvatar uid={hit.uid} />
 
-      {data.comission? 
+      {hit.comission? 
       <CardContent>
-        <ImagesPreview urls={data.photos} />
+        <ImagesPreview urls={hit.photos} />
       </CardContent>
       :
       <CardMedia
         className={classes.media}
-        image={data.map.snapUrl}
+        image={hit.map.snapUrl}
         title="Paella dish"
       />
       }
@@ -95,17 +95,17 @@ export default function PropertyCard(props) {
 
           <Grid item direction="column" spacing={2} container>
 
-            <PropertyDetails propData={data} />
+            <PropertyDetails propData={hit} />
 
             <Divider variant="middle" />
 
-            <MoneyView propData={data} />
+            <MoneyView propData={hit} />
 
           </Grid>
 
           <Divider variant="middle" />
 
-          <Features propData={data}/>
+          <Features propData={hit}/>
 
         </Grid>
 

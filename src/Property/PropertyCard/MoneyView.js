@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
@@ -15,8 +15,11 @@ const highlighted = {
     fontWeight: 'bolder',
 }
 
-export default function MoneyView(props) {
-    const data = props.propData;
+export default function MoneyView({propData}) {
+    useEffect(
+    ()=>{console.log('precio: ',propData.price)}
+    ,[]
+    );
     const root = {
         margin: '20px auto'
     }
@@ -31,14 +34,14 @@ export default function MoneyView(props) {
                 <Grid item>
                     <Chip
                         style={chip}
-                        label={data.comission? "Precio $ ":"Presupuesto $ " + data.price}
+                        label={propData.comission? "Precio $ "+propData.price:"Presupuesto $ " + propData.price}
                     />
                 </Grid>
-                {data.comission &&<>
+                {propData.comission &&<>
                 <Grid item>
                     <Chip
                         style={chip}
-                        label={" Te Comparto "+Number.parseFloat(data.comission.percent) + "%"}
+                        label={" Te Comparto "+Number.parseFloat(propData.comission.percent) + "%"}
                     />
                 </Grid>
                 
@@ -46,7 +49,7 @@ export default function MoneyView(props) {
                     <Chip
                         style={highlighted}
                         variant="outlined"
-                        label={"Tu Ganas $ " + Number.parseFloat(data.comission.value)}
+                        label={"Tu Ganas $ " + Number.parseFloat(propData.comission.value)}
                     />
                 </Grid> </>
                 }

@@ -1,0 +1,24 @@
+.ais-InfiniteHits{
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.ais-InfiniteHits-list{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}   
+
+.ais-InfiniteHits-item{
+    width: 100%;
+    display: flex;
+    box-shadow: none;
+    border:none;
+}
+
+.ais-SearchBox{
+    margin:0 auto;
+    width: 300px;
+}

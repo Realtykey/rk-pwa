@@ -7,10 +7,8 @@ import Link from '@material-ui/core/Link';
 import Modal from '@material-ui/core/Modal';
 
 import AgentCard from './AgentCard/AgentCard'
-// import Search from './Search/Search.js'
-// import Search1 from './SearchRequests/Search1.js'
 
-import Search from './Search';
+import Search from './SearchEngine/Search';
 
 
 /*ENRUTAMIENTO*/
@@ -108,7 +106,6 @@ export default function PublicArea() {
 
   return (
     <div className={classes.root}>
-      {/* {type=='prop'? <Search type={type} /> : <Search1/>} */}
       <Search/>
       <Modal
         open={!!userPreview}
