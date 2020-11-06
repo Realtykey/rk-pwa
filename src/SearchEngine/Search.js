@@ -3,10 +3,10 @@ import algoliasearch from 'algoliasearch/lite';
 
 import PropertyCard from '../Property/PropertyCard/PropertyCard';
 import './search.css';
+import InfiniteHits from './InfiniteHits';
 
 import {
     InstantSearch,
-    InfiniteHits,
     SearchBox,
     Pagination,
     Highlight,
@@ -28,7 +28,7 @@ export default function Search() {
                 autofocus={true}
                 searchAsYouType={false}
             />
-            <InfiniteHits hitComponent={PropertyCard} />
+            <InfiniteHits minHitsPerPage={16} />
 
         </InstantSearch>
     );
