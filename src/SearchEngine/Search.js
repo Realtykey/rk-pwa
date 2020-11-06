@@ -19,9 +19,9 @@ import {
 
 const searchClient = algoliasearch('IW55L7EK8V', 'e305d8ad0b21a89b620a1e11ab90dbad');
 
-export default function Search() {
+export default function Search({indexName}) {
     return (
-        <InstantSearch searchClient={searchClient} indexName="dev_PROPERTIES">
+        <InstantSearch searchClient={searchClient} indexName={indexName}>
             <Configure hitsPerPage={2}/>
             
             <SearchBox 

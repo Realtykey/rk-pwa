@@ -106,7 +106,7 @@ export default function PublicArea() {
 
   return (
     <div className={classes.root}>
-      <Search/>
+      {type=='prop'? <Search indexName='dev_PROPERTIES'/> : <Search indexName='dev_REQUESTS'/>}
       <Modal
         open={!!userPreview}
         onClose={() => setUserPreview(null)}
