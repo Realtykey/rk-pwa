@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connectInfiniteHits } from 'react-instantsearch-dom';
 import PropTypes from 'prop-types';
-import PropertyCard from '../Property/PropertyCard/PropertyCard';
 
 class InfiniteHits extends Component {
   static propTypes = {
@@ -33,14 +32,14 @@ class InfiniteHits extends Component {
   }
 
   render() {
-    const { hits } = this.props;
-
+    const { hits, hitComponent } = this.props;
+    const HitComponent = hitComponent;
     return (
       <div className="ais-InfiniteHits">
         <ul className="ais-InfiniteHits-list">
           {hits.map(hit => (
             <li key={hit.objectID} className="ais-InfiniteHits-item">
-              <PropertyCard hit={hit} />
+              <HitComponent hit={hit} />
             </li>
           ))}
           <li

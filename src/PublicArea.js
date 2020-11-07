@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Modal from '@material-ui/core/Modal';
+import PropertyCard from './Property/PropertyCard/PropertyCard';
 
 import AgentCard from './AgentCard/AgentCard'
 
@@ -106,7 +107,7 @@ export default function PublicArea() {
 
   return (
     <div className={classes.root}>
-      {type=='prop'? <Search indexName='dev_PROPERTIES'/> : <Search indexName='dev_REQUESTS'/>}
+      <Search hitComponent={PropertyCard} indexName={type=='prop'? 'dev_PROPERTIES' : 'dev_REQUESTS'}/> 
       <Modal
         open={!!userPreview}
         onClose={() => setUserPreview(null)}

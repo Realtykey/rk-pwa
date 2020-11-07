@@ -19,7 +19,7 @@ import {
 
 const searchClient = algoliasearch('IW55L7EK8V', 'e305d8ad0b21a89b620a1e11ab90dbad');
 
-export default function Search({indexName}) {
+export default function Search({indexName,hitComponent}) {
     return (
         <InstantSearch searchClient={searchClient} indexName={indexName}>
             <Configure hitsPerPage={2}/>
@@ -28,7 +28,10 @@ export default function Search({indexName}) {
                 autofocus={true}
                 searchAsYouType={false}
             />
-            <InfiniteHits minHitsPerPage={16} />
+
+            <RefinementList attribute="propType" />
+
+            <InfiniteHits hitComponent={hitComponent} minHitsPerPage={16} />
 
         </InstantSearch>
     );
