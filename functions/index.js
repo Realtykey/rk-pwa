@@ -142,34 +142,26 @@ exports.geocodePropertyLocation = functions.firestore
   //no olvidar retornar promesa
 });
 
-//algolia search
-
-const algoliasearch = require('algoliasearch');
-
-const APP_ID = functions.config().algolia.app;
-const ADMIN_KEY = functions.config().algolia.key;
-
-const client = algoliasearch(APP_ID, ADMIN_KEY);
-const index = client.initIndex('dev_PROPERTIES');
-
 //algolia search (properties)
 
 exports.addToIndex = functions.firestore
 .document('properties/{id}')
 .onCreate(snapshot => {
-  const data = snapshot.data();
-  const objectID = snapshot.id;
-  return index.saveObject({ ...data, objectID });
+  const {save}  = require('./algolia.js');
+  return save(snapshot);
 });
 
-exports.updateIndex = functions.firestore.document('properties/{id}')
+exports.updateIndex = functions.firestore
+.document('properties/{id}')
 .onUpdate((change) => {
-  const newData = change.after.data();
-  const objectID = change.after.id;
-  return index.saveObject({ ...newData, objectID });
+  const {update}  = require('./algolia.js');
+  return update(change);
 });
 
-exports.deleteFromIndex = functions.firestore.document('properties/{id}')
-.onDelete(snapshot => 
-  index.deleteObject(snapshot.id)
+exports.deleteFromIndex = functions.firestore
+.document('properties/{id}')
+.onDelete(snapshot => {
+  const {remove}  = require('./algolia.js');
+  return remove(snapshot);
+} 
 );
