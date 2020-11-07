@@ -1,4 +1,3 @@
-const functions = require('firebase-functions');
 
 const getAddress = (featureCollection) => {
 
