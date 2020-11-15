@@ -21,7 +21,6 @@
 }
 
 .ais-SearchBox{
-    margin:0 auto;
     width: 300px;
 }
 
@@ -59,4 +58,19 @@
     display: flex;
     justify-content: center;
     margin: 10px;
+}
+
+/*clear refinements*/
+
+.ais-ClearRefinements{
+    margin:0 10px;
+}
+
+.ais-ClearRefinements-button{
+    height: 100%;
+}
+
+.ais-ClearRefinements-button--disabled{
+    color:white;
+    background-color: gray;
 }

@@ -15,7 +15,7 @@ const GeocoderInput = ({setPosition}) => {
 
 
   return (
-    <div style={{ color: 'black' }}>
+    <div style={{ color: 'black',margin:'10px 0px' }}>
       <GooglePlacesAutocomplete
         apiKey="AIzaSyCZw9OFpZPxogZSm1J08zeW2yjomK-CVm0"
         minLengthAutocomplete={3}
