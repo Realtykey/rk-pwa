@@ -244,7 +244,7 @@ export default function PropertyForm(props) {
             return;
         }
 
-        if(!map.lat){
+        if(map.address==''){
             alert('Seleccionar una ubicación en el mapa.')
             return;
         }

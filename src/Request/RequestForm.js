@@ -160,7 +160,7 @@ export function RequestForm(props) {
     //create or update firestore doc
     await ref.set(request, { merge: true });
 
-    if(!map.lat){
+    if(map.address==''){
       alert('Seleccionar una ubicación en el mapa.')
       return;
     }
