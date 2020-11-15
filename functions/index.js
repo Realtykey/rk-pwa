@@ -9,29 +9,6 @@ exports.createMatch = functions.firestore
     return matchedProp(snap);
   });
 
-exports.geocodeRequestLocation = functions.firestore
-  .document(`requests/{id}`)
-  .onWrite(async (change, context) => {
-    if (change.after.exists) {
-      const data = change.after.data();
-      const {updateAddress} = require('./location.js');
-
-      return await updateAddress(data,'requests');
-    }
-    //no olvidar retornar promesa
-  });
-
-exports.geocodePropertyLocation = functions.firestore
-.document(`properties/{id}`)
-.onWrite(async (change, context) => {
-  if (change.after.exists) {
-    const {updateAddress} = require('./location.js');
-    const data = change.after.data();
-    
-    return await updateAddress(data,'properties');
-  }
-  //no olvidar retornar promesa
-});
 
 //algolia search
 
