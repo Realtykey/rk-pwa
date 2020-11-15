@@ -66,7 +66,7 @@ export default function Map() {
             <ReactMapGL
                 ref={mapRef}
                 {...viewport}
-                onClick={handleClick}
+                // onClick={handleClick}
                 onViewportChange={nextViewport => setViewport(nextViewport)}
             >
                 <Marker latitude={map.lat} longitude={map.lng} offsetLeft={-20} offsetTop={-10}>

@@ -24,15 +24,15 @@ const GeocoderInput = ({setPosition}) => {
           onChange: change => {
             geocodeByPlaceId(change.value.place_id)
             .then(async results => {
-              console.log('google result: ',results[0]);
               const {lat,lng} = await getLatLng(results[0]);
               setPosition({latitude:lat,longitude:lng});
+              const {secondary_text,main_text} = change.value.structured_formatting;
               setMap({
+                address: secondary_text+" "+main_text,
                 lat,
                 lng,
                 snapUrl: `https://api.mapbox.com/styles/v1/mapbox/light-v10/static/${lng},${lat},15,0/1100x400?access_token=${MAPBOX_TOKEN}`,
               });
-              // debugger
             })
             .catch(error => alert(error));
           }
