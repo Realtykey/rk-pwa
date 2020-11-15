@@ -18,7 +18,7 @@ import {
 
 const searchClient = algoliasearch('IW55L7EK8V', 'e305d8ad0b21a89b620a1e11ab90dbad');
 
-export default function Search({indexName,hitComponent}) {
+export default function Search({indexName,hitComponent,refinementAttributes}) {
     return (
         <InstantSearch searchClient={searchClient} indexName={indexName}>
             <Configure hitsPerPage={2}/>
@@ -28,8 +28,9 @@ export default function Search({indexName,hitComponent}) {
                 searchAsYouType={false}
             />
             <div className="refinements">
-                <RefinementList transformItems={items=>items} attribute="propType" />
-                <RefinementList transformItems={items=>items} attribute="operation" />
+                {refinementAttributes.map(
+                    attribute => <RefinementList transformItems={items=>items} attribute={attribute} />
+                )}
             </div>
 
             <InfiniteHits hitComponent={hitComponent} minHitsPerPage={16} />

@@ -104,10 +104,14 @@ export default function PublicArea() {
       <AgentCard agent={userPreview} style={{ paddingLeft: '30px' }}></AgentCard>
     </div>
   );
-
+  
+  const refinementAttributes = [
+    'propType',
+    'operation'
+  ];
   return (
     <div className={classes.root}>
-      <Search hitComponent={PropertyCard} indexName={type=='prop'? 'dev_PROPERTIES' : 'dev_REQUESTS'}/> 
+      <Search refinementAttributes={refinementAttributes} hitComponent={PropertyCard} indexName={type=='prop'? 'dev_PROPERTIES' : 'dev_REQUESTS'}/> 
       <Modal
         open={!!userPreview}
         onClose={() => setUserPreview(null)}
