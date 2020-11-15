@@ -1,7 +1,6 @@
 import React from 'react';
 import algoliasearch from 'algoliasearch/lite';
 
-import PropertyCard from '../Property/PropertyCard/PropertyCard';
 import './search.css';
 import InfiniteHits from './InfiniteHits';
 
@@ -28,8 +27,10 @@ export default function Search({indexName,hitComponent}) {
                 autofocus={true}
                 searchAsYouType={false}
             />
-
-            <RefinementList attribute="propType" />
+            <div className="refinements">
+                <RefinementList transformItems={items=>items} attribute="propType" />
+                <RefinementList transformItems={items=>items} attribute="operation" />
+            </div>
 
             <InfiniteHits hitComponent={hitComponent} minHitsPerPage={16} />
 
