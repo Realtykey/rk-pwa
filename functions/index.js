@@ -9,27 +9,6 @@ exports.createMatch = functions.firestore
     return matchedProp(snap);
   });
 
-
-//algolia search
-
-exports.addToIndex = functions.firestore
-.document('properties/{id}')
-.onCreate(snapshot => {
-  const {save}  = require('./algolia.js');
-  return save(snapshot);
-});
-
-exports.updateIndex = functions.firestore
-.document('properties/{id}')
-.onUpdate((change) => {
-  const {update}  = require('./algolia.js');
-  return update(change);
-});
-
-exports.deleteFromIndex = functions.firestore
-.document('properties/{id}')
-.onDelete(snapshot => {
-  const {remove}  = require('./algolia.js');
-  return remove(snapshot);
-} 
-);
+exports.propsIndexing = require('./algolia.js')('properties','dev_PROPERTIES');
+exports.reqsIndexing = require('./algolia.js')('requests','dev_REQUESTS');
+exports.usersIndexing = require('./algolia.js')('users','dev_USERS');

@@ -3,21 +3,45 @@ const algoliasearch = require('algoliasearch');
 const APP_ID = functions.config().algolia.app;
 const ADMIN_KEY = functions.config().algolia.key;
 const client = algoliasearch(APP_ID, ADMIN_KEY);
-const index = client.initIndex('dev_PROPERTIES');
 
-exports.save = snapshot => {
-    const data = snapshot.data();
-    const objectID = snapshot.id;
-    return index.saveObject({ ...data, objectID });
-}
+module.exports = (collectionName, indexName)  => {
 
-exports.update = change => {
-    const newData = change.after.data();
-    const objectID = change.after.id;
-    return index.saveObject({ ...newData, objectID });  
-}
+    const index = client.initIndex(indexName);
 
-exports.remove = snapshot => {
-    return index.deleteObject(snapshot.id);
-}
+    const save = snapshot => {
+        const data = snapshot.data();
+        const objectID = snapshot.id;
+        return index.saveObject({ ...data, objectID });
+    }
 
+    const update = change => {
+        const newData = change.after.data();
+        const objectID = change.after.id;
+        return index.saveObject({ ...newData, objectID });
+    }
+
+    const remove = snapshot => {
+        return index.deleteObject(snapshot.id);
+    }
+
+
+    const addToIndex = functions.firestore
+        .document(`${collectionName}/{id}`)
+        .onCreate(snapshot => {
+            return save(snapshot);
+        });
+
+    const updateIndex = functions.firestore
+        .document(`${collectionName}/{id}`)
+        .onUpdate((change) => {
+            return update(change);
+        });
+
+    const deleteFromIndex = functions.firestore
+        .document(`${collectionName}/{id}`)
+        .onDelete(snapshot => {
+            return remove(snapshot);
+        });
+
+    return { addToIndex, updateIndex, deleteFromIndex };
+};
