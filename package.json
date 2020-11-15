@@ -27,6 +27,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-fb-image-grid": "^0.1.5",
+    "react-google-places-autocomplete": "^3.0.0",
     "react-hook-form": "^6.0.1",
     "react-instantsearch-dom": "^6.8.2",
     "react-map-gl": "^5.2.7",

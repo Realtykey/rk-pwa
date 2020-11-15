@@ -2,16 +2,13 @@ import * as React from 'react';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import ReactMapGL, { Marker } from 'react-map-gl';
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
-import Geocoder from 'react-map-gl-geocoder';
 //redux imports
-import { useDispatch } from "react-redux";
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import { setMapAction } from './redux';
 //icon
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { geocode } from "../src/map_api";
-
+import Geocoder from './utils/Geocode';
 
 const MAPBOX_TOKEN = "pk.eyJ1Ijoic3RlYWx0aDE0IiwiYSI6ImNrNGhvY3hkdjFjY2kza283eDhzcGRnYmkifQ.mZXxhWd9yvNen0-qpoEnsg";
 
@@ -30,6 +27,9 @@ export default function Map() {
         zoom: 15,
     });
 
+    const setPosition = ({latitude,longitude}) => {
+        setViewport(viewport => ({...viewport,latitude,longitude}))
+    };
     const handleViewportChange = useCallback(
         (newViewport) => setViewport(newViewport),
         []
@@ -62,20 +62,13 @@ export default function Map() {
    
     return (
         <div>
+            <Geocoder setPosition={setPosition}/>
             <ReactMapGL
                 ref={mapRef}
                 {...viewport}
                 onClick={handleClick}
                 onViewportChange={nextViewport => setViewport(nextViewport)}
             >
-                <Geocoder
-                    mapRef={mapRef}
-                    onViewportChange={handleGeocoderViewportChange}
-                    mapboxApiAccessToken={MAPBOX_TOKEN}
-                    position="top-left"
-                    countries='ec'
-                    language='es'
-                />
                 <Marker latitude={map.lat} longitude={map.lng} offsetLeft={-20} offsetTop={-10}>
                     <FontAwesomeIcon style={{ fontSize: 30 }} color='purple' icon={faHome} />
                 </Marker>
