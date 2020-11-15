@@ -23,21 +23,21 @@ export default function Features({ propData }) {
             >
 
                 <Grid sm={3} xs={4} align="center" item>
-                    <Chip
+                    {propData.dormitories && <Chip
                         variant="outlined"
                         icon={<HotelIcon />}
                         label={" Dormitorios " + propData.dormitories}
                     >
-                    </Chip>
+                    </Chip>}
 
                 </Grid>
 
                 <Grid sm={3} xs={4} align="center" item>
-                    <Chip
+                    {propData.bathrooms && <Chip
                         variant="outlined"
                         icon={<BathtubIcon />}
                         label={" Baños " + propData.bathrooms}
-                    />
+                    />}
                 </Grid>
 
                 <Grid sm={3} xs={4} align="center" item>
@@ -49,11 +49,11 @@ export default function Features({ propData }) {
                 </Grid>
 
                 <Grid sm={3} xs={12} align="center" item>
-                    <Chip
+                    {propData.parkings && <Chip
                         variant="outlined"
                         icon={<DriveEtaIcon />}
                         label={" Parqueaderos " + propData.parkings}
-                    />
+                    />}
                 </Grid>
 
             </Grid>
