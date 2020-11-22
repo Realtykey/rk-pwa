@@ -8,12 +8,8 @@ import { v4 as uuidv4 } from 'uuid';
 import {
     InstantSearch,
     SearchBox,
-    Pagination,
-    Highlight,
-    ClearRefinements,
     RefinementList,
     Configure,
-    SortBy
   } from 'react-instantsearch-dom';
 
 
