@@ -292,6 +292,14 @@ export default function PropertyForm(props) {
 
             }
         );
+        //reset map
+        setMap({
+            lat: 0,
+            lng: 0,
+            zoom: 1,
+            snapUrl: ``,
+            address: '',
+          });
     }
 
 

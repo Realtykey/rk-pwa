@@ -174,6 +174,14 @@ export function RequestForm(props) {
       );
     }
     setStep(activeStep + 1);
+    //reset map
+    setMap({
+      lat: 0,
+      lng: 0,
+      zoom: 1,
+      snapUrl: ``,
+      address: '',
+    });
   }
 
   const classes = useStyles();

@@ -64,6 +64,7 @@ export default function Map() {
         <div>
             <Geocoder setPosition={setPosition}/>
             <ReactMapGL
+                mapboxApiAccessToken={MAPBOX_TOKEN}
                 ref={mapRef}
                 {...viewport}
                 // onClick={handleClick}
