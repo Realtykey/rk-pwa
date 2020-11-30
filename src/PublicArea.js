@@ -106,12 +106,22 @@ export default function PublicArea() {
   );
   
   const refinementAttributes = [
-    'propType',
-    'operation'
+    {name:'propType',label:'tipo'},
+    {name:'operation',label:'operación'}
   ];
+
+  const rangeAtributes = [
+    {name:'bathrooms',label:'baños'},
+    {name:'dormitories',label:'dormitorios'},
+    {name:'parkings',label:'parqueaderos'},
+    {name:'area',label:'área'},
+  ];
+  
   return (
     <div className={classes.root}>
-      <Search refinementAttributes={refinementAttributes} hitComponent={PropertyCard} indexName={type=='prop'? 'dev_PROPERTIES' : 'dev_REQUESTS'}/> 
+      <Search 
+      rangeAtributes={rangeAtributes}
+      refinementAttributes={refinementAttributes} hitComponent={PropertyCard} indexName={type=='prop'? 'dev_PROPERTIES' : 'dev_REQUESTS'}/> 
       <Modal
         open={!!userPreview}
         onClose={() => setUserPreview(null)}

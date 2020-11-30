@@ -26,15 +26,14 @@
 
 /*refinement*/
 
-.ais-RefinementList{
-    color:white;
+.ais-MenuSelect{
+    color:black;
     margin: 10px 10px;
     width: 200px;
 }
 
-.ais-RefinementList-item {
-    padding: 12px 0px;
-    box-sizing:none;
+.ais-MenuSelect-select {
+    width: 170px;
 }
 
 .ais-RefinementList-label{
@@ -74,3 +73,12 @@
     color:white;
     background-color: gray;
 }
+
+/*searchbox*/
+.searchbox-wrapper{
+    display:flex;
+    justify-content: center;
+    margin: 10px auto;
+}
+
+/*range inputs*/

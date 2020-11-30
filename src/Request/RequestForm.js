@@ -161,7 +161,7 @@ export function RequestForm(props) {
     await ref.set(request, { merge: true });
 
     if(map.address==''){
-      alert('Seleccionar una ubicación en el mapa.')
+      alert('Debes seleccionar una ubicación en el mapa.')
       return;
     }
     //redirect to mypanel, reset selected prop (forces list refresh)
