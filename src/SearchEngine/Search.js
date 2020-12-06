@@ -6,6 +6,7 @@ import './search.css';
 import InfiniteHits from './InfiniteHits';
 import RangeInput from './CustomRangeInput';
 import CustomClearRefinements from './CustomClearRefinements';
+import CustomSearchBox from './CustomSearchBox';
 
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -25,7 +26,12 @@ export default function Search({indexName,hitComponent,refinementAttributes,rang
         <InstantSearch searchClient={searchClient} indexName={indexName}>
             <Configure hitsPerPage={2}/>
             <div className="searchbox-wrapper">
-            <SearchBox 
+            <CustomClearRefinements
+            rangeAtributes={rangeAtributes}
+            translations={{reset:'Limpiar filtros'}}
+            clearsQuery={true}
+            />
+            <CustomSearchBox 
                 showLoadingIndicator={true}
                 showReset={false}
                 showSubmit={true}
@@ -39,11 +45,6 @@ export default function Search({indexName,hitComponent,refinementAttributes,rang
                 templates={{
                     reset: 'reset',
                 }}
-            />
-            <CustomClearRefinements
-            rangeAtributes={rangeAtributes}
-            translations={{reset:'Limpiar filtros'}}
-            clearsQuery={true}
             />
             </div>
             <form id="ranges-form" className="refinements">

@@ -45,7 +45,7 @@ const RangeInput = ({ label, name, currentRefinement, refine }) => {
           step: 1
         }}
       />
-      <Button variant="outlined" style={currentRefinement.min == "1" ? normal : colored} onClick={() => {
+      <Button className="button" variant="outlined" style={currentRefinement.min == "1" ? normal : colored} onClick={() => {
         console.log('ref value: ', ref.current.value);
         if (ref.current.value) {
           refine({

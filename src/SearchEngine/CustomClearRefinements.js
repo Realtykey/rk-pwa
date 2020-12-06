@@ -1,17 +1,24 @@
 import React from 'react';
-
+import Button from '@material-ui/core/Button';
 import { connectCurrentRefinements } from 'react-instantsearch-dom';
 
-const ClearRefinements = ({ items, refine }) => (
-  <button className="ais-ClearRefinements" onClick={() => {
+import { faUndo } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const ClearRefinements = ({ items, refine }) => {
+  const clear = () => {
     document.getElementById("ranges-form").reset();
     console.log('custom cleaner')
     refine(items);
-    }}
+  }
+  
+  return (
+  <Button className="ais-ClearRefinements" variant="contained" onClick={clear}
     disabled={!items.length}>
-    limpiar filtros
-  </button>
-);
+    <FontAwesomeIcon icon={faUndo} />
+  </Button>
+  )
+};
 
 const CustomClearRefinements = connectCurrentRefinements(ClearRefinements);
 export default CustomClearRefinements;
