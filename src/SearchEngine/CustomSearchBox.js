@@ -13,24 +13,25 @@ const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => {
         refine(input.value);
     }
 
-    return(
-    <form onSubmit={submit} className="searchbox-wrapper" noValidate action="" role="search">
-        <div className="ais-SearchBox">
-            <div className="ais-SearchBox-form" >
-                <input
-                    ref={ref}
-                    name="input"
-                    placeholder="país, cuidad o descripción"
-                    className="ais-SearchBox-input"
-                    type="search"
-                />
+    return (
+        <form onSubmit={submit} className="searchbox-wrapper" noValidate action="" role="search">
+            <div className="ais-SearchBox">
+                <div className="ais-SearchBox-form" >
+                    <input
+                        ref={ref}
+                        name="input"
+                        placeholder="país, cuidad o descripción"
+                        className="ais-SearchBox-input"
+                        type="search"
+                    />
+                </div>
             </div>
-        </div>
-        <Button variant="outlined" className="searchbox-submit-input" type="submit">
-        <FontAwesomeIcon icon={faSearch} />
-        </Button>
-    </form>
-);}
+            <Button variant="outlined" className="searchbox-submit-input" type="submit">
+                <FontAwesomeIcon icon={faSearch} />
+            </Button>
+        </form>
+    );
+}
 
 const CustomSearchBox = connectSearchBox(SearchBox);
 
