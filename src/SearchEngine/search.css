@@ -21,7 +21,6 @@
 }
 
 .ais-SearchBox{
-    width: 300px;
 }
 
 /*refinement*/
@@ -62,7 +61,7 @@
 /*clear refinements*/
 
  .ais-ClearRefinements{
-    margin:10px 10px;
+    height: 100%;
 }
 
 .ais-ClearRefinements-button{
@@ -78,10 +77,15 @@
 .searchbox-wrapper{
     display:flex;
     justify-content: center;
-    margin: 10px auto;
+    margin: 2px auto;
 }
 .searchbox-submit-input{
-    margin:0 10px;
     height: 100%;
+}
+
+.custom-search-button{
+    margin:0 2px;
+    height: 100%;
+    min-width: 10px;
 }
 /*range inputs*/

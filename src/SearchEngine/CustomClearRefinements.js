@@ -13,7 +13,7 @@ const ClearRefinements = ({ items, refine }) => {
   }
   
   return (
-  <Button className="ais-ClearRefinements" variant="contained" onClick={clear}
+  <Button classes={{root:'custom-search-button'}} variant="contained" onClick={clear}
     disabled={!items.length}>
     <FontAwesomeIcon icon={faUndo} />
   </Button>

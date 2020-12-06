@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import './search.css';
 import InfiniteHits from './InfiniteHits';
 import RangeInput from './CustomRangeInput';
-import CustomClearRefinements from './CustomClearRefinements';
 import CustomSearchBox from './CustomSearchBox';
 
 import { v4 as uuidv4 } from 'uuid';
@@ -25,13 +24,8 @@ export default function Search({indexName,hitComponent,refinementAttributes,rang
     return (
         <InstantSearch searchClient={searchClient} indexName={indexName}>
             <Configure hitsPerPage={2}/>
-            <div className="searchbox-wrapper">
-            <CustomClearRefinements
-            rangeAtributes={rangeAtributes}
-            translations={{reset:'Limpiar filtros'}}
-            clearsQuery={true}
-            />
-            <CustomSearchBox 
+            <CustomSearchBox
+                rangeAtributes={rangeAtributes}
                 showLoadingIndicator={true}
                 showReset={false}
                 showSubmit={true}
@@ -46,7 +40,6 @@ export default function Search({indexName,hitComponent,refinementAttributes,rang
                     reset: 'reset',
                 }}
             />
-            </div>
             <form id="ranges-form" className="refinements">
                 <Grid container justify="center">
                     {rangeAtributes.map(attribute => 
