@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ useState } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -83,20 +83,23 @@ export default function MatchCompletion() {
     const archiveMatch = async () => {
         const id = `${requesterData.uid}_${prop.id}_${ownerData.uid}`;
         //remove from primary collection
-        await db.collection('users').doc(userData.uid).collection('matches')
-            .doc(id)
-            .delete();
 
-        //todo:define archiving mechanism
+        const updates = {done:true}
+
+        updates[userData.uid == requesterData.uid ? 'ownerScore' : 'requesterScore'] = score;
+
+        await db.collection('users').doc(userData.uid).collection('matches').doc(id)
+        .set(updates,{merge:true});
+
         console.log('match archived');
     }
+    const [score,setScore] = useState(0);
 
     const submitComment = async values => {
         {
             //repaired ejejje
 
 
-            console.log(values);
 
             const { content } = values;
 
@@ -141,7 +144,7 @@ export default function MatchCompletion() {
                     </Grid>
 
                     <Grid item xs={12} sm={12} md={12}>
-                        <Rating name="score" />
+                        <Rating onChange={(event, newScore) => { console.log(newScore); setScore(newScore);}} name="score" />
                     </Grid>
 
                     <Grid item xs={12} sm={12} md={12}>
@@ -164,8 +167,6 @@ export default function MatchCompletion() {
                             type="submit"
                         >Confirmar</Button>
                     </Grid>
-                    {/* <div style={{ width: '100vh', borderRadius: 20 }}>
-                    </div> */}
                 </Grid>
             </form>
         </div>

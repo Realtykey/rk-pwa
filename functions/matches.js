@@ -31,6 +31,7 @@ const createMatch = async (reqData, propDoc, suggestion) => {
   let toCoords = [propData.map.lng, propData.map.lat];
 
   let match = {
+    done:false,
     suggestion: suggestion,
     uid: uid,
     distance: getDistance(fromCoords, toCoords),

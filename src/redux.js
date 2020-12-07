@@ -189,7 +189,9 @@ export const fetchMatchesThunk = (uid) => {
 
     import('./base').then(
       ({ app }) => {
-        app.firestore().collection('users').doc(uid).collection('matches').get().then(
+        app.firestore().collection('users').doc(uid).collection('matches')
+        .where('done','==',false).get()
+        .then(
           (snap) => {
             let matches = [];
             snap.docs.forEach(
