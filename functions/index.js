@@ -4,7 +4,7 @@ admin.initializeApp();
 
 exports.createMatch = functions.firestore
   .document(`requests/{id}`)
-  .onCreate(async (snap, context) => {
+  .onCreate(async snap => {
     const {matchedProp} = require('./matches.js');
     return matchedProp(snap);
   });
