@@ -5,14 +5,14 @@ import "firebase/storage";
 
 const app = firebase.initializeApp(
     {
-        apiKey: process.env.REACT_APP_apiKey,
-        authDomain: process.env.REACT_APP_authDomain,
-        databaseURL: process.env.REACT_APP_databaseURL,
-        projectId: process.env.REACT_APP_projectId,
-        storageBucket: process.env.REACT_APP_storageBucket,
-        messagingSenderId: process.env.REACT_APP_messagingSenderId,
-        appId: process.env.REACT_APP_appId,
-        measurementId: process.env.REACT_APP_measurementId,
+        apiKey: "AIzaSyC4VK5S97hl9jXuaPAtwt1u2uAXc18AVa4",
+        authDomain:  "realtykey-2507d.firebaseapp.com",
+        databaseURL: "https://realtykey-2507d.firebaseio.com",
+        projectId: "realtykey-2507d",
+        storageBucket: "realtykey-2507d.appspot.com",
+        messagingSenderId: "699566007850",
+        appId: "1:699566007850:web:44e76c1e51f0d547fac553",
+        measurementId: "G-H9Y0PRZKBJ"
       }
 );  
 
