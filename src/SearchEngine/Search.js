@@ -40,7 +40,7 @@ export default function Search({indexName,hitComponent,refinementAttributes,rang
                     reset: 'reset',
                 }}
             />
-            <form id="ranges-form" className="refinements">
+            <form onSubmit={e => e.preventDefault()} id="ranges-form" className="refinements">
                 <Grid container justify="center">
                     {rangeAtributes.map(attribute => 
                         <Grid item xs={12} sm={6} md={3} lg={3} key={uuidv4()}>

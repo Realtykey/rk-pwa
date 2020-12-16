@@ -16,7 +16,7 @@ import { faThLarge } from "@fortawesome/free-solid-svg-icons";
 import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 import { faCrown } from "@fortawesome/free-solid-svg-icons";
 import { faNewspaper } from "@fortawesome/free-solid-svg-icons";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
 
 import Typography from '@material-ui/core/Typography';
 import { useSelector } from 'react-redux';
@@ -108,8 +108,8 @@ export default function Dashboard1() {
                     </Grid>
 
                     <Grid item align="center" xs={12} sm={4} md={4} lg={3}>
-                        <Link style={link} to={`/Home/PublicArea/req`}>
-                            <MenuButton icon={faUser} background='#27233180' />
+                        <Link style={link} to={`/Home/PublicArea/agents`}>
+                            <MenuButton icon={faUsers} background='#27233180' />
                             <Typography style={title} variant="h6" align="center" gutterBottom>
                                 Agentes
                         </Typography>

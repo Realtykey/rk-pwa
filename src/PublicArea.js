@@ -105,23 +105,51 @@ export default function PublicArea() {
     </div>
   );
   
-  const refinementAttributes = [
+  var refinementAttributes = [
     {name:'propType',label:'tipo'},
     {name:'operation',label:'operación'}
   ];
 
-  const rangeAtributes = [
+  var rangeAtributes = [
     {name:'bathrooms',label:'baños'},
     {name:'dormitories',label:'dormitorios'},
     {name:'parkings',label:'parqueaderos'},
     {name:'area',label:'área'},
   ];
   
+  var indexName;
+  var hitComponent=PropertyCard;
+
+  switch(type){
+
+    case 'agents':
+      indexName = 'dev_USERS';
+
+      refinementAttributes = [];    
+
+      rangeAtributes = [
+        {name:'matchesCount',label:'negocios cerrados'},
+      ];
+    break;
+
+    case 'req':
+      indexName = 'dev_REQUESTS';
+    break;
+
+    case 'prop':
+      indexName = 'dev_PROPERTIES';
+    break;
+
+    default:
+      indexName = 'dev_PROPERTIES';
+  }
   return (
     <div className={classes.root}>
       <Search 
       rangeAtributes={rangeAtributes}
-      refinementAttributes={refinementAttributes} hitComponent={PropertyCard} indexName={type=='prop'? 'dev_PROPERTIES' : 'dev_REQUESTS'}/> 
+      refinementAttributes={refinementAttributes} 
+      hitComponent={hitComponent}
+      indexName={indexName}/> 
       <Modal
         open={!!userPreview}
         onClose={() => setUserPreview(null)}
