@@ -101,7 +101,7 @@ export default function RealtyAppBar(props) {
             position="fixed"
         >
             <Toolbar>
-                <Link style={{ textDecoration: 'inherit', color: 'inherit' }} to={`${props.match.path}/Dashboard1`}>
+                <Link style={{ textDecoration: 'inherit', color: 'inherit' }} to={`${props.match.path}/Menu`}>
                     <IconButton
                         color="inherit"
                         aria-label="open dashboard"

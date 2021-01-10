@@ -13,7 +13,6 @@ import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { faHandshake } from "@fortawesome/free-solid-svg-icons";
 import { faHandHoldingUsd } from "@fortawesome/free-solid-svg-icons";
 import { faThLarge } from "@fortawesome/free-solid-svg-icons";
-import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 import { faCrown } from "@fortawesome/free-solid-svg-icons";
 import { faNewspaper } from "@fortawesome/free-solid-svg-icons";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
@@ -58,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Dashboard1() {
+export default function Menu() {
     const userData = useSelector(state => state.general.userData);
     const classes = useStyles();
     const history = useHistory();

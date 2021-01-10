@@ -38,7 +38,7 @@ import BuildIcon from '@material-ui/icons/Build';
 import Publish from '../Publish/Publish.js';
 import MatchView from '../Matches/MatchView/MatchView';
 import AgentForm from '../AgentForm/AgentForm.js';
-import Dashboard1 from '../Dashboard1';
+import Menu from '../Menu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,7 +68,7 @@ function Home(props) {
 
               <InternalRoute path={`${props.match.path}/AgentForm`} component={AgentForm} />
 
-              <InternalRoute path={`${props.match.path}/Dashboard1`} component={Dashboard1} />
+              <InternalRoute path={`${props.match.path}/Menu`} component={Menu} />
 
               <InternalRoute path={`${props.match.path}/MatchView`} component={MatchView} />
 
@@ -92,7 +92,7 @@ function Home(props) {
               </Route>
 
               {/* default view, root view */}
-              <Route component={Dashboard1}>
+              <Route component={Menu}>
               </Route>
             </Switch>
           </div>
