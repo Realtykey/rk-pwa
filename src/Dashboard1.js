@@ -50,8 +50,7 @@ const useStyles = makeStyles((theme) => ({
     layout: {
         [theme.breakpoints.up('sm')]: {
             position: 'relative',
-            top: '50%',
-            transform: 'translateY(-50%)',
+            top: '10%',
         },
         [theme.breakpoints.only('xs')]: {
             paddingTop: 20,
