@@ -88,3 +88,13 @@
     min-width: 10px;
 }
 /*range inputs*/
+
+.ais-Stats{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.ais-Stats-text{
+    color: white;
+}

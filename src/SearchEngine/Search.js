@@ -10,15 +10,13 @@ import CustomSearchBox from './CustomSearchBox';
 import { v4 as uuidv4 } from 'uuid';
 import {
     MenuSelect,
-    ClearRefinements,
     InstantSearch,
-    SearchBox,
-    RefinementList,
+    Stats,
     Configure,
   } from 'react-instantsearch-dom';
 
 
-const searchClient = algoliasearch('IW55L7EK8V', 'e305d8ad0b21a89b620a1e11ab90dbad');
+  const searchClient = algoliasearch('IW55L7EK8V', 'e305d8ad0b21a89b620a1e11ab90dbad');
 
 export default function Search({indexName,hitComponent,refinementAttributes,rangeAtributes}) {
     return (
@@ -60,7 +58,13 @@ export default function Search({indexName,hitComponent,refinementAttributes,rang
                     attribute => <MenuSelect translations={{seeAllOption:attribute.label}}  key={uuidv4()}  attribute={attribute.name} />
                 )}
             </div>
-
+            <Stats translations={
+                {
+                    stats(nbHits, timeSpentMS) {
+                      return `${nbHits} resultados`;
+                    },
+                  }
+            }/>
             <InfiniteHits hitComponent={hitComponent} minHitsPerPage={16} />
 
         </InstantSearch>
