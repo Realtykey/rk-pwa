@@ -36,3 +36,4 @@
 3. - [x] Margen del titulo en tarjetas (Propiedad,Request)
 
 4. - [x] Ojo con dejar address(ubi) vacía 
+5. - [x] Remover la imagen de los requerimientos
