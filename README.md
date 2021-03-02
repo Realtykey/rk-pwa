@@ -1,4 +1,8 @@
 # Realty Key
+## TO DO
+1. - Acuerdo de uso. Cierre de servicios unilateral.
+2. - Acuerdo de cierre de negocios.
+
 
 ## Correcciones 2
 
@@ -36,4 +40,6 @@
 3. - [x] Margen del titulo en tarjetas (Propiedad,Request)
 
 4. - [x] Ojo con dejar address(ubi) vacía 
-5. - [x] Remover la imagen de los requerimientos
+5. - [ ] Remover captura de mapa de los requerimientos
+6. - [ ] Remover captura de mapa de los detalles de requerimiento
+7. - [ ] Mantenimiento.
