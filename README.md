@@ -1,8 +1,8 @@
 # Realty Key
 ## BACKLOG
 1. - Acuerdo de uso. Cierre de servicios unilateral.
-2. - Acuerdo de cierre de negocios.
-3. - 
+2. - Acuerdo de cierre de negocios con contrato que se acepta para acceder a la app.
+3. - Funcionalidad para agregar clientes potenciales a un requerimiento.
 
 ## Correcciones 2
 
