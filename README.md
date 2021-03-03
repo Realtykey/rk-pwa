@@ -35,7 +35,7 @@
 ## Correcciones 3
 
 1. - [x] Carousel en vista individual, en busquedas el mas liviano.
-2. - [ ] Agrandar foto cuando hay mas de una foto.
+2. - [ ] Agrandar foto cuando hay varias en el collage de propiedad y requerimiento.
 
 3. - [x] Margen del titulo en tarjetas (Propiedad,Request)
 
