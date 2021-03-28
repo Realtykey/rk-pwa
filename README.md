@@ -1,4 +1,8 @@
 # Realty Key
+## BACKLOG
+1. - Acuerdo de uso. Cierre de servicios unilateral.
+2. - Acuerdo de cierre de negocios con contrato que se acepta para acceder a la app.
+3. - Funcionalidad para agregar clientes potenciales a un requerimiento.
 
 ## Correcciones 2
 
@@ -31,8 +35,12 @@
 ## Correcciones 3
 
 1. - [x] Carousel en vista individual, en busquedas el mas liviano.
-2. - [ ] Agrandar foto cuando hay mas de una foto.
+2. - [ ] Agrandar foto cuando hay varias en el collage de propiedad y requerimiento.
 
 3. - [x] Margen del titulo en tarjetas (Propiedad,Request)
 
 4. - [x] Ojo con dejar address(ubi) vacía 
+5. - [ ] Remover captura de mapa de los requerimientos
+6. - [ ] Remover captura de mapa de los detalles de requerimiento
+7. - [ ] Mantenimiento.
+8. - [ ] Preparar el demo Creación de propiedades,requerimientos,matches.
