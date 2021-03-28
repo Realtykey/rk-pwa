@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.custom,
     fontSize: '14px',
     maxWidth: window.screen.width < 600 ? window.screen.width : 600,
+    minWidth: window.screen.width < 600 ? window.screen.width : 600,
     transition: "0.3s",
     boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
     "&:hover": {
@@ -82,11 +83,7 @@ export default function PropertyCard({hit}) {
         <ImagesPreview urls={hit.photos} />
       </CardContent>
       :
-      <CardMedia
-        className={classes.media}
-        image={hit.map.snapUrl}
-        title="Paella dish"
-      />
+      <></>
       }
 
       <CardActions >
