@@ -77,6 +77,13 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'scroll',
     padding: 50,
   },
+  photoWrapper: {
+    position: 'absolute',
+    width: 'auto',
+    height: 'auto',
+    overflow: 'scroll',
+  },
+  photo: { width: '100%',height:'100%' }
 }));
 
 function getModalStyle() {
@@ -116,6 +123,15 @@ function App() {
     </div>
   );
 
+  const setPhotoPreview = photoPreview => dispatch({ type: 'SET_PHOTO_PREVIEW', payload: photoPreview });
+  const {photoPreview} = useSelector(state => state.general);
+
+  const photoBody = (
+    <div style={modalStyle} className={classes.photoWrapper}>
+      <img className={classes.photo} src={photoPreview}/>
+    </div>
+  );
+
   return (
     <div className={classes.root}>
       <ThemeProvider theme={theme}>
@@ -132,6 +148,12 @@ function App() {
           onClose={closeAlert}
         >
           {body}
+        </Modal>
+        <Modal
+          open={!!photoPreview}
+          onClose={() => setPhotoPreview(null)}
+        >
+          {photoBody}
         </Modal>
       </ThemeProvider>
     </div>

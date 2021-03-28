@@ -52,6 +52,8 @@ export default function PropertyDet() {
 
     const selectedProperty = useSelector(state => state.property.selectedProperty);
     
+    const setPhotoPreview = photoPreview => dispatch({ type: 'SET_PHOTO_PREVIEW', payload: photoPreview });
+
     useEffect(
         () => {
             var unregister = null
@@ -122,7 +124,7 @@ export default function PropertyDet() {
                 {selectedProperty && <Grid item sm ={12} md ={12} xs ={12}>
 
                     <ToolsBar tools={tools}/>
-                    <Carousel photos = {selectedProperty.photos}/>
+                    <Carousel setPhotoPreview={setPhotoPreview} photos = {selectedProperty.photos}/>
 
                     <Divider className={classes.margin} />
 

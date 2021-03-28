@@ -12,9 +12,7 @@ import { switchDetailsAction } from '../redux';
 import PropertyDetails from './../Property/PropertyCard/PropertyDetails'
 //custom comps 
 import Divider from '@material-ui/core/Divider';
-import RequestBar from './RequestBar'
 import loadable from '@loadable/component';
-import Modal from '@material-ui/core/Modal';
 import Features from '../Property/Features';
 
 //font awesome icons
@@ -38,38 +36,11 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 20,
         padding: 9
     },
-    det: {
-        minWidth: '100%'
-    },
     margin: {
         margin: theme.spacing(1)
     },
-    paper: {
-        position: 'absolute',
-        width: 'auto',
-        backgroundColor: 'white',
-        height: '600px',
-        overflow: 'scroll',
-        padding: '50px',
-    },
-
 }
 ));
-
-function getModalStyle() {
-    const top = 50;
-    const left = 50;
-
-    return {
-        background: '#272331',
-        outline: 'none',
-        top: `${top}%`,
-        left: `${left}%`,
-        transform: `translate(-${top}%, -${left}%)`,
-        border: 'none'
-    };
-}
-
 
 
 export default function RequestDet() {
@@ -154,10 +125,6 @@ export default function RequestDet() {
                     <img alt="mapa del request" style={{ width: '100%', borderRadius: 20 }} src={selectedRequest.map?.snapUrl}>
                     </img>
                 </div>
-
-
-                {/* <ImageSlider photos={selectedRequest.photos} /> */}
-                {/* <Carousel photos = {selectedRequest.photos}/> */}
 
                 <Divider className={classes.margin} />
 
