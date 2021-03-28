@@ -1,19 +1,14 @@
-import React, { Suspense, lazy, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 
 //custom comps
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import { AuthProvider } from './Auth'
 //tema personalizado
-import { ThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 
-//
-// import { AuthProvider } from "./Auth.js";
 import PrivateRoute from "./PrivateRoute.js";
-import ReverseRoute from './InternalRoute'
 import loadable from '@loadable/component';
 
 //redux imports
@@ -109,7 +104,6 @@ function App() {
   //tema global
   const classes = useStyles();
 
-  const [signed, setSigned] = useState(false);
   //error
   const closeAlert = () => dispatch(closeAlertAction());
 
@@ -134,7 +128,6 @@ function App() {
 
   return (
     <div className={classes.root}>
-      <ThemeProvider theme={theme}>
         <Router>
           <Switch>
             <PrivateRoute path="/Home" component={Home} />
@@ -155,7 +148,6 @@ function App() {
         >
           {photoBody}
         </Modal>
-      </ThemeProvider>
     </div>
   );
 }
