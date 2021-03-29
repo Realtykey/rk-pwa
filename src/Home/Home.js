@@ -1,12 +1,9 @@
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import PropertyForm from './../Property/PropertyForm/PropertyForm'
 import RequestForm from './../Request/RequestForm'
 
-//
 import { AuthProvider } from './../Auth';
-import Profiles from './../Admin/Profiles'
-//
 import Grid from '@material-ui/core/Grid';
 
 import PublicArea from '../PublicArea.js'
@@ -22,12 +19,10 @@ import {
 
 
 //custom routing comps
-import PrivateRoute from "../PrivateRoute.js";
 import InternalRoute from "../InternalRoute";
 import Playground from '../Playground.js';
 import RealtyAppBar from './RealtyAppBar.js';
 import MyPanel from '../MyPanel';
-import News from '../News/News';
 
 //icons
 import BuildIcon from '@material-ui/icons/Build';
@@ -80,9 +75,7 @@ function Home(props) {
 
               <InternalRoute path={`${props.match.path}/reqForm`} component={RequestForm} />
 
-              <InternalRoute path={`${props.match.path}/news`} component={News} />
 
-              <InternalRoute path={`${props.match.path}/profiles`} component={Profiles} />
 
               <Route path={`${props.match.url}/WorkOnProgress`}>
                 <div>
