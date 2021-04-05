@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 
-import $ from 'jquery';
 import { useForm } from "react-hook-form";
 import { Rating } from '@material-ui/lab';
 
@@ -114,7 +113,6 @@ export default function MatchCompletion() {
                         lname: userData.lname,
                         photoUrl: userData.photoUrl,
                     }, { merge: true });
-            $('#content').val('');
             archiveMatch();
         }
 
