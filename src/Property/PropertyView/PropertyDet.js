@@ -160,7 +160,7 @@ export default function PropertyDet() {
             <Features propData={selectedProperty} />
 
             <div>
-              <img style={map} src={selectedProperty.map?.snapUrl}></img>
+              <img style={map} alt="mapa" src={selectedProperty.map?.snapUrl}></img>
             </div>
           </Grid>
         )}
