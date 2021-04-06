@@ -40,7 +40,7 @@
 3. - [x] Margen del titulo en tarjetas (Propiedad,Request)
 
 4. - [x] Ojo con dejar address(ubi) vacía 
-5. - [ ] Remover captura de mapa de los requerimientos
-6. - [ ] Remover captura de mapa de los detalles de requerimiento
-7. - [ ] Mantenimiento.
-8. - [ ] Preparar el demo Creación de propiedades,requerimientos,matches.
+5. - [x] Remover captura de mapa de los requerimientos
+6. - [x] Remover captura de mapa de los detalles de requerimiento
+7. - [x] Mantenimiento.
+8. - [x] Preparar el demo Creación de propiedades,requerimientos,matches.
