@@ -1,4 +1,5 @@
 # Realty Key
+
 ## BACKLOG
 1. - Acuerdo de uso. Cierre de servicios unilateral.
 2. - Acuerdo de cierre de negocios con contrato que se acepta para acceder a la app.
@@ -44,3 +45,8 @@
 6. - [x] Remover captura de mapa de los detalles de requerimiento
 7. - [x] Mantenimiento.
 8. - [x] Preparar el demo Creación de propiedades,requerimientos,matches.
+
+## Correcciones 4
+
+9. - [ ] Actualizar consumo de Google Maps.
+10.- [ ] Esconder scroll en formularios.
