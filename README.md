@@ -48,5 +48,5 @@
 
 ## Correcciones 4
 
-9. - [ ] Actualizar consumo de Google Maps.
+9. - [ ] Actualizar calculo de consumo en Google Maps.
 10. - [ ] Esconder scroll en formularios.
