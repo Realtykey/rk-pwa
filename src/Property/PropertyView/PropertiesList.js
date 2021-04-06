@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 import { setPropAction} from './../property-reducer';
 //custom comps
 import PropertyItem from './PropertyItem'
+import '../../styles/general.css';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -57,9 +58,9 @@ export default function PropertiesList() {
     const setProp = prop => { dispatch(setPropAction(prop)) }
 
     return (
-        <div style={{
+        <div className="hidden-scroll" style={{
             height:'calc(100vh - 180px)',
-            overflow:'scroll'
+            overflow:'scroll',
         }}>
             {properties.some(prop => prop.bookmarked) && <List className={classes.root}>
             <Typography style={{margin:'6px 0'}} color="textSecondary" variant="subtitle1" >Ver primero</Typography>

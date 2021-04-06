@@ -57,9 +57,9 @@ export default function MatchesList() {
     const setMatch = (match, index) => { dispatch(setMatchAction(match, index)) }
 
     return (
-        <div style={{
+        <div className="hidden-scroll" style={{
             height:'100vh',
-            overflow:'scroll'
+            overflow:'scroll',
         }}>
         {matches.some(match => match.bookmarked) && <List className={classes.root}>
             <Typography style={{margin:'6px 0'}} color="textSecondary" variant="subtitle1" >Ver primero</Typography>

@@ -56,7 +56,7 @@ export default function RequestList() {
     const setReq = req => { dispatch(setReqAction(req)) }
 
     return (
-        <div style={{
+        <div className="hidden-scroll" style={{
             height:'100vh',
             overflow:'scroll'
         }}>

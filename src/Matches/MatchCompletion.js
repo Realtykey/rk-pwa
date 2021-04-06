@@ -14,12 +14,6 @@ import { useSelector } from 'react-redux';
 import { db } from '../base';
 
 
-const root = {
-    minWidth: '100vh',
-    borderRadius: 20,
-    padding: 9
-};
-
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'grid',
@@ -95,27 +89,21 @@ export default function MatchCompletion() {
     const [score,setScore] = useState(0);
 
     const submitComment = async values => {
-        {
-            //repaired ejejje
 
+        const { content } = values;
 
+        //recoger la data del usuario
+        const { app } = await import('../base');
 
-            const { content } = values;
-
-            //recoger la data del usuario
-            const { app } = await import('../base');
-
-            await app.firestore().collection('users').doc(partnerData.uid).collection('comments').doc()
-                .set(
-                    {
-                        content: content,
-                        name: userData.name,
-                        lname: userData.lname,
-                        photoUrl: userData.photoUrl,
-                    }, { merge: true });
-            archiveMatch();
-        }
-
+        await app.firestore().collection('users').doc(partnerData.uid).collection('comments').doc()
+            .set(
+                {
+                    content: content,
+                    name: userData.name,
+                    lname: userData.lname,
+                    photoUrl: userData.photoUrl,
+                }, { merge: true });
+        archiveMatch();
     }
 
     const root = {
