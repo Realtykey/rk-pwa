@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from 'react'
-import { makeStyles } from '@material-ui/core/styles';
 
 //custom comps
 import { AuthContext } from "./../../Auth";
@@ -12,21 +11,8 @@ import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux'
 import { fetchPropsThunk } from './../property-reducer';
 
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        paddingTop: 0,
-    },
-    chip: {
-        borderRatio: '25px'
-    }
-
-}));
-
-
 const PropertyView = function () {
 
-    const classes = useStyles();
     const { currentUser } = useContext(AuthContext);
     const dispatch = useDispatch();
 

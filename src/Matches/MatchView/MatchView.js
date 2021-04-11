@@ -12,25 +12,8 @@ import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux'
 import { fetchMatchesThunk } from '../../redux';
 
-const useStyles = makeStyles((theme) => ({
-    layout: {
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: theme.palette.background.default,
-        paddingTop: 20,
-    },
-    root: {
-        paddingTop: 0,
-    },
-    chip: {
-        borderRatio: '25px'
-    }
-}));
-
-
 const MatchView = function () {
 
-    const classes = useStyles();
     const { currentUser } = useContext(AuthContext);
     const dispatch = useDispatch();
 
