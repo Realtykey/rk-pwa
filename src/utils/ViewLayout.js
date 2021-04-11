@@ -40,7 +40,7 @@ export default function ({ name, list, detail, iterable, showDetails }) {
                     </Grid>
                 </Hidden>
 
-                <Hidden only={['md', 'lg']}>
+                <Hidden only={['md', 'lg', 'xl']}>
                     <Grid justify="center" container>
                         <Box display={showDetails ? 'inline' : 'none'}>
                             <Grid container item xs={12} sm={12} align="center">{detail}</Grid>
