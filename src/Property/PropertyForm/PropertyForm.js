@@ -468,7 +468,7 @@ export default function PropertyForm(props) {
                             id="description"
                             label="Descripción"
                             fullWidth
-                            inputProps={{ maxLength: 300 }}
+                            inputProps={{ maxLength: 600 }}
                             multiline
                             autoComplete="billing address-line1"
                             variant="outlined"
