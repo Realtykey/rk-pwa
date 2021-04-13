@@ -184,14 +184,14 @@ function SignUp() {
               />
             </Grid>
             <Grid item xs={12}>
-            Tienes licencia?
+            Tienes licencia ACBIR?
             <Switch checked={license} onChange={() => hideLicense(!license)} name="checkedB" />
               {license==true && <TextField
                 inputRef={register({ required: true })}
                 variant="outlined"
                 fullWidth
                 id="licenseCode"
-                label="Licencia"
+                label="Reg. Nº"
                 name="licenseCode"
                 autoComplete="licenseCode"
               />
