@@ -16,7 +16,7 @@ import '../App.css'
 //chip avatares
 import Chip from '@material-ui/core/Chip';
 
-import UserComments from './UserComents'
+import UserComments from './UserComments'
 
 //rating
 import { Rating } from '@material-ui/lab';
