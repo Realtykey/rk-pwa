@@ -87,11 +87,9 @@ export default function ProfileAvatar (props) {
                   {data.name} {data.lname}
                 </div>
               </div>
-              {data.licenseCode && (
-                <div className={classes.placeholder}>
-                  {data.role} con licencia
-                </div>
-              )}
+              <div className={classes.placeholder}>
+                {data.role} {data.licenseCode && 'con licencia'}
+              </div>
             </div>
           </div>
 
