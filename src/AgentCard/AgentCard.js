@@ -115,12 +115,12 @@ export default function AgentCard (props) {
                       variant="outlined"
                     />
                   </Grid>
-                  <Grid item>
+                  {agent.licenseCode && <Grid item>
                     <Chip
                       label={'Licencia ' + agent.licenseCode}
                       variant="outlined"
                     />
-                  </Grid>
+                  </Grid>}
                   <Grid item>
                     <Chip label={'Celular ' + agent.phone} variant="outlined" />
                   </Grid>

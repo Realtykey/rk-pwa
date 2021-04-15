@@ -68,7 +68,9 @@ function SignUp () {
   const classes = useStyles()
   const history = useHistory()
   const { handleSubmit, register } = useForm()
-  const [license, hideLicense] = useState(false)
+
+  const [isAgent, setIsAgent] = useState(false)
+  const [license, setLicense] = useState(false)
 
   const submit = async (data) => {
     const { name, lname, email, password, address, phone } = data
@@ -89,7 +91,7 @@ function SignUp () {
             experience: 0,
             licenseCode: '',
             roles: [],
-            role: '',
+            role: isAgent ? 'Agente' : '',
             score: 0,
             status: 'Miembro',
             sells: 0,
@@ -169,10 +171,21 @@ function SignUp () {
               />
             </Grid>
             <Grid item xs={12}>
-              Tienes licencia ACBIR?
+              ¿Eres agente inmobiliario?
+              <Switch
+                checked={isAgent}
+                onChange={() => {
+                  setIsAgent(!isAgent)
+                  if (!isAgent) setLicense(false)
+                }}
+                name="isAgent"
+              />
+            </Grid>
+            {isAgent && <Grid item xs={12}>
+              ¿Tienes licencia ACBIR?
               <Switch
                 checked={license}
-                onChange={() => hideLicense(!license)}
+                onChange={() => setLicense(!license)}
                 name="checkedB"
               />
               {license === true && (
@@ -186,7 +199,7 @@ function SignUp () {
                   autoComplete="licenseCode"
                 />
               )}
-            </Grid>
+            </Grid>}
             <Grid item xs={12}>
               <TextField
                 inputRef={register({ required: true })}
