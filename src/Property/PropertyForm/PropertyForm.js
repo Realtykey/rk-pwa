@@ -522,7 +522,7 @@ export default function PropertyForm(props) {
                         <TextField
                             onClick={operation=='Alquiler'?() => hidePicker(false) : () => console.log('venta')}
                             inputRef={register({ required:true})}
-                            helperText={errors.percent && "valor obligatorio"}
+                            helperText={errors.percent ? 'obligatorio' : 'Porcentaje que estás dispuesto a compartir' }
                             defaultValue={props.location ? props.location.propData.comission.percent : null}
                             id="percent"
                             name="percent"
@@ -560,13 +560,11 @@ export default function PropertyForm(props) {
                     </Grid>
 
                     <Grid item xs={12}>
-                        {/* {(imgFiles.length > 0) && */}
                         <Button
                             variant="outlined"
                             type="submit"
                             className={classes.button}
-                        >Confirmar</Button>
-                        {/* } */}
+                        >PUBLICAR</Button>
                     </Grid>
 
                 </Grid>
