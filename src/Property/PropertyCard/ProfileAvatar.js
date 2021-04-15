@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     color: 'white !important',
     padding: '20px 10px',
-    width: '100%',
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
     flexDirection: 'column'
