@@ -394,7 +394,7 @@ export function RequestForm(props) {
               variant="outlined"
               type="submit"
               className={classes.button}
-            >Confirmar</Button>
+            >REQUERIR</Button>
             {/* } */}
           </Grid>
 
