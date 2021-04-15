@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
 
 import Chip from '@material-ui/core/Chip'
-
+import { Rating } from '@material-ui/lab'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
@@ -38,12 +38,16 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(7)
   },
   placeholder: {
-    color: 'gray'
+    color: 'gray',
+    marginTop: 4
   },
   chipWrapper: { display: 'flex', width: '20%' },
   nameWrapper: { display: 'flex', width: '80%' },
   fullName: { display: 'flex', flexDirection: 'row' },
-  prefixe: { color: 'gray', marginRight: 5 }
+  prefixe: { color: 'gray', marginRight: 5 },
+  ratingWrapper: {
+    margin: '4px 0px 0px -3px'
+  }
 }))
 
 const premium = {
@@ -89,6 +93,9 @@ export default function ProfileAvatar (props) {
               </div>
               <div className={classes.placeholder}>
                 {data.role} {data.licenseCode && 'con licencia'}
+              </div>
+              <div className={classes.ratingWrapper}>
+                  <Rating value={data.score} readOnly />
               </div>
             </div>
           </div>
