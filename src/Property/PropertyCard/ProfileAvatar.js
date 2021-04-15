@@ -21,15 +21,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column'
   },
-  inline: {
-    display: 'inline'
-  },
   identity: {
     display: 'flex',
     flexDirection: 'row'
   },
   photo: {
-    paddingRight: '10px',
+    paddingRight: 10,
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
@@ -40,24 +37,27 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(7),
     height: theme.spacing(7)
   },
-
   placeholder: {
     color: 'gray'
-  }
+  },
+  chipWrapper: { display: 'flex', width: '20%' },
+  nameWrapper: { display: 'flex', width: '80%' },
+  fullName: { display: 'flex', flexDirection: 'row' },
+  prefixe: { color: 'gray', marginRight: 5 }
 }))
 
 const premium = {
   backgroundColor: 'rgb(0	190	93)',
   color: 'white',
   fontWeight: 'bold',
-  letterSpacing: '1px'
+  letterSpacing: 1
 }
 
 const member = {
-  backgroundColor: 'rgb(0	110	213	)',
+  backgroundColor: '#0064D5',
   color: 'white',
   fontWeight: 'bold',
-  letterSpacing: '1px'
+  letterSpacing: 1
 }
 
 export default function ProfileAvatar (props) {
@@ -75,29 +75,27 @@ export default function ProfileAvatar (props) {
     return (
       <a className={classes.root} onClick={() => setUserPreview({ ...data })}>
         <div className={classes.identity}>
-          <div style={{ display: 'flex', width: '80%' }}>
+          <div className={classes.nameWrapper}>
             <div className={classes.photo}>
               <Avatar src={data.photoUrl} className={classes.large} />
             </div>
 
             <div className={classes.info}>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                {' '}
-                <div style={{ color: 'gray', marginRight: 5 }}>CBR </div>{' '}
+              <div className={classes.fullName}>
+                <div className={classes.prefixe}>CBR</div>
                 <div>
-                  {' '}
                   {data.name} {data.lname}
                 </div>
               </div>
-              {
+              {data.licenseCode && (
                 <div className={classes.placeholder}>
                   {data.role} con licencia
                 </div>
-              }
+              )}
             </div>
           </div>
 
-          <div style={{ display: 'flex', width: '20%' }}>
+          <div className={classes.chipWrapper}>
             <Chip
               classes={{ root: 'root' }}
               label={data.status}
