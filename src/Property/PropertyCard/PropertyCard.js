@@ -36,28 +36,20 @@ export default function PropertyCard (props) {
   return (
     <Card className={classes.root}>
       <ProfileAvatar uid={uid} />
-      {comission
-        ? (
+      {comission && (
         <CardContent>
           <ImagesPreview urls={photos} />
         </CardContent>
-          )
-        : (
-        <></>
-          )}
+      )}
 
       <CardActions>
         <Grid container spacing={2} direction="column">
           <Grid item direction="column" spacing={2} container>
             <PropertyDetails propData={hit} />
-
             <Divider variant="middle" />
-
             <MoneyView propData={hit} />
           </Grid>
-
           <Divider variant="middle" />
-
           <Features propData={hit} />
         </Grid>
       </CardActions>
