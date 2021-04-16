@@ -52,7 +52,12 @@ const useStyles = makeStyles(() => ({
     backgroundColor: '#4D81ED',
     width: '100%',
     margin: '0 auto'
-  }
+  },
+  nameWrapper: { display: 'flex', flexDirection: 'row', justifyContent: 'center' },
+  fullName: {
+    margin: '0 auto'
+  },
+  prefixe: { fontWeight: '400', marginRight: 5 }
 }))
 
 export default function AgentCard (props) {
@@ -72,8 +77,18 @@ export default function AgentCard (props) {
             <div className={classes.root}>
               <CardHeader
                 className={classes.cardHeader}
-                title={agent.name + ' ' + agent.lname}
-                subheader="Quito"
+                title={
+                  <div className={classes.nameWrapper}>
+                    <span>{agent.name} {agent.lname}</span>
+                  </div>
+                }
+                subheader={
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <span style={{ color: 'lightgray' }}>
+                      {agent.role} {agent.licenseCode && (' con licencia ')}
+                    </span>
+                  </div>
+                }
               />
 
               <div className={classes.flex}>
@@ -115,12 +130,14 @@ export default function AgentCard (props) {
                       variant="outlined"
                     />
                   </Grid>
-                  {agent.licenseCode && <Grid item>
-                    <Chip
-                      label={'Licencia ' + agent.licenseCode}
-                      variant="outlined"
-                    />
-                  </Grid>}
+                  {agent.licenseCode && (
+                    <Grid item>
+                      <Chip
+                        label={'Licencia ' + agent.licenseCode}
+                        variant="outlined"
+                      />
+                    </Grid>
+                  )}
                   <Grid item>
                     <Chip label={'Celular ' + agent.phone} variant="outlined" />
                   </Grid>

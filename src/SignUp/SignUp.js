@@ -91,7 +91,7 @@ function SignUp () {
             experience: 0,
             licenseCode: licenseCode ?? '',
             roles: [],
-            role: isAgent ? 'Agente' : '',
+            role: isAgent ? 'Agente inmobiliario' : '',
             score: 0,
             status: 'Miembro',
             sells: 0,
