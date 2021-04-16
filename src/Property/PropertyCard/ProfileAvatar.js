@@ -83,7 +83,7 @@ export default function ProfileAvatar (props) {
               <Avatar src={data.photoUrl} className={classes.large} />
             </div>
 
-            <div className={classes.info}>
+            <div>
               <div className={classes.fullName}>
                 {data.licenseCode && <div className={classes.prefixe}>CBR</div>}
                 <div>
