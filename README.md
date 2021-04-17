@@ -61,10 +61,10 @@
 
 ## Cambios 1
 
-1. - [ ] Mensaje descriptivo para el campo de comision.
+1. - [x] Mensaje descriptivo para el campo de comision.
 2. - [ ] Agregar validacion en campo de comision en propiedades con operacion de tipo venta. 9% max.
 3. - [x] Agregar las estrellas de rating del usuario.
-4. - [ ] Mostrar prefijo CBR antes del nombre de agentes con licencia(toda la app).
+4. - [x] Mostrar prefijo CBR antes del nombre de agentes con licencia en el header de las propiedades y requerimientos.
 5. - [ ] Validacion de usuario unico con cedula al momento de registrarse.
 6. - [ ] Formuario de edicion de perfil : cambio de sector, ciudad, provincia.
 7. - [ ] Formulario de registro: agregar campos : cedula (obliatorio), sector, ciudad, provincia. Validar longitud de codigo de licencia 4 max.
