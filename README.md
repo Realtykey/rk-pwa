@@ -61,7 +61,7 @@
 ## Cambios 1
 
 1. - [x] Mensaje descriptivo para el campo de comision.
-2. - [ ] Opcion para actualizar numero de celular.
+2. - [x] Opcion para actualizar numero de celular.
 3. - [ ] Agregar validacion en campo de comision en propiedades con operacion de tipo venta. 9% max.
 4. - [x] Agregar las estrellas de rating del usuario.
 5. - [x] Mostrar prefijo CBR antes del nombre de agentes con licencia en el header de las propiedades y requerimientos.
