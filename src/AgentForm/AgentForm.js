@@ -128,13 +128,14 @@ export function AgentForm () {
   const submit = async data => {
     const { app } = await import('./../base')
 
-    const { name, lname, ci, address, experience, licenseCode } = data
+    const { name, lname, ci, phone, address, experience, licenseCode } = data
 
     const user = {
       uid: currentUser.uid,
       name,
       lname,
       ci,
+      phone,
       address,
       experience,
       licenseCode
@@ -142,6 +143,14 @@ export function AgentForm () {
 
     const ref = app.firestore().collection('users').doc(currentUser.uid)
     await ref.set(user, { merge: true })
+
+    if (imgFiles.length === 0) {
+      history.goBack()
+      const { app } = await import('../base')
+      await app.auth()
+        .signOut()
+    }
+
     await uploadImages(ref)
 
     console.log('user data updated')
@@ -190,6 +199,17 @@ export function AgentForm () {
               id="ci"
               name="ci"
               label="Cédula"
+              autoComplete="billing address-line1"
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              defaultValue={userData ? userData.phone : ''}
+              inputRef={register({ required: true })}
+              id="phone"
+              name="phone"
+              label="Celular"
               autoComplete="billing address-line1"
               variant="outlined"
             />
