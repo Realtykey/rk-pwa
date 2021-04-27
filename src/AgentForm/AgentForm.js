@@ -217,7 +217,7 @@ export function AgentForm () {
           <Grid item xs={12} sm={6}>
             <TextField
               defaultValue={userData ? userData.licenseCode : ''}
-              inputRef={register({ required: true })}
+              inputRef={register({ required: userData?.licenseCode? true : false })}
               id="licenseCode"
               name="licenseCode"
               label="Numero de licencia"
