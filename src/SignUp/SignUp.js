@@ -73,7 +73,7 @@ function SignUp () {
   const [license, setLicense] = useState(false)
 
   const submit = async (data) => {
-    const { name, lname, email, password, address, phone, licenseCode } = data
+    const { name, lname, email, password, address, experience, phone, licenseCode, ci } = data
     try {
       const { app } = await import('./../base')
       await app.auth().createUserWithEmailAndPassword(email, password)
@@ -88,14 +88,14 @@ function SignUp () {
             address,
             phone,
             photoUrl: '',
-            experience: 0,
+            experience: experience ?? 0,
             licenseCode: licenseCode ?? '',
             roles: [],
             role: isAgent ? 'Agente inmobiliario' : '',
             score: 0,
             status: 'Miembro',
             sells: 0,
-            ci: ''
+            ci
           })
           unsuscribe()
           history.push('/Home')
@@ -168,6 +168,28 @@ function SignUp () {
                 label="Dirección"
                 name="address"
                 autoComplete="address"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                inputRef={register({ required: true })}
+                variant="outlined"
+                fullWidth
+                id="experience"
+                label="Experiencia"
+                name="experience"
+                autoComplete="experience"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                inputRef={register({ required: true })}
+                variant="outlined"
+                fullWidth
+                id="ci"
+                label="Cédula"
+                name="ci"
+                autoComplete="ci"
               />
             </Grid>
             <Grid item xs={12}>
