@@ -64,6 +64,15 @@ const saveUserDoc = async (userDoc) => {
   return ref.set(userDoc, { merge: true })
 }
 
+const ciExists = async (ci) => {
+  const { app } = await import('./../base')
+  const docRef = app.firestore().collection('users').where('ci', '==', ci)
+
+  const snap = await docRef.get()
+
+  return snap?.docs?.length > 0
+}
+
 function SignUp () {
   const classes = useStyles()
   const history = useHistory()
@@ -74,6 +83,14 @@ function SignUp () {
 
   const submit = async (data) => {
     const { name, lname, email, password, address, experience, phone, licenseCode, ci } = data
+
+    const exists = await ciExists(ci)
+    console.log(`ci exists: ${exists}`)
+    if (exists) {
+      alert('Ya existe un usuario con ese número de cédula')
+      return
+    }
+
     try {
       const { app } = await import('./../base')
       await app.auth().createUserWithEmailAndPassword(email, password)
@@ -102,7 +119,7 @@ function SignUp () {
         }
       })
     } catch (error) {
-      alert(error)
+      console.log(error)
     }
   }
 
@@ -176,7 +193,7 @@ function SignUp () {
                 variant="outlined"
                 fullWidth
                 id="experience"
-                label="Experiencia"
+                label="Experiencia en años"
                 name="experience"
                 autoComplete="experience"
               />
