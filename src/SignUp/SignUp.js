@@ -142,7 +142,7 @@ function SignUp () {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                inputRef={register({ required: true })}
+                inputRef={register}
                 autoComplete="fname"
                 name="name"
                 variant="outlined"
@@ -189,7 +189,7 @@ function SignUp () {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                inputRef={register({ required: true })}
+                inputRef={register}
                 variant="outlined"
                 fullWidth
                 id="experience"

@@ -246,7 +246,7 @@ export function AgentForm () {
 
             <TextField
               defaultValue={userData ? userData.experience : 0}
-              inputRef={register({ required: true })}
+              inputRef={register({ required: userData?.experience? true : false })}
               name="experience"
               id="experience"
               label="Experiencia (años)"
