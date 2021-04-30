@@ -73,7 +73,7 @@ function SignUp () {
   const [license, setLicense] = useState(false)
 
   const submit = async (data) => {
-    const { name, lname, email, password, address, phone, licenseCode } = data
+    const { name, lname, email, password, address, phone, licenseCode, province, city, sector } = data
     try {
       const { app } = await import('./../base')
       await app.auth().createUserWithEmailAndPassword(email, password)
@@ -95,7 +95,10 @@ function SignUp () {
             score: 0,
             status: 'Miembro',
             sells: 0,
-            ci: ''
+            ci: '',
+            province,
+            city,
+            sector
           })
           unsuscribe()
           history.push('/Home')
@@ -164,10 +167,32 @@ function SignUp () {
                 inputRef={register({ required: true })}
                 variant="outlined"
                 fullWidth
-                id="address"
-                label="Dirección"
-                name="address"
-                autoComplete="address"
+                id="province"
+                label="Provincia"
+                name="province"
+                autoComplete="province"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                inputRef={register({ required: true })}
+                variant="outlined"
+                fullWidth
+                id="city"
+                label="Ciudad"
+                name="city"
+                autoComplete="city"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                inputRef={register({ required: true })}
+                variant="outlined"
+                fullWidth
+                id="sector"
+                label="Sector"
+                name="sector"
+                autoComplete="sector"
               />
             </Grid>
             <Grid item xs={12}>
