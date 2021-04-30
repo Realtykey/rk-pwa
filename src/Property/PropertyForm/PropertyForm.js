@@ -220,6 +220,11 @@ export default function PropertyForm (props) {
   }
 
   const submit = async (data) => {
+    if (data.percent > 9) {
+      alert('La comisión no puede ser mayor a 9%.')
+      return
+    }
+
     if (data.parkings) {
       data.parkings = Number(data.parkings)
     }
