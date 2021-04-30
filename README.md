@@ -55,19 +55,21 @@
 
 1. - [ ] En buscador de agentes remover filtro de negocios concretados, habilitar motor de busqueda.
 2. - [ ] Icono de los 'TextInput' debe ir a la izquierda del 'field' y no en el 'label'.
-3. - [ ] Usuarios nuevos no tienen acceso a resultados los buscadores.
+3. - [x] Usuarios nuevos no tienen acceso a resultados los buscadores.
 4. - [ ] Propiedad de tipo terreno no se guarda correctamente.
 
 ## Cambios 1
 
 1. - [x] Mensaje descriptivo para el campo de comision.
 2. - [x] Opcion para actualizar numero de celular.
-3. - [ ] Agregar validacion en campo de comision en propiedades con operacion de tipo venta. 9% max.
+3. - [x] Agregar validacion en campo de comision en propiedades con operacion de tipo venta. 9% max.
 4. - [x] Agregar las estrellas de rating del usuario.
 5. - [x] Mostrar prefijo CBR antes del nombre de agentes con licencia en el header de las propiedades y requerimientos.
-6. - [ ] Validacion de usuario unico con cedula al momento de registrarse.
-7. - [ ] Formuario de edicion de perfil : cambio de sector, ciudad, provincia.
-8. - [ ] Formulario de registro: agregar campos : cedula (obliatorio), sector, ciudad, provincia. Validar longitud de codigo de licencia 4 max.
-9. - [ ] Actualizar flujo creacion, guardado, edicion del perfil de usuario.
-10. - [ ] Label del boton confirmar debe decir PUBLICAR y REQUERIR en formularios de propiedad y requerimiento respectivamente.
-11. - [ ] Agregar mensae validacion de inputs tipo modal en formularios.
+6. - [x] Validacion de usuario unico con cedula al momento de registrarse.
+7. - [ ] Validacion cedula max 10 digitos solo numeros.
+8. - [ ] Vista previa de foto de usuario en formulario de edicion de perfil.
+9. - [x] Formuario de edicion de perfil : cambio de sector, ciudad, provincia.
+10. - [x] Formulario de registro: agregar campos : cedula (obliatorio), sector, ciudad, provincia. Validar longitud de codigo de licencia 4 max.
+11. - [x] Actualizar flujo creacion, guardado, edicion del perfil de usuario.
+12. - [x] Label del boton confirmar debe decir PUBLICAR y REQUERIR en formularios de propiedad y requerimiento respectivamente.
+13. - [ ] Agregar mensae validacion de inputs tipo modal en formularios.
