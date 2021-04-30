@@ -82,7 +82,7 @@ function SignUp () {
   const [license, setLicense] = useState(false)
 
   const submit = async (data) => {
-    const { name, lname, email, password, address, experience, phone, licenseCode, ci } = data
+    const { name, lname, email, password, phone, licenseCode, ci, experience, province, city, sector } = data
 
     const exists = await ciExists(ci)
     console.log(`ci exists: ${exists}`)
@@ -102,7 +102,7 @@ function SignUp () {
             name,
             lname,
             email,
-            address,
+            address: '',
             phone,
             photoUrl: '',
             experience: experience ?? 0,
@@ -112,7 +112,10 @@ function SignUp () {
             score: 0,
             status: 'Miembro',
             sells: 0,
-            ci
+            ci,
+            province,
+            city,
+            sector
           })
           unsuscribe()
           history.push('/Home')
@@ -181,10 +184,32 @@ function SignUp () {
                 inputRef={register({ required: true })}
                 variant="outlined"
                 fullWidth
-                id="address"
-                label="Dirección"
-                name="address"
-                autoComplete="address"
+                id="province"
+                label="Provincia"
+                name="province"
+                autoComplete="province"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                inputRef={register({ required: true })}
+                variant="outlined"
+                fullWidth
+                id="city"
+                label="Ciudad"
+                name="city"
+                autoComplete="city"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                inputRef={register({ required: true })}
+                variant="outlined"
+                fullWidth
+                id="sector"
+                label="Sector"
+                name="sector"
+                autoComplete="sector"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
