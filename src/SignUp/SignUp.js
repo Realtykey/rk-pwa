@@ -64,6 +64,15 @@ const saveUserDoc = async (userDoc) => {
   return ref.set(userDoc, { merge: true })
 }
 
+const ciExists = async (ci) => {
+  const { app } = await import('./../base')
+  const docRef = app.firestore().collection('users').where('ci', '==', ci)
+
+  const snap = await docRef.get()
+
+  return snap?.docs?.length > 0
+}
+
 function SignUp () {
   const classes = useStyles()
   const history = useHistory()
@@ -73,7 +82,15 @@ function SignUp () {
   const [license, setLicense] = useState(false)
 
   const submit = async (data) => {
-    const { name, lname, email, password, address, phone, licenseCode } = data
+    const { name, lname, email, password, address, experience, phone, licenseCode, ci } = data
+
+    const exists = await ciExists(ci)
+    console.log(`ci exists: ${exists}`)
+    if (exists) {
+      alert('Ya existe un usuario con ese número de cédula')
+      return
+    }
+
     try {
       const { app } = await import('./../base')
       await app.auth().createUserWithEmailAndPassword(email, password)
@@ -88,21 +105,21 @@ function SignUp () {
             address,
             phone,
             photoUrl: '',
-            experience: 0,
+            experience: experience ?? 0,
             licenseCode: licenseCode ?? '',
             roles: [],
             role: isAgent ? 'Agente inmobiliario' : '',
             score: 0,
             status: 'Miembro',
             sells: 0,
-            ci: ''
+            ci
           })
           unsuscribe()
           history.push('/Home')
         }
       })
     } catch (error) {
-      alert(error)
+      console.log(error)
     }
   }
 
@@ -125,7 +142,7 @@ function SignUp () {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                inputRef={register({ required: true })}
+                inputRef={register}
                 autoComplete="fname"
                 name="name"
                 variant="outlined"
@@ -168,6 +185,28 @@ function SignUp () {
                 label="Dirección"
                 name="address"
                 autoComplete="address"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                inputRef={register}
+                variant="outlined"
+                fullWidth
+                id="experience"
+                label="Experiencia en años"
+                name="experience"
+                autoComplete="experience"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                inputRef={register({ required: true })}
+                variant="outlined"
+                fullWidth
+                id="ci"
+                label="Cédula"
+                name="ci"
+                autoComplete="ci"
               />
             </Grid>
             <Grid item xs={12}>
