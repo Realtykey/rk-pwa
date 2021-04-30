@@ -4,6 +4,8 @@
 1. - Acuerdo de uso. Cierre de servicios unilateral.
 2. - Acuerdo de cierre de negocios con contrato que se acepta para acceder a la app.
 3. - Funcionalidad para agregar clientes potenciales a un requerimiento.
+4. - Dashboard https://www.clicdata.com/es/ejemplos/ventas/
+5. - Administrador de matches.
 
 ## Correcciones 2
 
@@ -73,3 +75,10 @@
 11. - [x] Actualizar flujo creacion, guardado, edicion del perfil de usuario.
 12. - [x] Label del boton confirmar debe decir PUBLICAR y REQUERIR en formularios de propiedad y requerimiento respectivamente.
 13. - [ ] Agregar mensae validacion de inputs tipo modal en formularios.
+
+## Avances
+
+1. - [ ] Noticias
+2. - [ ] Administrador
+3. - [ ] Feature gratuito
+
