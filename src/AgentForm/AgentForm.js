@@ -124,11 +124,30 @@ export function AgentForm () {
 
     []
   )
+  const ciExists = async (ci) => {
+    const { app } = await import('./../base')
+    const docRef = app.firestore().collection('users').where('ci', '==', ci)
+
+    const snap = await docRef.get()
+
+    return snap?.docs?.length > 0
+  }
 
   const submit = async data => {
     const { app } = await import('./../base')
 
-    const { name, lname, ci, phone, address, experience, licenseCode } = data
+    const { name, lname, ci, phone, experience, licenseCode, province, city, sector } = data
+
+    const exists = await ciExists(ci)
+    console.log(`ci exists: ${exists}`)
+    if (exists) {
+      if (ci === userData.ci) {
+        console.log('misma cédula')
+      } else {
+        alert('Ya existe un usuario con ese número de cédula')
+        return
+      }
+    }
 
     const user = {
       uid: currentUser.uid,
@@ -136,9 +155,12 @@ export function AgentForm () {
       lname,
       ci,
       phone,
-      address,
+      address: '',
       experience,
-      licenseCode
+      licenseCode,
+      province,
+      city,
+      sector
     }
 
     const ref = app.firestore().collection('users').doc(currentUser.uid)
@@ -217,7 +239,7 @@ export function AgentForm () {
           <Grid item xs={12} sm={6}>
             <TextField
               defaultValue={userData ? userData.licenseCode : ''}
-              inputRef={register({ required: userData?.licenseCode? true : false })}
+              inputRef={register({ required: !!userData?.licenseCode })}
               id="licenseCode"
               name="licenseCode"
               label="Numero de licencia"
@@ -229,24 +251,46 @@ export function AgentForm () {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              defaultValue={userData ? userData.address : ''}
-              inputRef={register({ required: true })}
-              id="address"
-              name="address"
-              label="Sector (Ciudad)"
-              type="text"
-              InputLabelProps={{
-                shrink: true
-              }}
-              variant="outlined"
-            />
-          </Grid>
+              <TextField
+                defaultValue={userData ? userData.province : ''}
+                inputRef={register({ required: true })}
+                variant="outlined"
+                fullWidth
+                id="province"
+                label="Provincia"
+                name="province"
+                autoComplete="province"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                defaultValue={userData ? userData.city : ''}
+                inputRef={register({ required: true })}
+                variant="outlined"
+                fullWidth
+                id="city"
+                label="Ciudad"
+                name="city"
+                autoComplete="city"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                defaultValue={userData ? userData.sector : ''}
+                inputRef={register({ required: true })}
+                variant="outlined"
+                fullWidth
+                id="sector"
+                label="Sector"
+                name="sector"
+                autoComplete="sector"
+              />
+            </Grid>
           <Grid item xs={12} sm={6}>
 
             <TextField
               defaultValue={userData ? userData.experience : 0}
-              inputRef={register({ required: userData?.experience? true : false })}
+              inputRef={register({ required: !!userData?.experience })}
               name="experience"
               id="experience"
               label="Experiencia (años)"
