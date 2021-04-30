@@ -73,7 +73,7 @@ function SignUp () {
   const [license, setLicense] = useState(false)
 
   const submit = async (data) => {
-    const { name, lname, email, password, address, phone, licenseCode, province, city, sector } = data
+    const { name, lname, email, password, phone, licenseCode, province, city, sector } = data
     try {
       const { app } = await import('./../base')
       await app.auth().createUserWithEmailAndPassword(email, password)
@@ -85,7 +85,7 @@ function SignUp () {
             name,
             lname,
             email,
-            address,
+            address: '',
             phone,
             photoUrl: '',
             experience: 0,
