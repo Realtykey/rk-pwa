@@ -74,7 +74,7 @@
 10. - [x] Formulario de registro: agregar campos : cedula (obliatorio), sector, ciudad, provincia. Validar longitud de codigo de licencia 4 max.
 11. - [x] Actualizar flujo creacion, guardado, edicion del perfil de usuario.
 12. - [x] Label del boton confirmar debe decir PUBLICAR y REQUERIR en formularios de propiedad y requerimiento respectivamente.
-13. - [ ] Agregar mensae validacion de inputs tipo modal en formularios.
+13. - [ ] Agregar mensaje validacion de inputs tipo modal en formularios.
 
 ## Avances
 
