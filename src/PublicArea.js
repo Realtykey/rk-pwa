@@ -130,7 +130,7 @@ export default function PublicArea () {
 
       refinementAttributes = []
 
-      rangeAtributes = [{ name: 'matchesCount', label: 'negocios cerrados' }]
+      rangeAtributes = []
       break
 
     case 'req':
