@@ -1,4 +1,3 @@
-//
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
@@ -6,14 +5,12 @@ import Container from '@material-ui/core/Container'
 import Link from '@material-ui/core/Link'
 import Modal from '@material-ui/core/Modal'
 import PropertyCard from './Property/PropertyCard/PropertyCard'
-
+import AgentItem from './AgentItem'
 import AgentCard from './AgentCard/AgentCard'
 
 import Search from './SearchEngine/Search'
 
-/* ENRUTAMIENTO */
 import { useParams } from 'react-router-dom'
-// redux
 import { useSelector, useDispatch } from 'react-redux'
 
 import './App.css'
@@ -91,10 +88,8 @@ function getModalStyle () {
 export default function PublicArea () {
   const dispatch = useDispatch()
   const classes = useStyles()
-  // area type (property,request)
   const { type } = useParams()
 
-  // modal
   const [modalStyle] = React.useState(getModalStyle)
   const userPreview = useSelector((state) => state.general.userPreview)
   const setUserPreview = (userPreview) =>
@@ -122,7 +117,7 @@ export default function PublicArea () {
   ]
 
   let indexName
-  const hitComponent = PropertyCard
+  let hitComponent = PropertyCard
 
   switch (type) {
     case 'agents':
@@ -131,6 +126,7 @@ export default function PublicArea () {
       refinementAttributes = []
 
       rangeAtributes = []
+      hitComponent = AgentItem
       break
 
     case 'req':

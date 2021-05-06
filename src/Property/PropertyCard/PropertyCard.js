@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     margin: 'auto',
     marginBottom: 30,
+    borderRadius: 15,
     backgroundColor: theme.palette.background.custom,
     fontSize: 14,
     width: 600,
