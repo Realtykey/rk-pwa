@@ -77,8 +77,8 @@ export default function Search ({
       </div>
       <Stats
         translations={{
-          stats (nbHits, timeSpentMS) {
-            return `${nbHits} resultados`
+          stats (nbHits) {
+            return `${nbHits} resultado${nbHits === 1 ? '' : 's'}`
           }
         }}
       />
