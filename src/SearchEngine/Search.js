@@ -51,6 +51,7 @@ export default function Search ({
         className="refinements"
       >
         <Grid container justify="center">
+          {/* eslint-disable-next-line react/prop-types */}
           {rangeAtributes.map((attribute) => (
             <Grid item xs={12} sm={6} md={3} lg={3} key={uuidv4()}>
               <RangeInput
@@ -65,6 +66,7 @@ export default function Search ({
         </Grid>
       </form>
       <div className="refinements">
+        {/* eslint-disable-next-line react/prop-types */}
         {refinementAttributes.map((attribute) => (
           <MenuSelect
             translations={{ seeAllOption: attribute.label }}
