@@ -95,9 +95,9 @@ export default function AgentItem (props) {
             label="Dirección"
             value={'la china y la conchinchina'}
           />
-          <Detail icon={faIdBadge} label="Licencia" value={licenseCode} />
+          {licenseCode ? <Detail icon={faIdBadge} label="Licencia" value={licenseCode} /> : <></>}
           <Detail icon={faPhone} label="Celular" value={phone} />
-          <Detail icon={faHourglass} label="Experiencia" value={experience} />
+          {experience ? <Detail icon={faHourglass} label="Experiencia" value={experience} /> : <></>}
         </Grid>
       </Grid>
     )
@@ -110,7 +110,9 @@ export default function AgentItem (props) {
 
     return (
       <Grid
-        flexDirection="row"
+        item
+        container
+        direction="row"
         xs={grids}
         sm={grids}
         md={grids}
@@ -135,9 +137,9 @@ export default function AgentItem (props) {
   }
 
   Detail.propTypes = {
-    icon: PropTypes.node.isRequired,
+    icon: PropTypes.any.isRequired,
     label: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired
+    value: PropTypes.any.isRequired
   }
 
   const SellsCount = () => {
@@ -196,9 +198,9 @@ AgentItem.propTypes = {
     photoUrl: PropTypes.string,
     sells: PropTypes.number,
     licenseCode: PropTypes.string,
-    role: PropTypes.string,
+    role: PropTypes.string, 
     score: PropTypes.number,
-    experience: PropTypes.number,
+    experience: PropTypes.any,
     phone: PropTypes.string
   }).isRequired
 }

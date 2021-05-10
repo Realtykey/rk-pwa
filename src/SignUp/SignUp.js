@@ -103,6 +103,13 @@ function SignUp () {
       return
     }
 
+    if (experience) {
+      if (experience > 30) {
+        alert('No es posible ingresar mas de 30 años de experiencia')
+        return
+      }
+    }
+
     try {
       const { app } = await import('./../base')
       await app.auth().createUserWithEmailAndPassword(email, password)
@@ -117,7 +124,7 @@ function SignUp () {
             address: '',
             phone,
             photoUrl: '',
-            experience: experience ?? 0,
+            experience: '',
             licenseCode: licenseCode ?? '',
             roles: [],
             role: isAgent ? 'Agente inmobiliario' : '',
@@ -233,6 +240,7 @@ function SignUp () {
                 label="Experiencia en años"
                 name="experience"
                 autoComplete="experience"
+                type="number"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
