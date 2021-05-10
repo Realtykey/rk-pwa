@@ -82,7 +82,19 @@ function SignUp () {
   const [license, setLicense] = useState(false)
 
   const submit = async (data) => {
-    const { name, lname, email, password, phone, licenseCode, ci, experience, province, city, sector } = data
+    const {
+      name,
+      lname,
+      email,
+      password,
+      phone,
+      licenseCode,
+      ci,
+      experience,
+      province,
+      city,
+      sector
+    } = data
 
     const exists = await ciExists(ci)
     console.log(`ci exists: ${exists}`)
@@ -245,25 +257,27 @@ function SignUp () {
                 name="isAgent"
               />
             </Grid>
-            {isAgent && <Grid item xs={12}>
-              ¿Tienes licencia ACBIR?
-              <Switch
-                checked={license}
-                onChange={() => setLicense(!license)}
-                name="checkedB"
-              />
-              {license === true && (
-                <TextField
-                  inputRef={register({ required: true })}
-                  variant="outlined"
-                  fullWidth
-                  id="licenseCode"
-                  label="Reg. Nº"
-                  name="licenseCode"
-                  autoComplete="licenseCode"
+            {isAgent && (
+              <Grid item xs={12}>
+                ¿Tienes licencia ACBIR?
+                <Switch
+                  checked={license}
+                  onChange={() => setLicense(!license)}
+                  name="checkedB"
                 />
-              )}
-            </Grid>}
+                {license === true && (
+                  <TextField
+                    inputRef={register({ required: true })}
+                    variant="outlined"
+                    fullWidth
+                    id="licenseCode"
+                    label="Reg. Nº"
+                    name="licenseCode"
+                    autoComplete="licenseCode"
+                  />
+                )}
+              </Grid>
+            )}
             <Grid item xs={12}>
               <TextField
                 inputRef={register({ required: true })}
