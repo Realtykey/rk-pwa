@@ -67,7 +67,10 @@ export default function AgentItem (props) {
     role,
     score,
     experience,
-    phone
+    phone,
+    province,
+    city,
+    sector
   } = hit
 
   const UserTitle = () => {
@@ -80,24 +83,35 @@ export default function AgentItem (props) {
           </div>
         </div>
         <div className={classes.placeholder}>
-          {role} {licenseCode && 'con licencia'}
+          {role} {licenseCode && ' con licencia'}
         </div>
       </div>
     )
   }
+  const address = `${province ? province + ', ' : ''}${
+    city ? city + ', ' : ''
+  } ${sector ?? ''}`
 
   const UserDetails = () => {
     return (
       <Grid container>
         <Grid container spacing={1}>
-          <Detail
-            icon={faMapMarkerAlt}
-            label="Dirección"
-            value={'la china y la conchinchina'}
-          />
-          {licenseCode ? <Detail icon={faIdBadge} label="Licencia" value={licenseCode} /> : <></>}
+          <Detail icon={faMapMarkerAlt} label="Dirección" value={address} />
+          {licenseCode
+            ? (
+            <Detail icon={faIdBadge} label="Licencia" value={licenseCode} />
+              )
+            : (
+            <></>
+              )}
           <Detail icon={faPhone} label="Celular" value={phone} />
-          {experience ? <Detail icon={faHourglass} label="Experiencia" value={experience} /> : <></>}
+          {experience
+            ? (
+            <Detail icon={faHourglass} label="Experiencia" value={experience} />
+              )
+            : (
+            <></>
+              )}
         </Grid>
       </Grid>
     )
@@ -198,7 +212,7 @@ AgentItem.propTypes = {
     photoUrl: PropTypes.string,
     sells: PropTypes.number,
     licenseCode: PropTypes.string,
-    role: PropTypes.string, 
+    role: PropTypes.string,
     score: PropTypes.number,
     experience: PropTypes.any,
     phone: PropTypes.string

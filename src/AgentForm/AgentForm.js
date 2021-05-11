@@ -42,7 +42,7 @@ export function AgentForm () {
   // select state
   const { currentUser } = useContext(AuthContext)
   const { handleSubmit, register } = useForm()
-  const userData = useSelector(state => state.general.userData)
+  const userData = useSelector((state) => state.general.userData)
   const history = useHistory()
 
   // image local files
@@ -55,17 +55,20 @@ export function AgentForm () {
     console.log(id)
     console.log('uploading')
     const progressBar = document.getElementById('progressBar')
-    Array.prototype.forEach.call(imgFiles,
-      async (imgFile) => {
-        const { firebase } = await import('./../base')
+    Array.prototype.forEach.call(imgFiles, async (imgFile) => {
+      const { firebase } = await import('./../base')
 
-        // create storage ref
-        const storageRef = firebase.storage().ref(`users/${currentUser.uid}/${imgFile.name}`)
-        // upload file
-        const task = storageRef.put(imgFile)
+      // create storage ref
+      const storageRef = firebase
+        .storage()
+        .ref(`users/${currentUser.uid}/${imgFile.name}`)
+      // upload file
+      const task = storageRef.put(imgFile)
 
-        // update progress bar
-        const unsuscribe = task.on('state_changed', function progress (snap) {
+      // update progress bar
+      const unsuscribe = task.on(
+        'state_changed',
+        function progress (snap) {
           if (progressBar) {
             const percentage = (snap.bytesTransferred / snap.totalBytes) * 100
             progressBar.value = percentage
@@ -83,47 +86,42 @@ export function AgentForm () {
           const downloadUrl = await task.snapshot.ref.getDownloadURL()
 
           // update photos atribute (array) of the prop doc
-          await docRef.set({
-            photoUrl: downloadUrl
-          }, { merge: true })
+          await docRef.set(
+            {
+              photoUrl: downloadUrl
+            },
+            { merge: true }
+          )
 
           history.goBack()
           const { app } = await import('../base')
-          await app.auth()
-            .signOut()
+          await app.auth().signOut()
         }
-        )
-      }
-    )
+      )
+    })
   }
 
-  useEffect(
-    () => {
-      const fileButton = document.getElementById('fileButton')
-      fileButton.addEventListener('change', function (e) {
-        // get file or files
-        const files = fileButton.files
-        setImgFiles(files)
-        console.log(files)
-        const urls = []
-        // extract images urls
-        Array.prototype.forEach.call(files,
-          (file) => {
-            const url = window.URL.createObjectURL(file).toString()
-            console.log(url)
-            urls.push(url)
-          }
-        )
-
-        console.log(urls)
-        // images loaded
-        setImgRefs(urls)
-        console.log('urls array size ' + urls)
+  useEffect(() => {
+    const fileButton = document.getElementById('fileButton')
+    fileButton.addEventListener('change', function (e) {
+      // get file or files
+      const files = fileButton.files
+      setImgFiles(files)
+      console.log(files)
+      const urls = []
+      // extract images urls
+      Array.prototype.forEach.call(files, (file) => {
+        const url = window.URL.createObjectURL(file).toString()
+        console.log(url)
+        urls.push(url)
       })
-    },
 
-    []
-  )
+      console.log(urls)
+      // images loaded
+      setImgRefs(urls)
+      console.log('urls array size ' + urls)
+    })
+  }, [])
   const ciExists = async (ci) => {
     const { app } = await import('./../base')
     const docRef = app.firestore().collection('users').where('ci', '==', ci)
@@ -133,10 +131,20 @@ export function AgentForm () {
     return snap?.docs?.length > 0
   }
 
-  const submit = async data => {
+  const submit = async (data) => {
     const { app } = await import('./../base')
 
-    const { name, lname, ci, phone, experience, licenseCode, province, city, sector } = data
+    const {
+      name,
+      lname,
+      ci,
+      phone,
+      experience,
+      licenseCode,
+      province,
+      city,
+      sector
+    } = data
 
     const exists = await ciExists(ci)
     console.log(`ci exists: ${exists}`)
@@ -163,14 +171,17 @@ export function AgentForm () {
       sector
     }
 
+    if (!userData.role && licenseCode) {
+      user.role = 'Agente inmobiliario'
+    }
+
     const ref = app.firestore().collection('users').doc(currentUser.uid)
     await ref.set(user, { merge: true })
 
     if (imgFiles.length === 0) {
       history.goBack()
       const { app } = await import('../base')
-      await app.auth()
-        .signOut()
+      await app.auth().signOut()
     }
 
     await uploadImages(ref)
@@ -251,43 +262,42 @@ export function AgentForm () {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-              <TextField
-                defaultValue={userData ? userData.province : ''}
-                inputRef={register({ required: true })}
-                variant="outlined"
-                fullWidth
-                id="province"
-                label="Provincia"
-                name="province"
-                autoComplete="province"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                defaultValue={userData ? userData.city : ''}
-                inputRef={register({ required: true })}
-                variant="outlined"
-                fullWidth
-                id="city"
-                label="Ciudad"
-                name="city"
-                autoComplete="city"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                defaultValue={userData ? userData.sector : ''}
-                inputRef={register({ required: true })}
-                variant="outlined"
-                fullWidth
-                id="sector"
-                label="Sector"
-                name="sector"
-                autoComplete="sector"
-              />
-            </Grid>
+            <TextField
+              defaultValue={userData ? userData.province : ''}
+              inputRef={register({ required: true })}
+              variant="outlined"
+              fullWidth
+              id="province"
+              label="Provincia"
+              name="province"
+              autoComplete="province"
+            />
+          </Grid>
           <Grid item xs={12} sm={6}>
-
+            <TextField
+              defaultValue={userData ? userData.city : ''}
+              inputRef={register({ required: true })}
+              variant="outlined"
+              fullWidth
+              id="city"
+              label="Ciudad"
+              name="city"
+              autoComplete="city"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              defaultValue={userData ? userData.sector : ''}
+              inputRef={register({ required: true })}
+              variant="outlined"
+              fullWidth
+              id="sector"
+              label="Sector"
+              name="sector"
+              autoComplete="sector"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
             <TextField
               defaultValue={userData ? userData.experience : 0}
               inputRef={register({ required: !!userData?.experience })}
@@ -300,18 +310,29 @@ export function AgentForm () {
               }}
               variant="outlined"
             />
-
           </Grid>
           <Grid item xs={12} sm={6}>
             <label htmlFor="fileButton">
-              <IconButton color="primary" aria-label="upload picture" component="span">
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="span"
+              >
                 <PhotoCamera />
               </IconButton>
             </label>
 
-            <input hidden="hidden" accept="image/*" className={classes.input} id="fileButton" type="file" />
+            <input
+              hidden="hidden"
+              accept="image/*"
+              className={classes.input}
+              id="fileButton"
+              type="file"
+            />
 
-            <progress id="progressBar" value="0" max="100"> </progress>
+            <progress id="progressBar" value="0" max="100">
+              {' '}
+            </progress>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Button
