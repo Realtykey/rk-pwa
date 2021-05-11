@@ -52,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
   },
   iconWrapper: {
     fontSize: '10px'
+  },
+  titleWrapper: {
+    fontSize: 19
   }
 }))
 
@@ -75,7 +78,7 @@ export default function AgentItem (props) {
 
   const UserTitle = () => {
     return (
-      <div>
+      <div className={classes.titleWrapper} >
         <div className={classes.fullName}>
           {licenseCode && <div className={classes.prefixe}>CBR</div>}
           <div>
@@ -96,18 +99,18 @@ export default function AgentItem (props) {
     return (
       <Grid container>
         <Grid container spacing={1}>
-          <Detail icon={faMapMarkerAlt} label="Dirección" value={address} />
+          <Detail icon={faMapMarkerAlt} label="Sector:" value={address} />
           {licenseCode
             ? (
-            <Detail icon={faIdBadge} label="Licencia" value={licenseCode} />
+            <Detail icon={faIdBadge} label="Licencia:" value={licenseCode} />
               )
             : (
             <></>
               )}
-          <Detail icon={faPhone} label="Celular" value={phone} />
+          <Detail icon={faPhone} label="Celular:" value={phone} />
           {experience
             ? (
-            <Detail icon={faHourglass} label="Experiencia" value={experience} />
+            <Detail icon={faHourglass} label="Experiencia:" value={experience} />
               )
             : (
             <></>
@@ -120,7 +123,7 @@ export default function AgentItem (props) {
   const Detail = (props) => {
     const { icon, label, value } = props
 
-    const grids = label === 'Dirección' ? 12 : 6
+    const grids = 12
 
     return (
       <Grid
@@ -166,7 +169,7 @@ export default function AgentItem (props) {
         </Typography>
         <Typography style={{ color: 'gray', marginTop: 4 }}>
           {' '}
-          negocios cerrados
+          Negocios cerrados
         </Typography>
       </div>
     )
