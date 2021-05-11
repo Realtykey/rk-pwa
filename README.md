@@ -82,3 +82,13 @@
 2. - [ ] Administrador
 3. - [ ] Feature gratuito
 
+## Correcciones 6
+1. - [ ] Cambiar el lugar del numero de telefono en item de agente para eliminar espacio vacío.
+
+## Cambios 7
+
+1. - [ ] Ubicacion asociada a usuario se refiere a "sector en el que trabajo".
+2. - [ ] Mensaje de aviso de que se trata de la direccion de trabajo del agente.
+3. - [ ] Seleccion de rol agencia o agente en registro de usuario y agent item.
+4. - [ ] Formulario de edición de perfil debe adaptarse al tipo de usuario: agente/agencia
+5. - [ ] Chip input para agregar sector:  
