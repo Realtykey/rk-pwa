@@ -99,15 +99,15 @@ export default function AgentItem (props) {
     return (
       <Grid container>
         <Grid container spacing={1}>
-          <Detail icon={faMapMarkerAlt} label="Sector:" value={address} />
+          <Detail icon={faMapMarkerAlt} label="" value={address} />
           {licenseCode
             ? (
-            <Detail icon={faIdBadge} label="Licencia:" value={licenseCode} />
+            <Detail icon={faIdBadge} label="" value={licenseCode} />
               )
             : (
             <></>
               )}
-          <Detail icon={faPhone} label="Celular:" value={phone} />
+          <Detail icon={faPhone} label="" value={phone} />
           {experience
             ? (
             <Detail icon={faHourglass} label="Experiencia:" value={experience} />
