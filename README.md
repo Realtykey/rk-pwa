@@ -84,6 +84,7 @@
 
 ## Correcciones 6
 1. - [ ] Cambiar el lugar del numero de telefono en item de agente para eliminar espacio vacío.
+2. - [ ] Epacio vacío que desacomoda negocios cerrados en agent item cuando experiencia o licencia están vacíos.
 
 ## Cambios 7
 
