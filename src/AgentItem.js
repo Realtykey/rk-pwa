@@ -48,13 +48,15 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   sellsCount: {
-    textAlign: 'center'
+    textAlign: 'center',
+    marginTop: -28
   },
   iconWrapper: {
     fontSize: '10px'
   },
   titleWrapper: {
-    fontSize: 19
+    fontSize: 19,
+    marginBottom: 10
   }
 }))
 
@@ -78,7 +80,7 @@ export default function AgentItem (props) {
 
   const UserTitle = () => {
     return (
-      <div className={classes.titleWrapper} >
+      <div className={classes.titleWrapper}>
         <div className={classes.fullName}>
           {licenseCode && <div className={classes.prefixe}>CBR</div>}
           <div>
@@ -99,64 +101,71 @@ export default function AgentItem (props) {
     return (
       <Grid container>
         <Grid container spacing={1}>
-          <Detail icon={faMapMarkerAlt} label="" value={address} />
-          {licenseCode
-            ? (
-            <Detail icon={faIdBadge} label="" value={licenseCode} />
-              )
-            : (
-            <></>
-              )}
-          <Detail icon={faPhone} label="" value={phone} />
-          {experience
-            ? (
-            <Detail icon={faHourglass} label="Experiencia:" value={experience} />
-              )
-            : (
-            <></>
-              )}
+          <Detail icon={faMapMarkerAlt} value={address} />
+          {licenseCode && <Detail icon={faIdBadge} value={licenseCode} />}
+          <Detail icon={faPhone} value={phone} />
+          {experience && (
+            <Grid item container xs={10} sm md lg xl>
+              <Detail
+                icon={faHourglass}
+                units="años de experiencia"
+                value={experience}
+              />
+            </Grid>
+          )}
+          <Grid item container justify="flex-end" xs={2} sm md lg xl>
+            <SellsCount />
+          </Grid>
         </Grid>
       </Grid>
     )
   }
 
   const Detail = (props) => {
-    const { icon, label, value } = props
-
-    const grids = 12
+    const { icon, label, units, value } = props
 
     return (
       <Grid
         item
         container
         direction="row"
-        xs={grids}
-        sm={grids}
-        md={grids}
-        lg={grids}
-        style={{ marginBottom: 10 }}
+        style={{
+          marginBottom: 10,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center'
+        }}
       >
         <Grid container spacing={1}>
           <Grid style={{ color: 'gray' }} item>
             <FontAwesomeIcon size="lg" icon={icon} />
           </Grid>
-          <Grid style={{ color: 'gray' }} item>
-            <Typography>{label}</Typography>
-          </Grid>
+          {label && (
+            <Grid style={{ color: 'gray' }} item>
+              <Typography>{label}</Typography>
+            </Grid>
+          )}
           <Grid item>
-            <Typography>
-              {label === 'Experiencia' ? value + ' años' : value + ''}
-            </Typography>
+            <div style={{ display: 'block' }}>
+              <span>{value}</span>{' '}
+              <span style={{ color: 'gray' }}>{units}</span>
+            </div>
           </Grid>
         </Grid>
       </Grid>
     )
   }
 
+  Detail.defaultProps = {
+    units: '',
+    label: ''
+  }
+
   Detail.propTypes = {
     icon: PropTypes.any.isRequired,
-    label: PropTypes.string.isRequired,
-    value: PropTypes.any.isRequired
+    label: PropTypes.string,
+    value: PropTypes.any.isRequired,
+    units: PropTypes.string
   }
 
   const SellsCount = () => {
@@ -193,11 +202,8 @@ export default function AgentItem (props) {
           </Grid>
           <Grid item container direction="column" xs={8} sm={8} md={8} lg={8}>
             <Grid item container style={{ marginBottom: 10 }}>
-              <Grid item xs={9} sm={9} md={9} lg={9}>
+              <Grid item>
                 <UserTitle />
-              </Grid>
-              <Grid item xs={3} sm={3} md={3} lg={3}>
-                <SellsCount />
               </Grid>
             </Grid>
             <UserDetails />
@@ -218,6 +224,9 @@ AgentItem.propTypes = {
     role: PropTypes.string,
     score: PropTypes.number,
     experience: PropTypes.any,
-    phone: PropTypes.string
+    phone: PropTypes.string,
+    province: PropTypes.string,
+    city: PropTypes.string,
+    sector: PropTypes.string
   }).isRequired
 }
