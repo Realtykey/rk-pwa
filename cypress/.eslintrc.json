@@ -1,5 +1,4 @@
 {
-  "projectId": "unf7ty",
   "extends": [
     "plugin:cypress/recommended"
   ]
