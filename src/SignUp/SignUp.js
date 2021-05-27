@@ -14,6 +14,12 @@ import { useHistory, Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import Switch from '@material-ui/core/Switch'
 
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import Person from '@material-ui/icons/Person'
+import Store from '@material-ui/icons/Store'
+
 function Copyright () {
   const classes = useStyles()
 
@@ -78,8 +84,13 @@ function SignUp () {
   const history = useHistory()
   const { handleSubmit, register } = useForm()
 
-  const [isAgent, setIsAgent] = useState(false)
   const [license, setLicense] = useState(false)
+
+  const [selectedIndex, setSelectedIndex] = React.useState('')
+
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index)
+  }
 
   const submit = async (data) => {
     const {
@@ -127,7 +138,7 @@ function SignUp () {
             experience: '',
             licenseCode: licenseCode ?? '',
             roles: [],
-            role: isAgent ? 'Agente inmobiliario' : '',
+            role: selectedIndex,
             score: 0,
             status: 'Miembro',
             sells: 0,
@@ -249,43 +260,68 @@ function SignUp () {
                 variant="outlined"
                 fullWidth
                 id="ci"
-                label="Cédula"
+                label="Cédula o RUC"
                 name="ci"
                 autoComplete="ci"
               />
             </Grid>
             <Grid item xs={12}>
-              ¿Eres agente inmobiliario?
-              <Switch
-                checked={isAgent}
-                onChange={() => {
-                  setIsAgent(!isAgent)
-                  if (!isAgent) setLicense(false)
+              <ListItem
+                button
+                selected={selectedIndex === 'Agente inmobiliario'}
+                onClick={(event) => {
+                  if (selectedIndex === 'Agente inmobiliario') {
+                    handleListItemClick(event, '')
+                    return
+                  }
+                  handleListItemClick(event, 'Agente inmobiliario')
                 }}
-                name="isAgent"
-              />
-            </Grid>
-            {isAgent && (
-              <Grid item xs={12}>
-                ¿Tienes licencia ACBIR?
-                <Switch
-                  checked={license}
-                  onChange={() => setLicense(!license)}
-                  name="checkedB"
-                />
-                {license === true && (
-                  <TextField
-                    inputRef={register({ required: true })}
-                    variant="outlined"
-                    fullWidth
-                    id="licenseCode"
-                    label="Reg. Nº"
-                    name="licenseCode"
-                    autoComplete="licenseCode"
+              >
+                <ListItemIcon>
+                  <Person />
+                </ListItemIcon>
+                <ListItemText primary="Agente inmobiliario" />
+              </ListItem>
+
+              {selectedIndex === 'Agente inmobiliario' && (
+                <Grid item xs={12}>
+                  ¿Tienes licencia ACBIR?
+                  <Switch
+                    checked={license}
+                    onChange={() => setLicense(!license)}
+                    name="checkedB"
                   />
-                )}
-              </Grid>
-            )}
+                  {license === true && (
+                    <TextField
+                      inputRef={register({ required: true })}
+                      variant="outlined"
+                      fullWidth
+                      id="licenseCode"
+                      label="Reg. Nº"
+                      name="licenseCode"
+                      autoComplete="licenseCode"
+                    />
+                  )}
+                </Grid>
+              )}
+
+              <ListItem
+                button
+                selected={selectedIndex === 'Agencia inmobiliaria'}
+                onClick={(event) => {
+                  if (selectedIndex === 'Agencia inmobiliaria') {
+                    handleListItemClick(event, '')
+                    return
+                  }
+                  handleListItemClick(event, 'Agencia inmobiliaria')
+                }}
+              >
+                <ListItemIcon>
+                  <Store />
+                </ListItemIcon>
+                <ListItemText primary="Agencia inmobiliaria" />
+              </ListItem>
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 inputRef={register({ required: true })}

@@ -247,20 +247,22 @@ export function AgentForm () {
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              defaultValue={userData ? userData.licenseCode : ''}
-              inputRef={register({ required: !!userData?.licenseCode })}
-              id="licenseCode"
-              name="licenseCode"
-              label="Numero de licencia"
-              type="text"
-              InputLabelProps={{
-                shrink: true
-              }}
-              variant="outlined"
-            />
-          </Grid>
+          {userData.role === 'Agente inmobiliario' && (
+            <Grid item xs={12} sm={6}>
+              <TextField
+                defaultValue={userData ? userData.licenseCode : ''}
+                inputRef={register({ required: !!userData?.licenseCode })}
+                id="licenseCode"
+                name="licenseCode"
+                label="Numero de licencia"
+                type="text"
+                InputLabelProps={{
+                  shrink: true
+                }}
+                variant="outlined"
+              />
+            </Grid>
+          )}
           <Grid item xs={12} sm={6}>
             <TextField
               defaultValue={userData ? userData.province : ''}
