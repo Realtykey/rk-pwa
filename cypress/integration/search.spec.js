@@ -1,19 +1,17 @@
-const login = () => {
-  cy.visit('http://localhost:3000')
+import { login, searchUser } from '../interactions'
 
-  cy.get('input[name$="email"]').type('pato1418@yahoo.com')
-  cy.get('input[name$="password"]').type('123456')
-  cy.get('button[type$="submit"]').click()
-}
-
-describe('Search user', () => {
-  it('login', () => {
+describe(
+  'Dev',
+  {
+    viewportWidth: 600,
+    viewportHeight: 700,
+    env: {
+      DEMO: true,
+      API: 'http://localhost:9000'
+    }
+  },
+  () => {
     login()
-  })
-
-  it('search', () => {
-    cy.get('a[href$="/Home/PublicArea/agents"]').click()
-
-    cy.get('input[type$="search"]').type('kevin').type('{enter}')
-  })
-})
+    searchUser()
+  }
+)
