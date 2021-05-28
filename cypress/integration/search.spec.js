@@ -11,7 +11,12 @@ describe(
     }
   },
   () => {
-    login()
-    searchUser()
+    it('start', () => {
+      cy.visit('http://localhost:3000')
+    })
+
+    login('pato1418@yahoo.com', '123456')
+
+    // searchUser()
   }
 )
