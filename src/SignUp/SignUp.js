@@ -176,7 +176,6 @@ function SignUp () {
             <Grid item xs={12} sm={6}>
               <TextField
                 inputRef={register}
-                autoComplete="fname"
                 name="name"
                 variant="outlined"
                 fullWidth
@@ -188,7 +187,6 @@ function SignUp () {
             <Grid item xs={12} sm={6}>
               <TextField
                 inputRef={register({ required: true })}
-                autoComplete="lname"
                 name="lname"
                 variant="outlined"
                 fullWidth
@@ -200,7 +198,6 @@ function SignUp () {
             <Grid item xs={12} sm={6}>
               <TextField
                 inputRef={register({ required: true })}
-                autoComplete="phone"
                 name="phone"
                 variant="outlined"
                 fullWidth
@@ -217,7 +214,6 @@ function SignUp () {
                 id="province"
                 label="Provincia"
                 name="province"
-                autoComplete="province"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -228,7 +224,6 @@ function SignUp () {
                 id="city"
                 label="Ciudad"
                 name="city"
-                autoComplete="city"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -239,7 +234,6 @@ function SignUp () {
                 id="sector"
                 label="Sector"
                 name="sector"
-                autoComplete="sector"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -250,7 +244,6 @@ function SignUp () {
                 id="experience"
                 label="Experiencia en años"
                 name="experience"
-                autoComplete="experience"
                 type="number"
               />
             </Grid>
@@ -262,7 +255,6 @@ function SignUp () {
                 id="ci"
                 label="Cédula o RUC"
                 name="ci"
-                autoComplete="ci"
               />
             </Grid>
             <Grid item xs={12}>
@@ -299,7 +291,6 @@ function SignUp () {
                       id="licenseCode"
                       label="Reg. Nº"
                       name="licenseCode"
-                      autoComplete="licenseCode"
                     />
                   )}
                 </Grid>
@@ -330,7 +321,6 @@ function SignUp () {
                 id="email"
                 label="Correo"
                 name="email"
-                autoComplete="email"
               />
             </Grid>
             <Grid item xs={12}>
