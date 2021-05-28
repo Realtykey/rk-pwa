@@ -1,6 +1,6 @@
 {
   "projectId": "unf7ty",
-  "extends": [
-    "plugin:cypress/recommended"
-  ]
+  "extends": ["plugin:cypress/recommended"],
+  "viewportWidth": 1000,
+  "viewportHeight": 660
 }

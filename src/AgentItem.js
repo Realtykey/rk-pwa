@@ -102,17 +102,20 @@ export default function AgentItem (props) {
       <Grid container>
         <Grid container spacing={1}>
           <Detail icon={faMapMarkerAlt} value={address} />
-          {licenseCode && <Detail icon={faIdBadge} value={licenseCode} />}
           <Detail icon={faPhone} value={phone} />
-          {experience && (
-            <Grid item container xs={10} sm md lg xl>
-              <Detail
-                icon={faHourglass}
-                units="años de experiencia"
-                value={experience}
-              />
-            </Grid>
-          )}
+          <Detail
+            label="Licencia: "
+            icon={faIdBadge}
+            value={licenseCode ?? null}
+          />
+          <Grid item container xs={10} sm md lg xl>
+            <Detail
+              label="Experiencia: "
+              icon={faHourglass}
+              units={experience ? 'años' : null}
+              value={experience}
+            />
+          </Grid>
           <Grid item container justify="flex-end" xs={2} sm md lg xl>
             <SellsCount />
           </Grid>
@@ -147,8 +150,10 @@ export default function AgentItem (props) {
           )}
           <Grid item>
             <div style={{ display: 'block' }}>
-              <span>{value}</span>{' '}
-              <span style={{ color: 'gray' }}>{units}</span>
+              <Typography>
+                <span>{value || '-'}</span>{' '}
+                <span style={{ color: 'gray' }}>{value ? units : ''}</span>
+              </Typography>
             </div>
           </Grid>
         </Grid>
@@ -157,14 +162,16 @@ export default function AgentItem (props) {
   }
 
   Detail.defaultProps = {
-    units: '',
-    label: ''
+    icon: null,
+    label: null,
+    value: null,
+    units: ''
   }
 
   Detail.propTypes = {
-    icon: PropTypes.any.isRequired,
+    icon: PropTypes.any,
     label: PropTypes.string,
-    value: PropTypes.any.isRequired,
+    value: PropTypes.any,
     units: PropTypes.string
   }
 

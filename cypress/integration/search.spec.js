@@ -14,6 +14,6 @@ describe('Search user', () => {
   it('search', () => {
     cy.get('a[href$="/Home/PublicArea/agents"]').click()
 
-    cy.get('input[type$="search"]').type('luis').type('{enter}')
+    cy.get('input[type$="search"]').type('kevin').type('{enter}')
   })
 })
