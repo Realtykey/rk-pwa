@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import algoliasearch from 'algoliasearch/lite'
 
 import Grid from '@material-ui/core/Grid'
@@ -85,4 +86,11 @@ export default function Search ({
       <InfiniteHits hitComponent={hitComponent} minHitsPerPage={16} />
     </InstantSearch>
   )
+}
+
+Search.propTypes = {
+  indexName: PropTypes.string,
+  hitComponent: PropTypes.elementType,
+  refinementAttributes: PropTypes.array,
+  rangeAtributes: PropTypes.array
 }
