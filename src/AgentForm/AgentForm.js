@@ -136,11 +136,11 @@ export function AgentForm () {
 
     const {
       name,
-      lname,
+      lname = null,
       ci,
       phone,
       experience,
-      licenseCode,
+      licenseCode = null,
       province,
       city,
       sector
@@ -195,11 +195,11 @@ export function AgentForm () {
   return (
     <Container className={classes.root}>
       <Typography color="inherit" variant="h6" gutterBottom>
-        Información personal
+        Información de usuario
       </Typography>
       <form onSubmit={handleSubmit(submit)}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={userData?.role === 'Agencia inmobiliaria' ? 12 : 6}>
             <TextField
               defaultValue={userData ? userData.name : ''}
               inputRef={register({ required: true })}
@@ -208,11 +208,15 @@ export function AgentForm () {
               variant="outlined"
               fullWidth
               id="firstName"
-              label="Nombre"
+              label={
+                userData.role === 'Agencia inmobiliaria'
+                  ? 'Nombre de agencia'
+                  : 'Nombre'
+              }
               autoFocus
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          {userData.role !== 'Agencia inmobiliaria' && <Grid item xs={12} sm={6}>
             <TextField
               defaultValue={userData ? userData.lname : ''}
               inputRef={register({ required: true })}
@@ -224,7 +228,7 @@ export function AgentForm () {
               label="Apellido"
               autoFocus
             />
-          </Grid>
+          </Grid>}
           <Grid item xs={12} sm={6}>
             <TextField
               defaultValue={userData ? userData.ci : ''}
