@@ -8,7 +8,7 @@ const login = (email, password) => {
 
 const register = () => {
   it('register', () => {
-    //
+    cy.visit('http://localhost:3000/SignUp')
   })
 }
 

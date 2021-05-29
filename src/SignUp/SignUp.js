@@ -173,28 +173,30 @@ function SignUp () {
 
         <form className={classes.form} onSubmit={handleSubmit(submit)}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={selectedIndex !== 'Agencia inmobiliaria' ? 6 : 12}>
               <TextField
                 inputRef={register}
                 name="name"
                 variant="outlined"
                 fullWidth
                 id="firstName"
-                label="Nombre"
+                label={selectedIndex === 'Agencia inmobiliaria' ? 'Nombre de agencia' : 'Nombre'}
                 autoFocus
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                inputRef={register({ required: true })}
-                name="lname"
-                variant="outlined"
-                fullWidth
-                id="lname"
-                label="Apellido"
-                autoFocus
-              />
-            </Grid>
+            {selectedIndex !== 'Agencia inmobiliaria' && (
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  inputRef={register({ required: true })}
+                  name="lname"
+                  variant="outlined"
+                  fullWidth
+                  id="lname"
+                  label="Apellido"
+                  autoFocus
+                />
+              </Grid>
+            )}
             <Grid item xs={12} sm={6}>
               <TextField
                 inputRef={register({ required: true })}

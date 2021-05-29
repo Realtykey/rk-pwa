@@ -1,10 +1,10 @@
-import { login, searchUser } from '../interactions'
+import { login, searchUser, register } from '../interactions'
 
 describe(
   'Dev',
   {
-    viewportWidth: 600,
-    viewportHeight: 700,
+    viewportWidth: 320,
+    viewportHeight: 568,
     env: {
       DEMO: true,
       API: 'http://localhost:9000'
@@ -15,8 +15,9 @@ describe(
       cy.visit('http://localhost:3000')
     })
 
-    login('pato1418@yahoo.com', '123456')
+    register()
 
+    // login('pato1418@yahoo.com', '123456')
     // searchUser()
   }
 )
