@@ -12,6 +12,12 @@ const register = () => {
   })
 }
 
+const manageProfile = () => {
+  it('manage profile', () => {
+    cy.visit('http://localhost:3000/Home/AgentForm')
+  })
+}
+
 const searchUser = () => {
   it('search user', () => {
     cy.get('a[href$="/Home/PublicArea/agents"]').click()
@@ -20,4 +26,4 @@ const searchUser = () => {
   })
 }
 
-export { login, searchUser, register }
+export { login, searchUser, register, manageProfile }
