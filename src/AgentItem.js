@@ -85,6 +85,7 @@ const useStyles = makeStyles((theme) => ({
 export default function AgentItem (props) {
   const theme = useTheme()
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'))
+  const tinyRange = useMediaQuery('(min-width: 325px) and (max-width: 600px)')
 
   const classes = useStyles()
   const { hit } = props
@@ -133,7 +134,7 @@ export default function AgentItem (props) {
             icon={faIdBadge}
             value={licenseCode ?? null}
           />
-          <Grid item container xs={10} sm md lg xl>
+          <Grid item container xs={tinyRange ? 8 : 10} sm md lg xl>
             <Detail
               label="Experiencia: "
               icon={faHourglass}
@@ -141,7 +142,7 @@ export default function AgentItem (props) {
               value={experience}
             />
           </Grid>
-          <Grid item container justify="flex-end" xs={2} sm md lg xl>
+          <Grid item container justify="flex-end" xs={tinyRange ? 4 : 2} sm md lg xl>
             <SellsCount />
           </Grid>
         </Grid>
@@ -223,6 +224,7 @@ export default function AgentItem (props) {
           <Grid item container justify="center" xs={12} sm={4} md={4} lg={4}>
             <Grid className={classes.avatar}>
               <Avatar
+                // eslint-disable-next-line react/no-children-prop
                 children={<PersonOutline style={{ fontSize: 100 }} />}
                 classes={{
                   root: xsDown ? classes.darkAvatarRoot : classes.avatarRoot,
