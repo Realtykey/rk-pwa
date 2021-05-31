@@ -1,7 +1,7 @@
-const login = (email, password) => {
+const login = (profile) => {
   it('login', () => {
-    cy.get('input[name$="email"]').type(email)
-    cy.get('input[name$="password"]').type(password)
+    cy.get('input[name$="email"]').type(profile.email)
+    cy.get('input[name$="password"]').type(profile.password)
     cy.get('button[type$="submit"]').click()
   })
 }
@@ -26,4 +26,4 @@ const searchUser = () => {
   })
 }
 
-export { login, searchUser, register, manageProfile }
+export default { login, searchUser, register, manageProfile }

@@ -1,4 +1,4 @@
-import { login, searchUser, register,  manageProfile } from '../interactions'
+import interactions from '../interactions'
 
 describe(
   'Dev',
@@ -15,18 +15,23 @@ describe(
       cy.visit('http://localhost:3000')
     })
 
-    const user = {
-      // email: 'pato1418@yahoo.com',
-      // password: '123456'
-
-      email: 'kevin@coloma.com',
-      password: '123456'
-    }
+    const profiles = [
+      {
+        owner: 'kevin',
+        email: 'kevin@coloma.com',
+        password: '123456'
+      },
+      {
+        owner: 'ronny',
+        email: 'pato1418@yahoo.com',
+        password: '123456'
+      }
+    ]
 
     // register()
+    interactions.login(profiles.find((profile) => profile.owner === 'kevin'))
 
-    login(user.email, user.password)
-
+    // manageProfile()
     // searchUser()
   }
 )
