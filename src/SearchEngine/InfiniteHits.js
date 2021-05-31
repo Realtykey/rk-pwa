@@ -1,55 +1,56 @@
-import React, { Component } from 'react';
-import { connectInfiniteHits } from 'react-instantsearch-dom';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react'
+import { connectInfiniteHits } from 'react-instantsearch-dom'
+import PropTypes from 'prop-types'
 
-class InfiniteHits extends Component {
-  static propTypes = {
-    hits: PropTypes.arrayOf(PropTypes.object).isRequired,
-    hasMore: PropTypes.bool.isRequired,
-    refine: PropTypes.func.isRequired,
-  };
+function InfiniteHits (props) {
+  const { hasMore, refine, hits, hitComponent } = props
+  const HitComponent = hitComponent
+  let sentinel = null
 
-  sentinel = null;
-
-  onSentinelIntersection = entries => {
-    const { hasMore, refine } = this.props;
-
-    entries.forEach(entry => {
+  const onSentinelIntersection = (entries) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting && hasMore) {
-        refine();
+        refine()
       }
-    });
-  };
-
-  componentDidMount() {
-    this.observer = new IntersectionObserver(this.onSentinelIntersection);
-
-    this.observer.observe(this.sentinel);
+    })
   }
 
-  componentWillUnmount() {
-    this.observer.disconnect();
-  }
+  useEffect(() => {
+    const observer = new IntersectionObserver(onSentinelIntersection)
 
-  render() {
-    const { hits, hitComponent } = this.props;
-    const HitComponent = hitComponent;
-    return (
-      <div className="ais-InfiniteHits">
-        <ul className="ais-InfiniteHits-list">
-          {hits.map(hit => (
+    observer.observe(sentinel)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [hasMore])
+
+  return (
+    <div className="ais-InfiniteHits">
+      <ul className="ais-InfiniteHits-list">
+        {hits.map((hit) => {
+          return (
             <li key={hit.objectID} className="ais-InfiniteHits-item">
               <HitComponent hit={hit} />
             </li>
-          ))}
-          <li
-            className="ais-InfiniteHits-sentinel"
-            ref={c => (this.sentinel = c)}
-          />
-        </ul>
-      </div>
-    );
-  }
+          )
+        })}
+        <li
+          className="ais-InfiniteHits-sentinel"
+          ref={(c) => {
+            sentinel = c
+          }}
+        />
+      </ul>
+    </div>
+  )
 }
 
-export default connectInfiniteHits(InfiniteHits);
+InfiniteHits.propTypes = {
+  hitComponent: PropTypes.elementType,
+  hits: PropTypes.arrayOf(PropTypes.object).isRequired,
+  hasMore: PropTypes.bool.isRequired,
+  refine: PropTypes.func.isRequired
+}
+
+export default connectInfiniteHits(InfiniteHits)
