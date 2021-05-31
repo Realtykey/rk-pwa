@@ -28,10 +28,10 @@ describe(
       }
     ]
 
-    // register()
+    // interactions.register()
     interactions.login(profiles.find((profile) => profile.owner === 'kevin'))
 
-    // manageProfile()
-    // searchUser()
+    // interactions.manageProfile()
+    interactions.searchUser()
   }
 )
