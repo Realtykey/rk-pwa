@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Grid from '@material-ui/core/Grid'
@@ -8,6 +8,7 @@ import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
 import { Rating } from '@material-ui/lab'
 import './App.css'
+import clsx from 'clsx'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -16,6 +17,9 @@ import {
   faMapMarkerAlt,
   faHourglass
 } from '@fortawesome/free-solid-svg-icons'
+
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import { PersonOutline } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,10 +61,31 @@ const useStyles = makeStyles((theme) => ({
   titleWrapper: {
     fontSize: 19,
     marginBottom: 10
+  },
+  avatarRoot: {
+    backgroundColor: '#ffffff08',
+    '& .MuiSvgIcon-root': {
+      color: 'grey'
+    }
+  },
+  darkAvatarRoot: {
+    backgroundColor: 'rgba(1,1,1,0.3)',
+    '& .MuiSvgIcon-root': {
+      color: 'grey'
+    }
+  },
+  cover: {
+    objectFit: 'cover'
+  },
+  contain: {
+    objectFit: 'contain'
   }
 }))
 
 export default function AgentItem (props) {
+  const theme = useTheme()
+  const xsDown = useMediaQuery(theme.breakpoints.down('xs'))
+
   const classes = useStyles()
   const { hit } = props
   const {
@@ -194,11 +219,16 @@ export default function AgentItem (props) {
   return (
     <Card className={classes.root}>
       <CardContent className={classes.cardContent}>
-        <Grid container direction="row" spacing={2}>
-          <Grid item container justify="center" xs={4} sm={4} md={4} lg={4}>
+        <Grid container direction={!xsDown ? 'row' : 'column'} spacing={2}>
+          <Grid item container justify="center" xs={12} sm={4} md={4} lg={4}>
             <Grid className={classes.avatar}>
               <Avatar
-                className={classes.avatar}
+                children={<PersonOutline style={{ fontSize: 100 }} />}
+                classes={{
+                  root: xsDown ? classes.darkAvatarRoot : classes.avatarRoot,
+                  img: xsDown ? classes.contain : classes.cover
+                }}
+                className={clsx(classes.avatar)}
                 src={photoUrl}
                 variant="square"
               />
@@ -207,7 +237,7 @@ export default function AgentItem (props) {
               <Rating style={{ marginTop: 5 }} value={score} readOnly />
             </Grid>
           </Grid>
-          <Grid item container direction="column" xs={8} sm={8} md={8} lg={8}>
+          <Grid item container direction="column" xs={12} sm={8} md={8} lg={8}>
             <Grid item container style={{ marginBottom: 10 }}>
               <Grid item>
                 <UserTitle />
