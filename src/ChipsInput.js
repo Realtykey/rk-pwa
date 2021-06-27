@@ -28,34 +28,41 @@ export default function ChipsArray () {
   })
 
   return (
-    <FormControlLabel
-      style={{ margin: 0 }}
-      checked={true}
-      label="Sectores en los que trabajas"
-      labelPlacement="top"
-      control={
-        <Paper variant="outlined" color="" className={classes.root}>
-          {Object.entries(items).map(([key, item]) => {
-            console.log('key', key)
-            return (
-              <li key={key}>
-                <Chip
-                  onClick={() => {
-                    const updatedChip = { ...item, selected: !item.selected }
-                    const updatedChips = { ...items }
-                    updatedChips[key] = updatedChip
+    <div style={{ display: 'flex' }}>
+      <div style={{ margin: '0 auto' }}>
+        <FormControlLabel
+          style={{ textAlign: 'center' }}
+          checked={true}
+          label="Sectores en los que trabajas"
+          labelPlacement="top"
+          control={
+            <Paper variant="outlined" color="" className={classes.root}>
+              {Object.entries(items).map(([key, item]) => {
+                console.log('key', key)
+                return (
+                  <li key={key}>
+                    <Chip
+                      onClick={() => {
+                        const updatedChip = {
+                          ...item,
+                          selected: !item.selected
+                        }
+                        const updatedChips = { ...items }
+                        updatedChips[key] = updatedChip
 
-                    setChipData(updatedChips)
-                  }}
-                  variant={item.selected ? 'default' : 'outlined'}
-                  label={item.label}
-                  className={classes.chip}
-                />
-              </li>
-            )
-          })}
-        </Paper>
-      }
-    />
+                        setChipData(updatedChips)
+                      }}
+                      variant={item.selected ? 'default' : 'outlined'}
+                      label={item.label}
+                      className={classes.chip}
+                    />
+                  </li>
+                )
+              })}
+            </Paper>
+          }
+        />
+      </div>
+    </div>
   )
 }

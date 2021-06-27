@@ -239,9 +239,6 @@ function SignUp () {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <ChipsInput />
-            </Grid>
-            <Grid item xs={12} sm={6}>
               <TextField
                 inputRef={register}
                 variant="outlined"
@@ -261,6 +258,10 @@ function SignUp () {
                 label="Cédula o RUC"
                 name="ci"
               />
+            </Grid>
+            <Grid item xs={12} sm={6} />
+            <Grid item xs={12} sm={12}>
+              <ChipsInput />
             </Grid>
             <Grid item xs={12}>
               <ListItem
