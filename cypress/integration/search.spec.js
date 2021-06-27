@@ -27,11 +27,11 @@ describe(
         password: '123456'
       }
     ]
-
+    const owner = 'ronny'
     // interactions.register()
-    interactions.login(profiles.find((profile) => profile.owner === 'kevin'))
+    interactions.login(profiles.find((profile) => profile.owner === owner))
 
     // interactions.manageProfile()
-    interactions.searchUser()
+    interactions.searchUser(owner)
   }
 )

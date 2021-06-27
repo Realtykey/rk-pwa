@@ -18,11 +18,11 @@ const manageProfile = () => {
   })
 }
 
-const searchUser = () => {
+const searchUser = (owner) => {
   it('search user', () => {
     cy.get('a[href$="/Home/PublicArea/agents"]').click()
 
-    cy.get('input[type$="search"]').type('kevin').type('{enter}')
+    cy.get('input[type$="search"]').type(owner).type('{enter}')
   })
 }
 
