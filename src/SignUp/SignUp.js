@@ -20,6 +20,8 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Person from '@material-ui/icons/Person'
 import Store from '@material-ui/icons/Store'
 
+import ChipsInput from '../ChipsInput'
+
 function Copyright () {
   const classes = useStyles()
 
@@ -173,14 +175,22 @@ function SignUp () {
 
         <form className={classes.form} onSubmit={handleSubmit(submit)}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={selectedIndex !== 'Agencia inmobiliaria' ? 6 : 12}>
+            <Grid
+              item
+              xs={12}
+              sm={selectedIndex !== 'Agencia inmobiliaria' ? 6 : 12}
+            >
               <TextField
                 inputRef={register}
                 name="name"
                 variant="outlined"
                 fullWidth
                 id="firstName"
-                label={selectedIndex === 'Agencia inmobiliaria' ? 'Nombre de agencia' : 'Nombre'}
+                label={
+                  selectedIndex === 'Agencia inmobiliaria'
+                    ? 'Nombre de agencia'
+                    : 'Nombre'
+                }
                 autoFocus
               />
             </Grid>
@@ -229,14 +239,7 @@ function SignUp () {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                inputRef={register({ required: true })}
-                variant="outlined"
-                fullWidth
-                id="sector"
-                label="Sector"
-                name="sector"
-              />
+              <ChipsInput />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
