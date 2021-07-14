@@ -243,12 +243,12 @@ export default function PropertyForm (props) {
 
     data.price = Number(data.price)
 
-    if (imgFiles.length == 0 && !props.location) {
+    if (imgFiles.length === 0 && !props.location) {
       showAlert('Debes agregar almenos una foto')
       return
     }
 
-    if (map.address == '') {
+    if (map.address === '') {
       alert('Seleccionar una ubicación en el mapa.')
       return
     }
@@ -537,7 +537,7 @@ export default function PropertyForm (props) {
           <Grid item xs={12} md={6}>
             <TextField
               onClick={
-                operation == 'Alquiler'
+                operation === 'Alquiler'
                   ? () => hidePicker(false)
                   : () => console.log('venta')
               }
@@ -560,7 +560,7 @@ export default function PropertyForm (props) {
                 shrink: true
               }}
               InputProps={{
-                readOnly: operation == 'Alquiler'
+                readOnly: operation === 'Alquiler'
               }}
               inputProps={{
                 step: 0.1
