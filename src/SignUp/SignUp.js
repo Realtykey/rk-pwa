@@ -134,6 +134,7 @@ function SignUp () {
 
       const unsuscribe = app.auth().onAuthStateChanged((user) => {
         if (user) {
+          const selectedSectors = Object.keys(sectors).filter(key => sectors[key].selected)
           saveUserDoc({
             uid: user.uid,
             name,
@@ -152,17 +153,7 @@ function SignUp () {
             ci,
             province,
             city,
-            sectors: Object.keys(sectors)
-              .filter((sector) => {
-                const [, item] = sector
-                return item.selected
-              })
-              .map((sector) => {
-                /* eslint-disable array-bracket-spacing */
-                // eslint-disable-next-line comma-dangle
-                const [key] = sector
-                return key
-              })
+            sectors: selectedSectors
           })
           unsuscribe()
           history.push('/Home')
