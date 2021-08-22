@@ -11,10 +11,6 @@ describe(
     }
   },
   () => {
-    it('start', () => {
-      cy.visit('http://localhost:3000')
-    })
-
     const profiles = [
       {
         owner: 'kevin',
@@ -28,10 +24,9 @@ describe(
       }
     ]
     const owner = 'ronny'
-    // interactions.register()
+
     interactions.login(profiles.find((profile) => profile.owner === owner))
 
-    // interactions.manageProfile()
     interactions.searchUser(owner)
   }
 )

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import Chip from '@material-ui/core/Chip'
 import Paper from '@material-ui/core/Paper'
@@ -18,14 +19,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function ChipsArray () {
+export default function ChipsInput (props) {
   const classes = useStyles()
-  const [items, setChipData] = useState({
-    north: { label: 'Norte', selected: false },
-    south: { label: 'Sur', selected: false },
-    center: { label: 'Centro', selected: false },
-    valleys: { label: 'Valles', selected: false }
-  })
+  const { chips, onChipSelected } = props
 
   return (
     <div style={{ display: 'flex' }}>
@@ -37,8 +33,7 @@ export default function ChipsArray () {
           labelPlacement="top"
           control={
             <Paper variant="outlined" color="" className={classes.root}>
-              {Object.entries(items).map(([key, item]) => {
-                console.log('key', key)
+              {Object.entries(chips).map(([key, item]) => {
                 return (
                   <li key={key}>
                     <Chip
@@ -47,10 +42,10 @@ export default function ChipsArray () {
                           ...item,
                           selected: !item.selected
                         }
-                        const updatedChips = { ...items }
+                        const updatedChips = { ...chips }
                         updatedChips[key] = updatedChip
 
-                        setChipData(updatedChips)
+                        onChipSelected(updatedChips)
                       }}
                       variant={item.selected ? 'default' : 'outlined'}
                       label={item.label}
@@ -65,4 +60,14 @@ export default function ChipsArray () {
       </div>
     </div>
   )
+}
+
+ChipsInput.defaultProps = {
+  chips: {},
+  onChipSelected: () => {}
+}
+
+ChipsInput.propTypes = {
+  chips: PropTypes.object,
+  onChipSelected: PropTypes.func
 }

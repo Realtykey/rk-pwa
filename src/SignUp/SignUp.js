@@ -90,6 +90,13 @@ function SignUp () {
 
   const [selectedIndex, setSelectedIndex] = React.useState('')
 
+  const [sectors, onSectorSelected] = useState({
+    north: { label: 'Norte', selected: false },
+    south: { label: 'Sur', selected: false },
+    center: { label: 'Centro', selected: false },
+    valleys: { label: 'Valles', selected: false }
+  })
+
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index)
   }
@@ -105,8 +112,7 @@ function SignUp () {
       ci,
       experience,
       province,
-      city,
-      sector
+      city
     } = data
 
     const exists = await ciExists(ci)
@@ -129,10 +135,12 @@ function SignUp () {
 
       const unsuscribe = app.auth().onAuthStateChanged((user) => {
         if (user) {
+          const selectedSectors = Object.entries(sectors).filter((sector) => sector.selected).map(([key]) => key)
+          debugger
           saveUserDoc({
             uid: user.uid,
             name,
-            lname,
+            lname: lname ?? null, // agencys should have null lname
             email,
             address: '',
             phone,
@@ -147,7 +155,7 @@ function SignUp () {
             ci,
             province,
             city,
-            sector
+            sectors: selectedSectors
           })
           unsuscribe()
           history.push('/Home')
@@ -261,7 +269,7 @@ function SignUp () {
             </Grid>
             <Grid item xs={12} sm={6} />
             <Grid item xs={12} sm={12}>
-              <ChipsInput />
+              <ChipsInput onChipSelected={onSectorSelected} chips={sectors} />
             </Grid>
             <Grid item xs={12}>
               <ListItem

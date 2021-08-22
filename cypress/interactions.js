@@ -1,5 +1,6 @@
 const login = (profile) => {
   it('login', () => {
+    cy.visit('http://localhost:3000/SignIn')
     cy.get('input[name$="email"]').type(profile.email)
     cy.get('input[name$="password"]').type(profile.password)
     cy.get('button[type$="submit"]').click()

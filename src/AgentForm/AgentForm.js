@@ -171,7 +171,7 @@ export function AgentForm () {
       sector
     }
 
-    if (!userData.role && licenseCode) {
+    if (!userData?.role && licenseCode) {
       user.role = 'Agente inmobiliario'
     }
 
@@ -209,14 +209,14 @@ export function AgentForm () {
               fullWidth
               id="firstName"
               label={
-                userData.role === 'Agencia inmobiliaria'
+                userData?.role === 'Agencia inmobiliaria'
                   ? 'Nombre de agencia'
                   : 'Nombre'
               }
               autoFocus
             />
           </Grid>
-          {userData.role !== 'Agencia inmobiliaria' && <Grid item xs={12} sm={6}>
+          {userData?.role !== 'Agencia inmobiliaria' && <Grid item xs={12} sm={6}>
             <TextField
               defaultValue={userData ? userData.lname : ''}
               inputRef={register({ required: true })}
@@ -251,7 +251,7 @@ export function AgentForm () {
               variant="outlined"
             />
           </Grid>
-          {userData.role === 'Agente inmobiliario' && (
+          {userData?.role === 'Agente inmobiliario' && (
             <Grid item xs={12} sm={6}>
               <TextField
                 defaultValue={userData ? userData.licenseCode : ''}
