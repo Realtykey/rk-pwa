@@ -25,7 +25,7 @@ describe(
     ]
     const owner = 'ronny'
 
-    interactions.login(profiles.find((profile) => profile.owner === owner))
+    interactions.login(profiles.find((profile) => profile.owner === owner), 'submit')
 
     interactions.searchUser(owner)
   }

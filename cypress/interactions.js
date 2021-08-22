@@ -1,13 +1,14 @@
-const login = (profile) => {
+const login = (profile, action) => {
   it('login', () => {
     cy.visit('http://localhost:3000/SignIn')
     cy.get('input[name$="email"]').type(profile.email)
     cy.get('input[name$="password"]').type(profile.password)
-    cy.get('button[type$="submit"]').click()
+
+    if (action === 'submit') cy.get('button[type$="submit"]').click()
   })
 }
 
-const register = (profile, submit) => {
+const register = (profile, action) => {
   it('register', () => {
     cy.visit('http://localhost:3000/SignUp')
 
@@ -15,7 +16,8 @@ const register = (profile, submit) => {
 
     if (profile.role === 'Agencia inmobiliaria') cy.get('div[name$="agency"]').click()
 
-    cy.get('input[name$="name"]').type(profile.name)
+    cy.get('input[id$="firstName"]').type(profile.name)
+    cy.get('input[name$="lname"]').type(profile.lname)
     cy.get('input[name$="email"]').type(profile.email)
     cy.get('input[name$="password"]').type(profile.password)
     cy.get('input[name$="phone"]').type(profile.phone)
@@ -27,7 +29,7 @@ const register = (profile, submit) => {
     cy.get('li[name$="north"]').click()
     cy.get('li[name$="south"]').click()
 
-    if (submit) cy.get('button[type$="submit"]').click()
+    if (action === 'submit') cy.get('button[type$="submit"]').click()
   })
 }
 

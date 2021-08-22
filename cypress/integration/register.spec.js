@@ -13,14 +13,10 @@ describe(
   () => {
     const profiles = [
       {
-        owner: 'kevin',
-        email: 'kevin@coloma.com',
-        password: '123456'
-      },
-      {
         owner: 'ronny',
-        name: 'Ronny Cajas',
-        role: 'Agencia inmobiliaria',
+        name: 'Ronny',
+        lname: 'Cajas',
+        role: 'Agente inmobiliario',
         email: 'pato1418@yahoo.com',
         password: '123456',
         phone: '0992825956',
@@ -44,6 +40,6 @@ describe(
     ]
     const owner = 'ronny'
 
-    interactions.register(profiles.find((profile) => profile.owner === owner), false)
+    interactions.register(profiles.find((profile) => profile.owner === owner), 'submit')
   }
 )

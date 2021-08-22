@@ -116,7 +116,6 @@ function SignUp () {
     } = data
 
     const exists = await ciExists(ci)
-    console.log(`ci exists: ${exists}`)
     if (exists) {
       alert('Ya existe un usuario con ese número de cédula')
       return
@@ -135,8 +134,6 @@ function SignUp () {
 
       const unsuscribe = app.auth().onAuthStateChanged((user) => {
         if (user) {
-          const selectedSectors = Object.entries(sectors).filter((sector) => sector.selected).map(([key]) => key)
-          debugger
           saveUserDoc({
             uid: user.uid,
             name,
@@ -155,7 +152,17 @@ function SignUp () {
             ci,
             province,
             city,
-            sectors: selectedSectors
+            sectors: Object.keys(sectors)
+              .filter((sector) => {
+                const [, item] = sector
+                return item.selected
+              })
+              .map((sector) => {
+                /* eslint-disable array-bracket-spacing */
+                // eslint-disable-next-line comma-dangle
+                const [key] = sector
+                return key
+              })
           })
           unsuscribe()
           history.push('/Home')
