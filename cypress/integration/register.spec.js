@@ -19,8 +19,15 @@ describe(
       },
       {
         owner: 'ronny',
+        name: 'Ronny Cajas',
+        role: 'Agencia inmobiliaria',
         email: 'pato1418@yahoo.com',
-        password: '123456'
+        password: '123456',
+        phone: '0992825956',
+        province: 'Pichincha',
+        city: 'Quito',
+        experience: 2,
+        ci: '1725257594'
       },
       {
         owner: 'dailyhome',
@@ -35,7 +42,7 @@ describe(
         ci: '123456789'
       }
     ]
-    const owner = 'dailyhome'
+    const owner = 'ronny'
 
     interactions.register(profiles.find((profile) => profile.owner === owner), false)
   }
