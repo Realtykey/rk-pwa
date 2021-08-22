@@ -35,7 +35,7 @@ export default function ChipsInput (props) {
             <Paper variant="outlined" color="" className={classes.root}>
               {Object.entries(chips).map(([key, item]) => {
                 return (
-                  <li key={key}>
+                  <li name={key} key={key}>
                     <Chip
                       onClick={() => {
                         const updatedChip = {

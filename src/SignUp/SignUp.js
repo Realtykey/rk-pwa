@@ -273,6 +273,7 @@ function SignUp () {
             </Grid>
             <Grid item xs={12}>
               <ListItem
+                name="agent"
                 button
                 selected={selectedIndex === 'Agente inmobiliario'}
                 onClick={(event) => {
@@ -311,6 +312,7 @@ function SignUp () {
               )}
 
               <ListItem
+                name="agency"
                 button
                 selected={selectedIndex === 'Agencia inmobiliaria'}
                 onClick={(event) => {
