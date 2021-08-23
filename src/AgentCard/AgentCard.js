@@ -53,7 +53,11 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     margin: '0 auto'
   },
-  nameWrapper: { display: 'flex', flexDirection: 'row', justifyContent: 'center' },
+  nameWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
   fullName: {
     margin: '0 auto'
   },
@@ -64,6 +68,8 @@ export default function AgentCard (props) {
   const classes = useStyles()
   const [expanded, setExpanded] = React.useState(false)
   const { agent } = props
+  const { name, licenseCode, lname, photoUrl, phone, role, score, sells } =
+    agent
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
@@ -79,13 +85,15 @@ export default function AgentCard (props) {
                 className={classes.cardHeader}
                 title={
                   <div className={classes.nameWrapper}>
-                    <span>{agent.name} {agent.lname}</span>
+                    <span>
+                      {name} {lname === '' ? '' : lname}
+                    </span>
                   </div>
                 }
                 subheader={
                   <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <span style={{ color: 'lightgray' }}>
-                      {agent.role} {agent.licenseCode && (' con licencia ')}
+                      {role} {licenseCode && ' con licencia '}
                     </span>
                   </div>
                 }
@@ -95,7 +103,7 @@ export default function AgentCard (props) {
                 <div className={classes.outerCircle}>
                   <Avatar
                     alt="No photo"
-                    src={agent.photoUrl}
+                    src={photoUrl}
                     className={classes.bigAvatar}
                   />
                 </div>
@@ -103,7 +111,7 @@ export default function AgentCard (props) {
 
               <CardActions className={classes.flex} disableSpacing>
                 <div className={classes.ratingWrapper}>
-                  <Rating value={agent.score} readOnly />
+                  <Rating value={score} readOnly />
                 </div>
               </CardActions>
               <CardContent className={classes.flex}>
@@ -126,24 +134,24 @@ export default function AgentCard (props) {
                 >
                   <Grid item>
                     <Chip
-                      label={'Nombre ' + agent.name + ' ' + agent.lname}
+                      label={'Nombre ' + name + ' ' + lname}
                       variant="outlined"
                     />
                   </Grid>
-                  {agent.licenseCode && (
+                  {licenseCode && (
                     <Grid item>
                       <Chip
-                        label={'Licencia ' + agent.licenseCode}
+                        label={'Licencia ' + licenseCode}
                         variant="outlined"
                       />
                     </Grid>
                   )}
                   <Grid item>
-                    <Chip label={'Celular ' + agent.phone} variant="outlined" />
+                    <Chip label={'Celular ' + phone} variant="outlined" />
                   </Grid>
                   <Grid item>
                     <Chip
-                      label={'Negocios cerrados ' + agent.sells}
+                      label={'Negocios cerrados ' + sells}
                       variant="outlined"
                     />
                   </Grid>
