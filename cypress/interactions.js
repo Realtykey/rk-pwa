@@ -17,7 +17,7 @@ const register = (profile, action) => {
     if (profile.role === 'Agencia inmobiliaria') cy.get('div[name$="agency"]').click()
 
     cy.get('input[id$="firstName"]').type(profile.name)
-    cy.get('input[name$="lname"]').type(profile.lname)
+    if (profile.role !== 'Agencia inmobiliaria') cy.get('input[name$="lname"]').type(profile.lname)
     cy.get('input[name$="email"]').type(profile.email)
     cy.get('input[name$="password"]').type(profile.password)
     cy.get('input[name$="phone"]').type(profile.phone)
