@@ -3,11 +3,9 @@ import React, { useContext, useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 
-// image picker
 import IconButton from '@material-ui/core/IconButton'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
 
-// select
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
@@ -142,8 +140,7 @@ export function AgentForm () {
       experience,
       licenseCode = null,
       province,
-      city,
-      sector
+      city
     } = data
 
     const exists = await ciExists(ci)
@@ -167,8 +164,7 @@ export function AgentForm () {
       experience,
       licenseCode,
       province,
-      city,
-      sector
+      city
     }
 
     if (!userData?.role && licenseCode) {
@@ -199,7 +195,11 @@ export function AgentForm () {
       </Typography>
       <form onSubmit={handleSubmit(submit)}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={userData?.role === 'Agencia inmobiliaria' ? 12 : 6}>
+          <Grid
+            item
+            xs={12}
+            sm={userData?.role === 'Agencia inmobiliaria' ? 12 : 6}
+          >
             <TextField
               defaultValue={userData ? userData.name : ''}
               inputRef={register({ required: true })}
@@ -216,19 +216,21 @@ export function AgentForm () {
               autoFocus
             />
           </Grid>
-          {userData?.role !== 'Agencia inmobiliaria' && <Grid item xs={12} sm={6}>
-            <TextField
-              defaultValue={userData ? userData.lname : ''}
-              inputRef={register({ required: true })}
-              autoComplete="lname"
-              name="lname"
-              variant="outlined"
-              fullWidth
-              id="lname"
-              label="Apellido"
-              autoFocus
-            />
-          </Grid>}
+          {userData?.role !== 'Agencia inmobiliaria' && (
+            <Grid item xs={12} sm={6}>
+              <TextField
+                defaultValue={userData ? userData.lname : ''}
+                inputRef={register({ required: true })}
+                autoComplete="lname"
+                name="lname"
+                variant="outlined"
+                fullWidth
+                id="lname"
+                label="Apellido"
+                autoFocus
+              />
+            </Grid>
+          )}
           <Grid item xs={12} sm={6}>
             <TextField
               defaultValue={userData ? userData.ci : ''}
@@ -289,18 +291,6 @@ export function AgentForm () {
               label="Ciudad"
               name="city"
               autoComplete="city"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              defaultValue={userData ? userData.sector : ''}
-              inputRef={register({ required: true })}
-              variant="outlined"
-              fullWidth
-              id="sector"
-              label="Sector"
-              name="sector"
-              autoComplete="sector"
             />
           </Grid>
           <Grid item xs={12} sm={6}>
