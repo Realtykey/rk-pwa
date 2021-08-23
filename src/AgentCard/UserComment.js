@@ -16,18 +16,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserComment(props) {
     const classes = useStyles();
-    const commentData = props.commentData;
+    const { commentData } = props;
+    const {photoUrl, name, lname, content} = commentData
 
     return (
         <ListItem className={classes.root} alignItems="flex-start">
             <ListItemAvatar>
-                <Avatar alt="Remy Sharp" src={commentData.photoUrl} />
+                <Avatar alt="Remy Sharp" src={photoUrl} />
             </ListItemAvatar>
             <ListItemText
-                primary={commentData.name + " " + commentData.lname}
+                primary={`${name} ${lname === null ? '' : lname}`}
                 secondary={
                     <React.Fragment>
-                        {`${commentData.content}`}
+                        {`${content}`}
                     </React.Fragment>
                 }
             />
