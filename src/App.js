@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { closeAlertAction } from './redux'
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { withAlert } from './components/globals/Alert'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -101,4 +102,4 @@ function App () {
   )
 }
 
-export default App
+export default withAlert(App)

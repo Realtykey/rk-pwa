@@ -8,9 +8,9 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-import Alert from '../components/globals/Alert'
+import { useAlert } from '../components/globals/Alert'
 
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 import { setUserAction, fetchUserDataThunk } from './../redux'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -57,7 +57,7 @@ function SignIn () {
   const classes = useStyles()
   const history = useHistory()
   const dispatch = useDispatch()
-  const [message, setMessage] = useState('')
+  const alert = useAlert()
   const setUser = (currentUser) => dispatch(setUserAction(currentUser))
   const currentUser = useSelector((state) => state.general.currentUser)
 
@@ -93,7 +93,7 @@ function SignIn () {
         default:
           authErrorMessage = 'Servicio no disponible'
       }
-      setMessage(authErrorMessage)
+      alert.setMessage(authErrorMessage)
     }
   }, [])
 
@@ -176,12 +176,6 @@ function SignIn () {
           </Grid>
         </form>
       </div>
-      <Alert
-        message={message}
-        onClose={() => {
-          setMessage('')
-        }}
-      />
       <Box mt={8}>
         <Copyright />
       </Box>

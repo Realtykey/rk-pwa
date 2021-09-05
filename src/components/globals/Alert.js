@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 
 import Button from '@material-ui/core/Button'
@@ -11,6 +11,35 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Box from '@material-ui/core/Box'
 import Paper from '@material-ui/core/Paper'
 
+const AlertContext = React.createContext({
+  message: '',
+  setMessage: () => {},
+  onClose: () => {}
+})
+
+export const withAlert = (WrappedComponent) => {
+  const AlertWrapper = (props) => {
+    const [message, setMessage] = useState('')
+
+    const onClose = () => {
+      setMessage('')
+    }
+    return (
+      <>
+        <AlertContext.Provider value={{ message, setMessage, onClose }}>
+          <WrappedComponent {...props} />
+          <Alert />
+        </AlertContext.Provider>
+      </>
+    )
+  }
+  return AlertWrapper
+}
+
+export const useAlert = () => {
+  return useContext(AlertContext)
+}
+
 const PaperComponent = ({ children }) => {
   return (
     <Paper>
@@ -20,11 +49,11 @@ const PaperComponent = ({ children }) => {
 }
 
 PaperComponent.propTypes = {
-  children: PropTypes.element.isRequired
+  children: PropTypes.array.isRequired
 }
 
-export default function Alert (props) {
-  const { onClose, message } = props
+export default function Alert () {
+  const { message, onClose } = useAlert()
 
   return (
     <Dialog
@@ -38,19 +67,18 @@ export default function Alert (props) {
       <DialogContent>
         <Box
           display="flex"
-          height={80}
-          marginBottom={2}
+          marginBottom={1}
           alignItems="center"
           justifyContent="center"
         >
           <FontAwesomeIcon
             color="#ffa733"
-            size="5x"
+            size="4x"
             icon={faExclamationTriangle}
           />
         </Box>
         <DialogTitle id="alert-dialog-title">
-          <Box fontWeight="fontWeightBold">{message}</Box>
+          <Box>{message}</Box>
         </DialogTitle>
       </DialogContent>
       <DialogActions>
@@ -60,9 +88,4 @@ export default function Alert (props) {
       </DialogActions>
     </Dialog>
   )
-}
-
-Alert.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  message: PropTypes.string.isRequired
 }
