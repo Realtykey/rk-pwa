@@ -8,12 +8,13 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+import Alert from '../components/globals/Alert'
 
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { setUserAction, fetchUserDataThunk } from './../redux'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect, useHistory } from 'react-router-dom'
 
 function Copyright () {
   const classes = useStyles()
@@ -56,6 +57,7 @@ function SignIn () {
   const classes = useStyles()
   const history = useHistory()
   const dispatch = useDispatch()
+  const [message, setMessage] = useState('')
   const setUser = (currentUser) => dispatch(setUserAction(currentUser))
   const currentUser = useSelector((state) => state.general.currentUser)
 
@@ -73,8 +75,25 @@ function SignIn () {
       setUser(result.user)
       fetchUserDataThunk(result.user.uid)
       history.push('/Home')
-    } catch (error) {
-      console.log(error)
+    } catch (exception) {
+      let authErrorMessage
+      switch (exception.code) {
+        case 'auth/invalid-email':
+          authErrorMessage = 'Correo no válido'
+          break
+        case 'auth/user-disabled':
+          authErrorMessage = 'Usuario deshabilitado'
+          break
+        case 'auth/user-not-found':
+          authErrorMessage = 'Usuario no registrado'
+          break
+        case 'auth/wrong-password':
+          authErrorMessage = 'Contraseña incorrecta'
+          break
+        default:
+          authErrorMessage = 'Servicio no disponible'
+      }
+      setMessage(authErrorMessage)
     }
   }, [])
 
@@ -157,6 +176,12 @@ function SignIn () {
           </Grid>
         </form>
       </div>
+      <Alert
+        message={message}
+        onClose={() => {
+          setMessage('')
+        }}
+      />
       <Box mt={8}>
         <Copyright />
       </Box>
