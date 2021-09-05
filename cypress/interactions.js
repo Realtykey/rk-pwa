@@ -1,6 +1,6 @@
 const login = (profile, action) => {
   it('login', () => {
-    cy.visit('http://localhost:3000/SignIn')
+    cy.visit('https://localhost:3000/SignIn')
     cy.get('input[name$="email"]').type(profile.email)
     cy.get('input[name$="password"]').type(profile.password)
 
@@ -10,7 +10,7 @@ const login = (profile, action) => {
 
 const register = (profile, action) => {
   it('register', () => {
-    cy.visit('http://localhost:3000/SignUp')
+    cy.visit('https://localhost:3000/SignUp')
 
     if (profile.role === 'Agente inmobiliario') cy.get('div[name$="agent"]').click()
 
@@ -35,7 +35,7 @@ const register = (profile, action) => {
 
 const manageProfile = () => {
   it('manage profile', () => {
-    cy.visit('http://localhost:3000/Home/AgentForm')
+    cy.visit('https://localhost:3000/Home/AgentForm')
   })
 }
 
