@@ -1,45 +1,33 @@
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import HomeWorkIcon from '@material-ui/icons/HomeWork';
-import { useHistory } from "react-router-dom";
+import Button from '@material-ui/core/Button'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import TextField from '@material-ui/core/TextField'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import Grid from '@material-ui/core/Grid'
+import Box from '@material-ui/core/Box'
+import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/core/styles'
+import Container from '@material-ui/core/Container'
 
-//auth routing
-import React, { useCallback, useEffect } from "react";
-//redux
-import { setUserAction, fetchUserDataThunk } from './../redux';
-import { useDispatch, useSelector } from "react-redux";
+import React, { useCallback } from 'react'
+import { setUserAction, fetchUserDataThunk } from './../redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-/*ENRUTAMIENTO*/
-import {
-  Link,
-  Redirect
-} from "react-router-dom";
+import { Link, Redirect } from 'react-router-dom'
 
-//
-function Copyright() {
-
-  const classes = useStyles();
+function Copyright () {
+  const classes = useStyles()
 
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link className={classes.link} to="https://material-ui.com/">
         Valeria
-      </Link>
-      {' '}
+      </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
-  );
+  )
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -47,51 +35,48 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   avatar: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(1)
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(3, 0, 2)
   },
   link: {
     color: 'white'
-  },
+  }
+}))
 
-}));
+function SignIn () {
+  const classes = useStyles()
+  const history = useHistory()
+  const dispatch = useDispatch()
+  const setUser = (currentUser) => dispatch(setUserAction(currentUser))
+  const currentUser = useSelector((state) => state.general.currentUser)
 
-function SignIn() {
-  const classes = useStyles();
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const setUser = currentUser => dispatch(setUserAction(currentUser));
-  const currentUser = useSelector(state => state.general.currentUser);
+  const handleLogin = useCallback(async (event) => {
+    event.preventDefault()
+    const { email, password } = event.target.elements
 
-  const handleLogin = useCallback(
-    async event => {
-      event.preventDefault();
-      const { email, password } = event.target.elements;
+    const { app } = await import('./../base')
 
-      const { app } = await import('./../base');
-
-      try {
-        const result = await app.auth().signInWithEmailAndPassword(email.value, password.value);
-        console.log(result.user.email + ' signed ');
-        setUser(result.user);
-        fetchUserDataThunk(result.user.uid);
-        history.push('/Home');
-
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    []
-  );
+    try {
+      const result = await app
+        .auth()
+        .signInWithEmailAndPassword(email.value, password.value)
+      console.log(result.user.email + ' signed ')
+      setUser(result.user)
+      fetchUserDataThunk(result.user.uid)
+      history.push('/Home')
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
 
   if (currentUser) {
     return <Redirect to="/Home" />
@@ -111,8 +96,7 @@ function SignIn() {
       <div className={classes.paper}>
         <div className={classes.avatar}>
           <div style={wrapper}>
-            <img style={img} src="imagotipo.png">
-            </img>
+            <img style={img} src="imagotipo.png"></img>
           </div>
         </div>
         <Typography component="h1" variant="h4">
@@ -167,7 +151,7 @@ function SignIn() {
             </Grid>
             <Grid item>
               <Link className={classes.link} to="/SignUp" variant="body2">
-                {"No tienes una cuenta? Registrarse"}
+                {'No tienes una cuenta? Registrarse'}
               </Link>
             </Grid>
           </Grid>
@@ -177,8 +161,7 @@ function SignIn() {
         <Copyright />
       </Box>
     </Container>
-  );
-
+  )
 }
 
-export default SignIn;
+export default SignIn
