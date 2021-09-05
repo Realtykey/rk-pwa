@@ -57,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MatchCompletion () {
   const classes = useStyles()
+  const [score, setScore] = useState(0)
 
   const { register, errors, handleSubmit } = useForm()
 
@@ -71,22 +72,15 @@ export default function MatchCompletion () {
     const id = `${requesterData.uid}_${prop.id}_${ownerData.uid}`
     // remove from primary collection
 
-    const updates = { done: true }
-
-    updates[
-      userData.uid === requesterData.uid ? 'ownerScore' : 'requesterScore'
-    ] = score
-
     await db
       .collection('users')
       .doc(userData.uid)
       .collection('matches')
       .doc(id)
-      .set(updates, { merge: true })
+      .set({ active: false, score }, { merge: true })
 
     console.log('match archived')
   }
-  const [score, setScore] = useState(0)
 
   const submitComment = async (values) => {
     const { content } = values
