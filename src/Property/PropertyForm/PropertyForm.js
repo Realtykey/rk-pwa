@@ -4,31 +4,26 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
-// select
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import InputAdornment from '@material-ui/core/InputAdornment'
-// custom comps
 import FormLayout from '../../FormLayout'
 import OutlinedInput from '@material-ui/core/OutlinedInput'
 import ImagesPicker from '../ImagesPicker'
 import ComissionPicker from '../../utils/ComissionPicker'
 import Modal from '@material-ui/core/Modal'
 
-// ios switch
 import Switch from '@material-ui/core/Switch'
 
 import ImagesPreview from './ImagesPreview.js'
 
 import { AuthContext } from '../../Auth'
 
-// redux imports
 import { useDispatch, useSelector } from 'react-redux'
 
 import { setStepAction, showAlertAction, setMapAction } from '../../redux.js'
-// form hook
 import { useForm, Controller } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 
@@ -85,7 +80,6 @@ function getModalStyle () {
 export default function PropertyForm (props) {
   const classes = useStyles()
 
-  // forms hook
   const { register, errors, handleSubmit, setValue, control } = useForm()
 
   const [modalStyle] = React.useState(getModalStyle)
@@ -100,10 +94,6 @@ export default function PropertyForm (props) {
       <ComissionPicker pickPercent={pickPercent} hidePicker={hidePicker} />
     </div>
   )
-
-  const setProp = (prop) => {
-    dispatch({ type: 'SET_SELECTED_PROPERTY', prop })
-  }
 
   const history = useHistory()
 
