@@ -93,6 +93,7 @@ export default function RealtyAppBar (props) {
         <Typography className={classes.title} variant="h6" noWrap></Typography>
 
         <Link
+          data-cy="property-form-link"
           style={{ textDecoration: 'inherit', color: 'inherit' }}
           to={`${match.path}/Publish/prop`}
         >

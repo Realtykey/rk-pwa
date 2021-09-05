@@ -47,4 +47,10 @@ const searchUser = (owner) => {
   })
 }
 
-export default { login, searchUser, register, manageProfile }
+const createProperty = () => {
+  it('create property', () => {
+    cy.get('[data-cy=property-form-link]').click()
+  })
+}
+
+export default { login, searchUser, register, manageProfile, createProperty }
