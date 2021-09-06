@@ -60,6 +60,7 @@
     ]
   },
   "devDependencies": {
+    "cypress-file-upload": "^5.0.8",
     "eslint": "^7.24.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-cypress": "^2.11.3",

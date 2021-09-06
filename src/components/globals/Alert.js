@@ -78,7 +78,7 @@ export default function Alert () {
           />
         </Box>
         <DialogTitle id="alert-dialog-title">
-          <Box>{message}</Box>
+          <Box textAlign="center">{message}</Box>
         </DialogTitle>
       </DialogContent>
       <DialogActions>

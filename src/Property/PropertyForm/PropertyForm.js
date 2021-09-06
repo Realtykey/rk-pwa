@@ -14,7 +14,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput'
 import ImagesPicker from '../ImagesPicker'
 import ComissionPicker from '../../utils/ComissionPicker'
 import Modal from '@material-ui/core/Modal'
-
+import Box from '@material-ui/core/Box'
 import Switch from '@material-ui/core/Switch'
 
 import ImagesPreview from './ImagesPreview.js'
@@ -26,8 +26,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setStepAction, showAlertAction, setMapAction } from '../../redux.js'
 import { useForm, Controller } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
-
-import Box from '@material-ui/core/Box'
+import { useAlert } from 'src/components/globals/Alert'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -81,6 +80,8 @@ export default function PropertyForm (props) {
   const classes = useStyles()
 
   const { register, errors, handleSubmit, setValue, control } = useForm()
+
+  const alert = useAlert()
 
   const [modalStyle] = React.useState(getModalStyle)
 
@@ -211,7 +212,7 @@ export default function PropertyForm (props) {
 
   const submit = async (data) => {
     if (data.percent > 9) {
-      alert('La comisión no puede ser mayor a 9%.')
+      alert.setMessage('La comisión no puede ser mayor a 9%.')
       return
     }
 
@@ -234,12 +235,12 @@ export default function PropertyForm (props) {
     data.price = Number(data.price)
 
     if (imgFiles.length === 0 && !props.location) {
-      showAlert('Debes agregar almenos una foto')
+      alert.setMessage('Debes agregar una o varias fotos')
       return
     }
 
     if (map.address === '') {
-      alert('Seleccionar una ubicación en el mapa.')
+      alert.setMessage('Debes marcar una ubicación en el mapa')
       return
     }
     const { app, firebase } = await import('./../../base')
@@ -319,6 +320,7 @@ export default function PropertyForm (props) {
                   fullWidth
                   label="Título de publicación"
                   variant="outlined"
+                  data-cy="title"
                   helperText={
                     errors.title?.type === 'minLength'
                       ? 'mínimo 30 caracteres'
@@ -337,33 +339,31 @@ export default function PropertyForm (props) {
 
           <Grid item xs={12} sm={6}>
             <FormControl variant="outlined" className={classes.formControl}>
-              <InputLabel id="demo-simple-select-outlined-label">
-                Tipo de inmueble
-              </InputLabel>
               <Select
-                labelId="propType"
-                id="demo-simple-select-outlined"
+                native
+                inputProps={{
+                  'data-cy': 'property-type'
+                }}
                 onChange={handleType}
-                label="Tipo de inmueble"
                 value={propType}
               >
-                <MenuItem value={'Casa'}>Casa</MenuItem>
-                <MenuItem value={'Casa Rentera'}>Casa Rentera</MenuItem>
-                <MenuItem value={'Terreno'}>Terreno</MenuItem>
-                <MenuItem value={'Bodega'}>Bodega</MenuItem>
-                <MenuItem value={'Consultorio'}>Consultorio</MenuItem>
-                <MenuItem value={'Departamento'}>Departamento</MenuItem>
-                <MenuItem value={'Duplex'}>Duplex</MenuItem>
-                <MenuItem value={'Edificio'}>Edificio</MenuItem>
-                <MenuItem value={'Hacienda'}>Hacienda</MenuItem>
-                <MenuItem value={'Hotel'}>Hotel</MenuItem>
-                <MenuItem value={'Loft'}>Loft</MenuItem>
-                <MenuItem value={'Oficina'}>Oficina</MenuItem>
-                <MenuItem value={'Villa'}>Villa</MenuItem>
-                <MenuItem value={'Suite'}>Suite</MenuItem>
-                <MenuItem value={'Galpon'}>Galpón</MenuItem>
-                <MenuItem value={'Local Comercial'}>Local Comercial</MenuItem>
-                <MenuItem value={'Otros'}>Otros</MenuItem>
+                <option value={'Casa'}>Casa</option>
+                <option value={'Casa Rentera'}>Casa Rentera</option>
+                <option value={'Terreno'}>Terreno</option>
+                <option value={'Bodega'}>Bodega</option>
+                <option value={'Consultorio'}>Consultorio</option>
+                <option value={'Departamento'}>Departamento</option>
+                <option value={'Duplex'}>Duplex</option>
+                <option value={'Edificio'}>Edificio</option>
+                <option value={'Hacienda'}>Hacienda</option>
+                <option value={'Hotel'}>Hotel</option>
+                <option value={'Loft'}>Loft</option>
+                <option value={'Oficina'}>Oficina</option>
+                <option value={'Villa'}>Villa</option>
+                <option value={'Suite'}>Suite</option>
+                <option value={'Galpon'}>Galpón</option>
+                <option value={'Local Comercial'}>Local Comercial</option>
+                <option value={'Otros'}>Otros</option>
               </Select>
             </FormControl>
           </Grid>
@@ -374,15 +374,17 @@ export default function PropertyForm (props) {
                 Operación
               </InputLabel>
               <Select
-                labelId="propType"
-                id="demo-simple-select-outlined"
+                native
+                inputProps={{
+                  'data-cy': 'operation'
+                }}
                 onChange={handleOperation}
-                label="Tipo de inmueble"
+                label="Inmueble"
                 value={operation}
               >
-                <MenuItem value={'Venta'}>Venta</MenuItem>
-                <MenuItem value={'Alquiler'}>Alquiler</MenuItem>
-                <MenuItem value={'Anticresis'}>Anticresis</MenuItem>
+                <option value={'Venta'}>Venta</option>
+                <option value={'Alquiler'}>Alquiler</option>
+                <option value={'Anticresis'}>Anticresis</option>
               </Select>
             </FormControl>
           </Grid>

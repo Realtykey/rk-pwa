@@ -1,53 +1,60 @@
 import React, { useEffect } from 'react'
-//image picker
-import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import PropTypes from 'prop-types'
 
+import IconButton from '@material-ui/core/IconButton'
+import PhotoCamera from '@material-ui/icons/PhotoCamera'
 
-export default function ImagesPicker({ setImgFiles, setImgRefs }) {
+export default function ImagesPicker (props) {
+  const { setImgFiles, setImgRefs } = props
 
-    useEffect(() => {
-        //listen for file selected
-        var fileButton = document.getElementById('fileButton');
-        fileButton.addEventListener('change', function (e) {
-            //get file or files
-            let files = fileButton.files;
-            setImgFiles(files);
-            console.log(files);
-            var urls = [];
-            //extract images urls
-            Array.prototype.forEach.call(files,
-                (file) => {
-                    let url = window.URL.createObjectURL(file).toString();
-                    console.log(url);
-                    urls.push(url);
-                }
-            )
+  useEffect(() => {
+    const fileButton = document.getElementById('fileButton')
+    fileButton.addEventListener('change', function (e) {
+      const files = fileButton.files
+      setImgFiles(files)
+      const urls = []
+      Array.prototype.forEach.call(files, (file) => {
+        const url = window.URL.createObjectURL(file).toString()
+        urls.push(url)
+      })
 
-            console.log(urls);
-            //images loaded
-            setImgRefs(urls);
-            console.log('urls array size ' + urls)
-
-        })
-
-        return () => {
-            fileButton.removeEventListener("mouseover", () => console.log('img listener removed'));
-        }
+      setImgRefs(urls)
     })
 
+    return () => {
+      fileButton.removeEventListener('mouseover', () => {})
+    }
+  })
 
-    return (
-        <>
-            <label htmlFor="fileButton">
-                <IconButton color="primary" aria-label="upload picture" component="span">
-                    <PhotoCamera />
-                </IconButton>
-            </label>
+  return (
+    <>
+      <label htmlFor="fileButton">
+        <IconButton
+          color="primary"
+          aria-label="upload picture"
+          component="span"
+        >
+          <PhotoCamera />
+        </IconButton>
+      </label>
 
-            <input hidden="hidden" accept="image/*" id="fileButton" type="file" multiple />
+      <input
+        data-cy="images-picker"
+        hidden="hidden"
+        accept="image/*"
+        id="fileButton"
+        type="file"
+        multiple
+      />
 
-            <progress id="progressBar" value="0" max="100"> </progress>
-        </>
-    )
+      <progress id="progressBar" value="0" max="100">
+        {' '}
+      </progress>
+    </>
+  )
+}
+
+ImagesPicker.propTypes = {
+  setImgFiles: PropTypes.func.isRequired,
+  setImgRefs: PropTypes.func.isRequired
 }
