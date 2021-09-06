@@ -12,12 +12,18 @@ const register = (profile, action) => {
   it('register', () => {
     cy.visit('https://localhost:3000/SignUp')
 
-    if (profile.role === 'Agente inmobiliario') cy.get('div[name$="agent"]').click()
+    if (profile.role === 'Agente inmobiliario') {
+      cy.get('div[name$="agent"]').click()
+    }
 
-    if (profile.role === 'Agencia inmobiliaria') cy.get('div[name$="agency"]').click()
+    if (profile.role === 'Agencia inmobiliaria') {
+      cy.get('div[name$="agency"]').click()
+    }
 
     cy.get('input[id$="firstName"]').type(profile.name)
-    if (profile.role !== 'Agencia inmobiliaria') cy.get('input[name$="lname"]').type(profile.lname)
+    if (profile.role !== 'Agencia inmobiliaria') {
+      cy.get('input[name$="lname"]').type(profile.lname)
+    }
     cy.get('input[name$="email"]').type(profile.email)
     cy.get('input[name$="password"]').type(profile.password)
     cy.get('input[name$="phone"]').type(profile.phone)
@@ -47,4 +53,28 @@ const searchUser = (owner) => {
   })
 }
 
-export default { login, searchUser, register, manageProfile }
+const createProperty = () => {
+  it('create property', () => {
+    cy.get('[data-cy=property-form-link]').click()
+
+    cy.get('[data-cy=title]').type(
+      'Casa rentera en la carolina cerca de la tribuna de los shyris'
+    )
+    cy.get('[data-cy=property-type]').select('Terreno')
+    cy.get('[data-cy=operation]').select('Alquiler')
+    cy.get('input[name$="area"]').type(200)
+
+    cy.get('textarea[name$="description"]')
+      .type('ReNta departamento de lujo de 2 dormitorios en el Quito Tenis')
+
+    cy.get('[data-cy=images-picker]').attachFile('properties/sample1.jpg')
+    cy.get('div[id$="geocoder"]').click()
+    cy.get('input[id$="react-select-2-input"]').type('la carolina')
+    cy.get('div[id$="react-select-2-option-0"]').click()
+    cy.get('input[name$="price"]').type(4000)
+
+    // cy.get('button[type$="submit"]').click()
+  })
+}
+
+export default { login, searchUser, register, manageProfile, createProperty }

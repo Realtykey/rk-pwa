@@ -62,6 +62,6 @@ PropertyCard.propTypes = {
   hit: PropTypes.shape({
     uid: PropTypes.string,
     photos: PropTypes.array,
-    comission: PropTypes.number
+    comission: PropTypes.object
   }).isRequired
 }
