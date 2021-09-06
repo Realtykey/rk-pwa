@@ -3,8 +3,8 @@ import interactions from '../interactions'
 describe(
   'Dev',
   {
-    viewportWidth: 400,
-    viewportHeight: 600,
+    viewportWidth: 600,
+    viewportHeight: 1000,
     env: {
       DEMO: true,
       API: 'http://localhost:9000'

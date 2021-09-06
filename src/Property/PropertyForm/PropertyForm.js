@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import InputLabel from '@material-ui/core/InputLabel'
-import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import InputAdornment from '@material-ui/core/InputAdornment'
@@ -23,7 +22,7 @@ import { AuthContext } from '../../Auth'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-import { setStepAction, showAlertAction, setMapAction } from '../../redux.js'
+import { setStepAction, setMapAction } from '../../redux.js'
 import { useForm, Controller } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 import { useAlert } from 'src/components/globals/Alert'
@@ -105,9 +104,6 @@ export default function PropertyForm (props) {
   // mapbox map
   const map = useSelector((state) => state.general.map)
   const setMap = (map) => dispatch(setMapAction(map))
-  // error
-  const showAlert = (errorMessage) => dispatch(showAlertAction(errorMessage))
-
   // select inputs state
   const [propType, setType] = React.useState(
     props.location ? props.location.propData.propType : 'Casa'
@@ -148,6 +144,18 @@ export default function PropertyForm (props) {
       console.log('prop form umounted')
     }
   }, [])
+
+  // errors alert
+  useEffect(() => {
+    console.log('errors:', Object.entries(errors))
+
+    for (const [key] of Object.entries(errors)) {
+      if (errors[key]) {
+        alert.setMessage(errors[key].message)
+        return
+      }
+    }
+  }, [errors])
 
   const uploadImages = (docRef) => {
     const id = docRef.id
@@ -333,7 +341,14 @@ export default function PropertyForm (props) {
               name="title"
               control={control}
               defaultValue={props.location ? props.location.propData.title : ''}
-              rules={{ required: true, minLength: 30, maxLength: 60 }}
+              rules={{
+                required: 'Debes colocar el título de la propiedad',
+                minLength: {
+                  value: 30,
+                  message: 'El título debe tener al menos 30 caracteres'
+                },
+                maxLength: 60
+              }}
             />
           </Grid>
 
@@ -391,8 +406,8 @@ export default function PropertyForm (props) {
           {propType !== 'Terreno' && (
             <Grid item xs={12} sm={6}>
               <TextField
-                inputRef={register({ required: true })}
-                helperText={errors.bathrooms && 'número de baños obligatorio'}
+                inputRef={register({ required: 'Debes colocar el número de baños' })}
+                helperText={errors.bathrooms && 'Debes colocar el número de baños'}
                 defaultValue={
                   props.location ? props.location.propData.bathrooms : ''
                 }
@@ -411,9 +426,11 @@ export default function PropertyForm (props) {
           {propType !== 'Terreno' && (
             <Grid item xs={12} sm={6}>
               <TextField
-                inputRef={register({ required: true })}
+                inputRef={register({
+                  required: 'Debes colocar el número de parqueaderos'
+                })}
                 helperText={
-                  errors.parkings && 'número de parqueaderos obligatorio'
+                  errors.parkings && 'Debes colocar el número de parqueaderos'
                 }
                 defaultValue={
                   props.location ? props.location.propData.parkings : ''
@@ -433,9 +450,11 @@ export default function PropertyForm (props) {
           {propType !== 'Terreno' && (
             <Grid item xs={12} sm={6}>
               <TextField
-                inputRef={register({ required: true })}
+                inputRef={register({
+                  required: 'Debes colocar el número de dormitorios'
+                })}
                 helperText={
-                  errors.dormitories && 'número de dormitorios obligatorio'
+                  errors.dormitories && 'Debes colocar el número de dormitorios'
                 }
                 defaultValue={
                   props.location ? props.location.propData.dormitories : ''
@@ -454,8 +473,8 @@ export default function PropertyForm (props) {
 
           <Grid item xs={12} sm={6}>
             <TextField
-              inputRef={register({ required: true })}
-              helperText={errors.area && 'área obligatoria'}
+              inputRef={register({ required: 'Debes colocar el área' })}
+              helperText={errors.area && 'Debes colocar el área'}
               defaultValue={props.location ? props.location.propData.area : ''}
               id="area"
               name="area"
@@ -470,8 +489,8 @@ export default function PropertyForm (props) {
 
           <Grid item xs={12} sm={6}>
             <TextField
-              inputRef={register({ required: true })}
-              helperText={errors.description && 'descripción obligatoria'}
+              inputRef={register({ required: 'Debes colocar la descripción de la propiedad' })}
+              helperText={errors.description && 'Debes colocar la descripción de la propiedad'}
               defaultValue={
                 props.location ? props.location.propData.description : ''
               }
@@ -533,7 +552,7 @@ export default function PropertyForm (props) {
                   ? () => hidePicker(false)
                   : () => console.log('venta')
               }
-              inputRef={register({ required: true })}
+              inputRef={register({ required: 'Debes colocar el porcentaje que estás dispuesto a compartir' })}
               helperText={
                 errors.percent
                   ? 'obligatorio'
@@ -569,7 +588,7 @@ export default function PropertyForm (props) {
             >
               <InputLabel htmlFor="price">Precio</InputLabel>
               <OutlinedInput
-                inputRef={register({ required: true })}
+                inputRef={register({ required: 'Debes colocar el precio de la propiedad' })}
                 defaultValue={
                   props.location ? props.location.propData.price : ''
                 }

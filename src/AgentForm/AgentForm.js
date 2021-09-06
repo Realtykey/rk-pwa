@@ -235,6 +235,7 @@ export function AgentForm () {
             <TextField
               defaultValue={userData ? userData.ci : ''}
               inputRef={register({ required: true })}
+              disabled
               id="ci"
               name="ci"
               label="Cédula"
