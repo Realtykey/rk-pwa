@@ -88,7 +88,7 @@ function SignIn () {
           authErrorMessage = 'Usuario no registrado'
           break
         case 'auth/wrong-password':
-          authErrorMessage = 'Contraseña incorrecta'
+          authErrorMessage = 'Usuario o contraseña incorrecta'
           break
         default:
           authErrorMessage = 'Servicio no disponible'
@@ -148,10 +148,6 @@ function SignIn () {
             type="password"
             id="password"
             autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Recordarme"
           />
           <Button
             type="submit"

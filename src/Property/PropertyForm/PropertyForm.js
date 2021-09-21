@@ -331,9 +331,9 @@ export default function PropertyForm (props) {
                   data-cy="title"
                   helperText={
                     errors.title?.type === 'minLength'
-                      ? 'mínimo 30 caracteres'
+                      ? 'Mínimo 30 caracteres'
                       : '' + errors.title?.type === 'required'
-                        ? 'título obligatorio'
+                        ? 'Título obligatorio'
                         : ''
                   }
                 />
@@ -342,7 +342,7 @@ export default function PropertyForm (props) {
               control={control}
               defaultValue={props.location ? props.location.propData.title : ''}
               rules={{
-                required: 'Debes colocar el título de la propiedad',
+                required: 'Debes ingresar el título de la propiedad',
                 minLength: {
                   value: 30,
                   message: 'El título debe tener al menos 30 caracteres'
@@ -406,8 +406,8 @@ export default function PropertyForm (props) {
           {propType !== 'Terreno' && (
             <Grid item xs={12} sm={6}>
               <TextField
-                inputRef={register({ required: 'Debes colocar el número de baños' })}
-                helperText={errors.bathrooms && 'Debes colocar el número de baños'}
+                inputRef={register({ required: 'Debes ingresar el número de baños' })}
+                helperText={errors.bathrooms && 'Debes ingresar el número de baños'}
                 defaultValue={
                   props.location ? props.location.propData.bathrooms : ''
                 }
@@ -427,10 +427,10 @@ export default function PropertyForm (props) {
             <Grid item xs={12} sm={6}>
               <TextField
                 inputRef={register({
-                  required: 'Debes colocar el número de parqueaderos'
+                  required: 'Debes ingresar el número de parqueaderos'
                 })}
                 helperText={
-                  errors.parkings && 'Debes colocar el número de parqueaderos'
+                  errors.parkings && 'Debes ingresar el número de parqueaderos'
                 }
                 defaultValue={
                   props.location ? props.location.propData.parkings : ''
@@ -451,10 +451,10 @@ export default function PropertyForm (props) {
             <Grid item xs={12} sm={6}>
               <TextField
                 inputRef={register({
-                  required: 'Debes colocar el número de dormitorios'
+                  required: 'Debes ingresar el número de dormitorios'
                 })}
                 helperText={
-                  errors.dormitories && 'Debes colocar el número de dormitorios'
+                  errors.dormitories && 'Debes ingresar el número de dormitorios'
                 }
                 defaultValue={
                   props.location ? props.location.propData.dormitories : ''
@@ -473,8 +473,8 @@ export default function PropertyForm (props) {
 
           <Grid item xs={12} sm={6}>
             <TextField
-              inputRef={register({ required: 'Debes colocar el área' })}
-              helperText={errors.area && 'Debes colocar el área'}
+              inputRef={register({ required: 'Debes ingresar el área' })}
+              helperText={errors.area && 'Debes ingresar el área'}
               defaultValue={props.location ? props.location.propData.area : ''}
               id="area"
               name="area"
@@ -489,8 +489,8 @@ export default function PropertyForm (props) {
 
           <Grid item xs={12} sm={6}>
             <TextField
-              inputRef={register({ required: 'Debes colocar la descripción de la propiedad' })}
-              helperText={errors.description && 'Debes colocar la descripción de la propiedad'}
+              inputRef={register({ required: 'Debes ingresar la descripción de la propiedad' })}
+              helperText={errors.description && 'Debes ingresar la descripción'}
               defaultValue={
                 props.location ? props.location.propData.description : ''
               }
@@ -552,10 +552,10 @@ export default function PropertyForm (props) {
                   ? () => hidePicker(false)
                   : () => console.log('venta')
               }
-              inputRef={register({ required: 'Debes colocar el porcentaje que estás dispuesto a compartir' })}
+              inputRef={register({ required: 'Debes ingresar el porcentaje que estás dispuesto a compartir' })}
               helperText={
                 errors.percent
-                  ? 'obligatorio'
+                  ? 'Debes ingresar el porcentaje'
                   : 'Porcentaje que estás dispuesto a compartir'
               }
               defaultValue={
@@ -588,7 +588,7 @@ export default function PropertyForm (props) {
             >
               <InputLabel htmlFor="price">Precio</InputLabel>
               <OutlinedInput
-                inputRef={register({ required: 'Debes colocar el precio de la propiedad' })}
+                inputRef={register({ required: 'Debes ingresar el precio de la propiedad' })}
                 defaultValue={
                   props.location ? props.location.propData.price : ''
                 }
