@@ -88,7 +88,7 @@ function SignIn () {
           authErrorMessage = 'Usuario no registrado'
           break
         case 'auth/wrong-password':
-          authErrorMessage = 'Usuario o contraseña incorrecta'
+          authErrorMessage = 'Credenciales incorrectas'
           break
         default:
           authErrorMessage = 'Servicio no disponible'
