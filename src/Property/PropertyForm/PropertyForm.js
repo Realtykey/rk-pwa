@@ -318,7 +318,15 @@ export default function PropertyForm (props) {
         <Typography style={{ color: 'white' }} variant="h6" gutterBottom>
           Características del Inmueble
         </Typography>
-
+        {/* button added to prevent any implicit submition of the form from conflicting with geocoder input behaviour */}
+        {/* for more details please refer to: https://stackoverflow.com/questions/895171/prevent-users-from-submitting-a-form-by-hitting-enter */}
+        {/* https://www.w3.org/TR/2018/SPSD-html5-20180327/forms.html#implicit-submission */}
+        <button
+          type="submit"
+          disabled
+          style={{ display: 'none' }}
+          ariaHidden="true"
+        />
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12}>
             <Controller
@@ -406,8 +414,12 @@ export default function PropertyForm (props) {
           {propType !== 'Terreno' && (
             <Grid item xs={12} sm={6}>
               <TextField
-                inputRef={register({ required: 'Debes ingresar el número de baños' })}
-                helperText={errors.bathrooms && 'Debes ingresar el número de baños'}
+                inputRef={register({
+                  required: 'Debes ingresar el número de baños'
+                })}
+                helperText={
+                  errors.bathrooms && 'Debes ingresar el número de baños'
+                }
                 defaultValue={
                   props.location ? props.location.propData.bathrooms : ''
                 }
@@ -454,7 +466,8 @@ export default function PropertyForm (props) {
                   required: 'Debes ingresar el número de dormitorios'
                 })}
                 helperText={
-                  errors.dormitories && 'Debes ingresar el número de dormitorios'
+                  errors.dormitories &&
+                  'Debes ingresar el número de dormitorios'
                 }
                 defaultValue={
                   props.location ? props.location.propData.dormitories : ''
@@ -489,7 +502,9 @@ export default function PropertyForm (props) {
 
           <Grid item xs={12} sm={6}>
             <TextField
-              inputRef={register({ required: 'Debes ingresar la descripción de la propiedad' })}
+              inputRef={register({
+                required: 'Debes ingresar la descripción de la propiedad'
+              })}
               helperText={errors.description && 'Debes ingresar la descripción'}
               defaultValue={
                 props.location ? props.location.propData.description : ''
@@ -552,7 +567,10 @@ export default function PropertyForm (props) {
                   ? () => hidePicker(false)
                   : () => console.log('venta')
               }
-              inputRef={register({ required: 'Debes ingresar el porcentaje que estás dispuesto a compartir' })}
+              inputRef={register({
+                required:
+                  'Debes ingresar el porcentaje que estás dispuesto a compartir'
+              })}
               helperText={
                 errors.percent
                   ? 'Debes ingresar el porcentaje'
@@ -588,7 +606,9 @@ export default function PropertyForm (props) {
             >
               <InputLabel htmlFor="price">Precio</InputLabel>
               <OutlinedInput
-                inputRef={register({ required: 'Debes ingresar el precio de la propiedad' })}
+                inputRef={register({
+                  required: 'Debes ingresar el precio de la propiedad'
+                })}
                 defaultValue={
                   props.location ? props.location.propData.price : ''
                 }
