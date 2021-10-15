@@ -59,7 +59,7 @@ export default function Alert () {
     <Dialog
       PaperComponent={PaperComponent}
       disableBackdropClick
-      open={!!message}
+      open={message !== ''}
       onClose={onClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
