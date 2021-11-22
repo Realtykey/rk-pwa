@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 export function useLocalStorage (key, initialValue) {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
