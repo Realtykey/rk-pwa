@@ -255,7 +255,6 @@ export function AgentForm() {
                   message: "Tu cédula no puede tener mas de 10 dígitos",
                 },
               })}
-              disabled
               id="ci"
               name="ci"
               label="Cédula"
