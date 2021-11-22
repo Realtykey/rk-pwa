@@ -102,16 +102,16 @@ export default function RealtyAppBar (props) {
           </IconButton>
         </Link>
 
-        <Link
+        {/* <Link
           style={{ textDecoration: 'inherit', color: 'inherit' }}
           to={`${match.path}/Publish/req`}
         >
           <IconButton color="inherit">
             <ListAltIcon />
           </IconButton>
-        </Link>
+        </Link> */}
 
-        <Link
+        {/* <Link
           style={{ textDecoration: 'inherit', color: 'inherit' }}
           to={`${match.path}/MatchView`}
         >
@@ -120,7 +120,7 @@ export default function RealtyAppBar (props) {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-        </Link>
+        </Link> */}
         <IconButton
           aria-label="account of current user"
           aria-controls="menu-appbar"
