@@ -25,6 +25,7 @@ const GeocoderInput = (props) => {
         apiKey={API_KEY}
         minLengthAutocomplete={3}
         selectProps={{
+          placeholder: 'Escribe aquí la ubicación',
           onChange: (change) => {
             geocodeByPlaceId(change.value.place_id)
               .then(async (results) => {

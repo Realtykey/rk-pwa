@@ -573,7 +573,7 @@ export default function PropertyForm (props) {
 
           <Grid item xs={12} sm={12}>
             <Suspense fallback={<div>cargando mapa</div>}>
-              <Map />
+              <Map defaultMap={storedProperty?.map || null} />
             </Suspense>
           </Grid>
 
