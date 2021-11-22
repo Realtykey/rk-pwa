@@ -5,20 +5,12 @@ import { makeStyles } from '@material-ui/core/styles'
 import PropertyForm from './../Property/PropertyForm/PropertyForm'
 import RequestForm from './../Request/RequestForm'
 
-import { AuthProvider } from './../Auth'
 import Grid from '@material-ui/core/Grid'
 
 import PublicArea from '../PublicArea.js'
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  withRouter
-} from 'react-router-dom'
+import { Switch, Route, withRouter } from 'react-router-dom'
 
-import InternalRoute from '../InternalRoute'
-import Playground from '../Playground.js'
 import RealtyAppBar from './RealtyAppBar.js'
 import MyPanel from '../MyPanel'
 
@@ -29,7 +21,7 @@ import MatchView from '../Matches/MatchView/MatchView'
 import AgentForm from '../AgentForm/AgentForm.js'
 import Menu from '../Menu'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: '100%'
   }
@@ -44,76 +36,41 @@ function Home (props) {
   const { match } = props
 
   return (
-    <AuthProvider>
-      <Router>
-        <Grid className={classes.root}>
-          <RealtyAppBar match={match} />
-          <div style={content}>
-            <Switch>
-              <InternalRoute
-                path={`${match.path}/Publish/:type`}
-                component={Publish}
-              />
-              <InternalRoute
-                path={`${match.path}/PublicArea/:type`}
-                component={PublicArea}
-              />
+    <Grid className={classes.root}>
+      <RealtyAppBar match={match} />
+      <div style={content}>
+        <Switch>
+          <Route path={`${match.path}/Publish/:type`} component={Publish} />
+          <Route
+            path={`${match.path}/PublicArea/:type`}
+            component={PublicArea}
+          />
 
-              <InternalRoute
-                path={`${match.path}/PropertyForm`}
-                component={PropertyForm}
-              />
-              <InternalRoute
-                path={`${match.path}/RequestForm`}
-                component={RequestForm}
-              />
+          <Route path={`${match.path}/PropertyForm`} component={PropertyForm} />
+          <Route path={`${match.path}/RequestForm`} component={RequestForm} />
 
-              <InternalRoute
-                path={`${match.path}/AgentForm`}
-                component={AgentForm}
-              />
+          <Route path={`${match.path}/AgentForm`} component={AgentForm} />
 
-              <InternalRoute path={`${match.path}/Menu`} component={Menu} />
+          <Route path={`${match.path}/Menu`} component={Menu} />
 
-              <InternalRoute
-                path={`${match.path}/MatchView`}
-                component={MatchView}
-              />
+          <Route path={`${match.path}/MatchView`} component={MatchView} />
 
-              <InternalRoute
-                path={`${match.path}/Playground`}
-                component={Playground}
-              />
+          <Route path={`${match.path}/MyPanel`} component={MyPanel} />
 
-              <InternalRoute
-                path={`${match.path}/MyPanel`}
-                component={MyPanel}
-              />
+          <Route path={`${match.path}/propform`} component={PropertyForm} />
 
-              <InternalRoute
-                path={`${match.path}/propform`}
-                component={PropertyForm}
-              />
+          <Route path={`${match.path}/reqForm`} component={RequestForm} />
 
-              <InternalRoute
-                path={`${match.path}/reqForm`}
-                component={RequestForm}
-              />
-
-              <Route path={`${match.url}/WorkOnProgress`}>
-                <div>
-                  <BuildIcon />
-                  Work in progress..
-                </div>
-              </Route>
-
-              {/* default view, root view */}
-              <Route component={Menu}></Route>
-            </Switch>
-          </div>
-        </Grid>
-      </Router>
-    </AuthProvider>
+          <Route path={`${match.url}/WorkOnProgress`}>
+            <div>
+              <BuildIcon />
+              Work in progress..
+            </div>
+          </Route>
+          <Route component={Menu}></Route>
+        </Switch>
+      </div>
+    </Grid>
   )
 }
 
