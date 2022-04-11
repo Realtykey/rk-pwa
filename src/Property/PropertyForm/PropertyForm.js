@@ -1,4 +1,11 @@
-import React, { useEffect, useState, useContext, lazy, Suspense } from 'react'
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useState,
+  useContext,
+  lazy,
+  Suspense
+} from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
@@ -24,8 +31,9 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { setStepAction, setMapAction } from '../../redux.js'
 import { useForm, Controller } from 'react-hook-form'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useAlert } from 'src/components/globals/Alert'
+import { useLocalStorage } from '../../hooks'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -77,12 +85,29 @@ function getModalStyle () {
 
 export default function PropertyForm (props) {
   const classes = useStyles()
-
   const { register, errors, handleSubmit, setValue, control } = useForm()
+
+  // on edit, page refresh persistance
+  const location = useLocation()
+  const { propData } = location
+  const [storedProperty, storeProperty] = useLocalStorage(
+    'storedProperty',
+    propData
+  )
+
+  useLayoutEffect(() => {
+    if (propData !== undefined) {
+      storeProperty(propData)
+    }
+
+    return () => {
+      localStorage.removeItem('storedProperty')
+    }
+  }, [])
 
   const alert = useAlert()
 
-  const [modalStyle] = React.useState(getModalStyle)
+  const [modalStyle] = useState(getModalStyle)
 
   const pickPercent = (name, value) => {
     setValue(name, value)
@@ -105,16 +130,16 @@ export default function PropertyForm (props) {
   const map = useSelector((state) => state.general.map)
   const setMap = (map) => dispatch(setMapAction(map))
   // select inputs state
-  const [propType, setType] = React.useState(
-    props.location ? props.location.propData.propType : 'Casa'
+  const [propType, setType] = useState(
+    storedProperty ? storedProperty?.propType : 'Casa'
   )
 
   const handleType = (event) => {
     setType(event.target.value)
   }
 
-  const [operation, setOperation] = React.useState(
-    props.location ? props.location.propData.operation : 'Venta'
+  const [operation, setOperation] = useState(
+    storedProperty ? storedProperty?.operation : 'Venta'
   )
 
   const handleOperation = (event) => {
@@ -127,7 +152,7 @@ export default function PropertyForm (props) {
   // local (images view)
   const [imgRefs, setImgRefs] = useState([])
 
-  const [updateImages, setUpdateImages] = useState(!props.location)
+  const [updateImages, setUpdateImages] = useState(!location)
 
   // stepper state
   const activeStep = useSelector((state) => state.general.activeStep)
@@ -136,8 +161,8 @@ export default function PropertyForm (props) {
   // activar listener para boton de upload i2mages
   useEffect(() => {
     // on edit
-    if (props.location) {
-      setMap(props.location.propData.map)
+    if (storedProperty) {
+      setMap(storedProperty?.map)
     }
     console.log('prop form mounted')
     return () => {
@@ -147,8 +172,6 @@ export default function PropertyForm (props) {
 
   // errors alert
   useEffect(() => {
-    console.log('errors:', Object.entries(errors))
-
     for (const [key] of Object.entries(errors)) {
       if (errors[key]) {
         alert.setMessage(errors[key].message)
@@ -187,7 +210,7 @@ export default function PropertyForm (props) {
           console.log(err)
         },
         async function complete () {
-          if (props.location) {
+          if (storedProperty) {
             await docRef.set(
               {
                 photos: []
@@ -219,6 +242,8 @@ export default function PropertyForm (props) {
   }
 
   const submit = async (data) => {
+    console.log("submit started")
+    debugger
     if (data.percent > 9) {
       alert.setMessage('La comisión no puede ser mayor a 9%.')
       return
@@ -242,7 +267,7 @@ export default function PropertyForm (props) {
 
     data.price = Number(data.price)
 
-    if (imgFiles.length === 0 && !props.location) {
+    if (imgFiles.length === 0 && !location) {
       alert.setMessage('Debes agregar una o varias fotos')
       return
     }
@@ -271,10 +296,10 @@ export default function PropertyForm (props) {
       date: firebase.firestore.Timestamp.now()
     }
 
-    if (props.location) {
+    if (storedProperty) {
       // on edit
-      ref = ref.doc(props.location.propData.id)
-      property = { ...property, id: props.location.propData.id }
+      ref = ref.doc(storedProperty?.id)
+      property = { ...property, id: storedProperty?.id }
     } else {
       // on create
       ref = ref.doc()
@@ -284,7 +309,7 @@ export default function PropertyForm (props) {
 
     // create or update firestore doc
     ref.set(property, { merge: true }).then(() => {
-      if (props.location) {
+      if (storedProperty) {
         // on edit
         if (updateImages && imgFiles.length > 0) {
           // upload loaded images to firestore storage
@@ -295,7 +320,7 @@ export default function PropertyForm (props) {
         uploadImages(ref)
       }
       // redirect to mypanel, reset selected prop (forces list refresh)
-      if (props.location?.propData) {
+      if (storedProperty) {
         history.push({
           pathname: '/Home/MyPanel',
           tab: 0
@@ -325,7 +350,7 @@ export default function PropertyForm (props) {
           type="submit"
           disabled
           style={{ display: 'none' }}
-          ariaHidden="true"
+          aria-hidden="true"
         />
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12}>
@@ -348,7 +373,7 @@ export default function PropertyForm (props) {
               }
               name="title"
               control={control}
-              defaultValue={props.location ? props.location.propData.title : ''}
+              defaultValue={storedProperty ? storedProperty?.title : ''}
               rules={{
                 required: 'Debes ingresar el título de la propiedad',
                 minLength: {
@@ -420,9 +445,7 @@ export default function PropertyForm (props) {
                 helperText={
                   errors.bathrooms && 'Debes ingresar el número de baños'
                 }
-                defaultValue={
-                  props.location ? props.location.propData.bathrooms : ''
-                }
+                defaultValue={storedProperty ? storedProperty?.bathrooms : ''}
                 id="bathrooms"
                 name="bathrooms"
                 label="Baños"
@@ -444,9 +467,7 @@ export default function PropertyForm (props) {
                 helperText={
                   errors.parkings && 'Debes ingresar el número de parqueaderos'
                 }
-                defaultValue={
-                  props.location ? props.location.propData.parkings : ''
-                }
+                defaultValue={storedProperty ? storedProperty?.parkings : ''}
                 id="parkings"
                 name="parkings"
                 label="Parqueaderos"
@@ -469,9 +490,7 @@ export default function PropertyForm (props) {
                   errors.dormitories &&
                   'Debes ingresar el número de dormitorios'
                 }
-                defaultValue={
-                  props.location ? props.location.propData.dormitories : ''
-                }
+                defaultValue={storedProperty ? storedProperty?.dormitories : ''}
                 id="dormitories"
                 name="dormitories"
                 label="Dormitorios"
@@ -488,7 +507,7 @@ export default function PropertyForm (props) {
             <TextField
               inputRef={register({ required: 'Debes ingresar el área' })}
               helperText={errors.area && 'Debes ingresar el área'}
-              defaultValue={props.location ? props.location.propData.area : ''}
+              defaultValue={storedProperty ? storedProperty?.area : ''}
               id="area"
               name="area"
               label="Area m²"
@@ -506,9 +525,7 @@ export default function PropertyForm (props) {
                 required: 'Debes ingresar la descripción de la propiedad'
               })}
               helperText={errors.description && 'Debes ingresar la descripción'}
-              defaultValue={
-                props.location ? props.location.propData.description : ''
-              }
+              defaultValue={storedProperty ? storedProperty?.description : ''}
               name="description"
               id="description"
               label="Descripción"
@@ -526,7 +543,7 @@ export default function PropertyForm (props) {
             </Typography>
 
             <div className={classes.placeholder}>(5 máximo)</div>
-            {props.location && (
+            {storedProperty && (
               <div>
                 <Typography gutterBottom>
                   ¿Quieres actualizar las fotos?
@@ -556,7 +573,7 @@ export default function PropertyForm (props) {
 
           <Grid item xs={12} sm={12}>
             <Suspense fallback={<div>cargando mapa</div>}>
-              <Map />
+              <Map defaultMap={storedProperty?.map || null} />
             </Suspense>
           </Grid>
 
@@ -577,9 +594,7 @@ export default function PropertyForm (props) {
                   : 'Porcentaje que estás dispuesto a compartir'
               }
               defaultValue={
-                props.location
-                  ? props.location.propData.comission.percent
-                  : null
+                storedProperty ? storedProperty?.comission?.percent : null
               }
               id="percent"
               name="percent"
@@ -609,9 +624,7 @@ export default function PropertyForm (props) {
                 inputRef={register({
                   required: 'Debes ingresar el precio de la propiedad'
                 })}
-                defaultValue={
-                  props.location ? props.location.propData.price : ''
-                }
+                defaultValue={storedProperty ? storedProperty?.price : ''}
                 id="price"
                 name="price"
                 type="number"

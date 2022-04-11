@@ -1,13 +1,11 @@
 import React, { useCallback } from 'react'
-import { Link, Redirect, useHistory } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { Link, useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -59,7 +57,6 @@ function SignIn () {
   const dispatch = useDispatch()
   const alert = useAlert()
   const setUser = (currentUser) => dispatch(setUserAction(currentUser))
-  const currentUser = useSelector((state) => state.general.currentUser)
 
   const handleLogin = useCallback(async (event) => {
     event.preventDefault()
@@ -71,7 +68,6 @@ function SignIn () {
       const result = await app
         .auth()
         .signInWithEmailAndPassword(email.value, password.value)
-      console.log(result.user.email + ' signed ')
       setUser(result.user)
       fetchUserDataThunk(result.user.uid)
       history.push('/Home')
@@ -97,9 +93,6 @@ function SignIn () {
     }
   }, [])
 
-  if (currentUser) {
-    return <Redirect to="/Home" />
-  }
   const img = {
     width: '100%',
     heigh: '100%'

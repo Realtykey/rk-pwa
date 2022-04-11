@@ -4,7 +4,6 @@ import './App.css'
 import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 
-import PrivateRoute from './PrivateRoute.js'
 import loadable from '@loadable/component'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,6 +12,8 @@ import { closeAlertAction } from './redux'
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { withAlert } from './components/globals/Alert'
+
+import { AuthProvider } from './Auth'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -85,19 +86,21 @@ function App () {
   return (
     <div className={classes.root}>
       <Router>
-        <Switch>
-          <PrivateRoute path="/Home" component={Home} />
-          <Route exact path="/" component={SignIn} />
-          <Route path="/SignIn" component={SignIn} />
-          <Route path="/SignUp" component={SignUp} />
-        </Switch>
+        <AuthProvider>
+          <Switch>
+            <Route path="/Home" component={Home} />
+            <Route exact path="/" component={SignIn} />
+            <Route path="/SignIn" component={SignIn} />
+            <Route path="/SignUp" component={SignUp} />
+          </Switch>
+          <Modal open={errorMessage !== ''} onClose={closeAlert}>
+            {body}
+          </Modal>
+          <Modal open={!!photoPreview} onClose={() => setPhotoPreview(null)}>
+            {photoBody}
+          </Modal>
+        </AuthProvider>
       </Router>
-      <Modal open={errorMessage !== ''} onClose={closeAlert}>
-        {body}
-      </Modal>
-      <Modal open={!!photoPreview} onClose={() => setPhotoPreview(null)}>
-        {photoBody}
-      </Modal>
     </div>
   )
 }

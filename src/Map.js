@@ -12,20 +12,24 @@ import Geocoder from './utils/Geocode';
 
 const MAPBOX_TOKEN = "pk.eyJ1Ijoic3RlYWx0aDE0IiwiYSI6ImNrNGhvY3hkdjFjY2kza283eDhzcGRnYmkifQ.mZXxhWd9yvNen0-qpoEnsg";
 
-export default function Map() {
+export default function Map(props) {
+    const { defaultMap } = props 
+
     const mapRef = useRef();
     //redux
     const dispatch = useDispatch();
     const setMap = map => dispatch(setMapAction(map));
     const map = useSelector(state => state.general.map);
 
-    const [viewport, setViewport] = useState({
+    const initialViewport = {
         width: '100%',
         height: 400,
-        latitude: -0.175698,
-        longitude: -78.485593,
+        latitude: defaultMap?.lat || -0.175698,
+        longitude: defaultMap?.lng || -78.485593,
         zoom: 15,
-    });
+    }
+
+    const [viewport, setViewport] = useState(initialViewport);
 
     const setPosition = ({latitude,longitude}) => {
         setViewport(viewport => ({...viewport,latitude,longitude}))
@@ -67,6 +71,8 @@ export default function Map() {
                 mapboxApiAccessToken={MAPBOX_TOKEN}
                 ref={mapRef}
                 {...viewport}
+                scrollZoom={false}
+                dragPan={false}
                 // onClick={handleClick}
                 onViewportChange={nextViewport => setViewport(nextViewport)}
             >
