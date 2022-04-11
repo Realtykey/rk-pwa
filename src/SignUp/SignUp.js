@@ -78,7 +78,7 @@ const ciExists = async (ci) => {
 
   const snap = await docRef.get()
 
-  return snap?.docs?.length > 0
+  return !snap.empty
 }
 
 function SignUp () {
@@ -134,7 +134,9 @@ function SignUp () {
 
       const unsuscribe = app.auth().onAuthStateChanged((user) => {
         if (user) {
-          const selectedSectors = Object.keys(sectors).filter(key => sectors[key].selected)
+          const selectedSectors = Object.keys(sectors).filter(
+            (key) => sectors[key].selected
+          )
           saveUserDoc({
             uid: user.uid,
             name,

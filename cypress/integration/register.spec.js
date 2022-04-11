@@ -38,7 +38,7 @@ describe(
         ci: '123456789'
       }
     ]
-    const owner = 'dailyhome'
+    const owner = 'ronny'
 
     interactions.register(profiles.find((profile) => profile.owner === owner), 'submit')
   }
