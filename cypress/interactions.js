@@ -10,7 +10,11 @@ const login = (profile, action) => {
 
 const register = (profile, action) => {
   it('register', () => {
-    cy.visit('https://localhost:3000/SignUp')
+    cy.visit('https://localhost:3000/SignIn')
+
+    cy.get('[data-cy=register-link]').click()
+
+    cy.get('li[name$="north"]').click()
 
     if (profile.role === 'Agente inmobiliario') {
       cy.get('div[name$="agent"]').click()

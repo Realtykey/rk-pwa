@@ -161,7 +161,7 @@ function SignIn () {
               </Link> */}
             </Grid>
             <Grid item>
-              <Link className={classes.link} to="/SignUp" variant="body2">
+              <Link data-cy="register-link" className={classes.link} to="/SignUp" variant="body2">
                 {'No tienes una cuenta? Registrarse'}
               </Link>
             </Grid>
