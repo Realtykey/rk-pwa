@@ -86,6 +86,9 @@ function SignIn () {
         case 'auth/wrong-password':
           authErrorMessage = 'Credenciales incorrectas'
           break
+        case 'auth/too-many-requests':
+          authErrorMessage = 'Demasiados intentos, intente más tarde'
+          break
         default:
           authErrorMessage = 'Servicio no disponible'
       }
