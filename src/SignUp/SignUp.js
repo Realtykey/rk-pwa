@@ -72,7 +72,7 @@ const saveUserDoc = async (userDoc) => {
   return ref.set(userDoc, { merge: true })
 }
 
-const ciExists = async (ci) => {
+const validateIdentification = async (ci) => {
   const { app } = await import('./../base')
   const docRef = app.firestore().collection('users').where('ci', '==', ci)
 
@@ -115,7 +115,7 @@ function SignUp () {
       city
     } = data
 
-    const exists = await ciExists(ci)
+    const exists = await validateIdentification(ci)
     if (exists) {
       alert('Ya existe un usuario con ese número de cédula')
       return
