@@ -242,8 +242,6 @@ export default function PropertyForm (props) {
   }
 
   const submit = async (data) => {
-    console.log("submit started")
-    debugger
     if (data.percent > 9) {
       alert.setMessage('La comisión no puede ser mayor a 9%.')
       return
