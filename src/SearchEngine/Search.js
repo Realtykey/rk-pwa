@@ -18,7 +18,7 @@ import {
 
 const searchClient = algoliasearch(
   'IW55L7EK8V',
-  'e305d8ad0b21a89b620a1e11ab90dbad'
+  '99fbc9df8fd50e08eccd3d6151c35b15'
 )
 
 export default function Search ({
