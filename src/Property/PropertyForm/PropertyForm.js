@@ -242,30 +242,32 @@ export default function PropertyForm (props) {
   }
 
   const submit = async (data) => {
-    console.log("submit started")
-    debugger
-    if (data.percent > 9) {
+    console.log('data:', data)
+
+    let { percent, parkings, area, bathrooms, dormitories, price } = data
+
+    if (percent > 9) {
       alert.setMessage('La comisión no puede ser mayor a 9%.')
       return
     }
 
-    if (data.parkings) {
-      data.parkings = Number(data.parkings)
+    if (parkings) {
+      parkings = Number(parkings)
     }
 
-    if (data.area) {
-      data.area = Number(data.area)
+    if (area) {
+      area = Number(area)
     }
 
-    if (data.bathrooms) {
-      data.bathrooms = Number(data.bathrooms)
+    if (bathrooms) {
+      bathrooms = Number(bathrooms)
     }
 
-    if (data.dormitories) {
-      data.dormitories = Number(data.dormitories)
+    if (dormitories) {
+      dormitories = Number(dormitories)
     }
 
-    data.price = Number(data.price)
+    price = Number(price)
 
     if (imgFiles.length === 0 && !location) {
       alert.setMessage('Debes agregar una o varias fotos')
@@ -281,8 +283,8 @@ export default function PropertyForm (props) {
     let ref = app.firestore().collection('properties')
     // comission
     const comission = {
-      percent: Number(data.percent),
-      value: data.price * data.percent * 0.01
+      percent: Number(percent),
+      value: price * percent * 0.01
     }
     delete data.percent
     // edit and create

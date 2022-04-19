@@ -86,6 +86,9 @@ function SignIn () {
         case 'auth/wrong-password':
           authErrorMessage = 'Credenciales incorrectas'
           break
+        case 'auth/too-many-requests':
+          authErrorMessage = 'Demasiados intentos, intente más tarde'
+          break
         default:
           authErrorMessage = 'Servicio no disponible'
       }
@@ -158,7 +161,7 @@ function SignIn () {
               </Link> */}
             </Grid>
             <Grid item>
-              <Link className={classes.link} to="/SignUp" variant="body2">
+              <Link data-cy="register-link" className={classes.link} to="/SignUp" variant="body2">
                 {'No tienes una cuenta? Registrarse'}
               </Link>
             </Grid>
