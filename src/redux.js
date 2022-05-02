@@ -158,13 +158,11 @@ const generalReducer = (state = initialState, action) => {
 }
 //current user data
 export const fetchUserDataThunk = (uid) => {
-
-  return async (dispatch) => {
-    const {firebase} = await import('./base');
-    
-    const userDoc = await firebase.firestore().collection('users').doc(uid).get();
-    dispatch(setUserData(userDoc.data()));
-      
+  return (dispatch) => {
+    import('./base').then(async ({ app }) => {
+      const userDoc = await app.firestore().collection('users').doc(uid).get()
+      dispatch(setUserData(userDoc.data()))
+    })
   }
 }
 export const setUserAction = (currentUser) => { return { type: 'SET_USER', payload: currentUser } }
