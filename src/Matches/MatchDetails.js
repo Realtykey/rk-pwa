@@ -63,6 +63,7 @@ export default function MatchDetails() {
   const classes = useStyles();
 
   useEffect(() => {
+    if (!userData) return;
     var unregister = null;
     if (selectedMatch) {
       unregister = db
