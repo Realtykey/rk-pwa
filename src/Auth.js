@@ -17,8 +17,6 @@ export const AuthProvider = ({ children }) => {
           setCurrentUser(user)
           if (user === null) {
             history.push('/SignIn')
-          } else {
-            // history.push('/Home')
           }
         })
       } catch (e) {
