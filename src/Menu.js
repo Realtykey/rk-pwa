@@ -91,7 +91,7 @@ export default function Menu () {
             </Link>
           </Grid>
 
-          {/* <Grid item align="center" xs={12} sm={4} md={4} lg={3}>
+          <Grid item align="center" xs={12} sm={4} md={4} lg={3}>
             <Link style={link} to={'/Home/PublicArea/req'}>
               <MenuButton icon={faHandHoldingUsd} background="#27233180" />
               <Typography
@@ -103,7 +103,7 @@ export default function Menu () {
                 Requerimientos
               </Typography>
             </Link>
-          </Grid> */}
+          </Grid>
 
           <Grid item align="center" xs={12} sm={4} md={4} lg={3}>
             <Link style={link} to={'/Home/PublicArea/agents'}>

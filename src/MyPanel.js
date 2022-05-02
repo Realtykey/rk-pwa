@@ -78,7 +78,7 @@ export default function MyPanel({location}) {
         <div className={classes.root} >
                 <Tabs className = {classes.tabs} centered value={actualTab} onChange={handleTab} aria-label="tabs de propiedades">
                     <Tab label="propiedades" {...a11yProps(0)} />
-                    {/* <Tab label="requerimientos" {...a11yProps(0)} /> */}
+                    <Tab label="requerimientos" {...a11yProps(1)} />
                 </Tabs>
 
                 <SwipeableViews

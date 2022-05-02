@@ -102,14 +102,14 @@ export default function RealtyAppBar (props) {
           </IconButton>
         </Link>
 
-        {/* <Link
+        <Link
           style={{ textDecoration: 'inherit', color: 'inherit' }}
           to={`${match.path}/Publish/req`}
         >
           <IconButton color="inherit">
             <ListAltIcon />
           </IconButton>
-        </Link> */}
+        </Link>
 
         {/* <Link
           style={{ textDecoration: 'inherit', color: 'inherit' }}
