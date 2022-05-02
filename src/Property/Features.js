@@ -12,14 +12,18 @@ export default function Features (props) {
   const { propData } = props
   const { dormitories, bathrooms, area, parkings } = propData
   const root = {
-    margin: '20px auto'
+    margin: '20px 10px'
+  }
+  const chip = {
+    width: '100%'
   }
   return (
     <div style={root}>
       <Grid spacing={1} container direction="row" alignItems="center">
-        <Grid sm={3} xs={4} align="center" item>
+        <Grid xs={6} sm={6} md={3} lg={3} xl={3} xxl={3} align="center" item>
           {dormitories && (
             <Chip
+              style={chip}
               variant="outlined"
               icon={<HotelIcon />}
               label={' Dormitorios ' + dormitories}
@@ -27,9 +31,10 @@ export default function Features (props) {
           )}
         </Grid>
 
-        <Grid sm={3} xs={4} align="center" item>
+        <Grid xs={6} sm={6} md={3} lg={3} xl={3} xxl={3} align="center" item>
           {bathrooms && (
             <Chip
+              style={chip}
               variant="outlined"
               icon={<BathtubIcon />}
               label={' Baños ' + bathrooms}
@@ -37,22 +42,24 @@ export default function Features (props) {
           )}
         </Grid>
 
-        <Grid sm={3} xs={4} align="center" item>
+        <Grid xs={6} sm={6} md={3} lg={3} xl={3} xxl={3} align="center" item>
+          {parkings && (
+            <Chip
+              style={chip}
+              variant="outlined"
+              icon={<DriveEtaIcon />}
+              label={' Garages ' + parkings}
+            />
+          )}
+        </Grid>
+
+        <Grid xs={6} sm={6} md={3} lg={3} xl={3} xxl={3} align="center" item>
           <Chip
+            style={chip}
             variant="outlined"
             icon={<AspectRatioIcon />}
             label={' Area ' + area + ' m²'}
           />
-        </Grid>
-
-        <Grid sm={3} xs={12} align="center" item>
-          {parkings && (
-            <Chip
-              variant="outlined"
-              icon={<DriveEtaIcon />}
-              label={' Parqueaderos ' + parkings}
-            />
-          )}
         </Grid>
       </Grid>
     </div>
