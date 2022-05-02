@@ -6,6 +6,8 @@ import React, {
   lazy,
   Suspense
 } from 'react'
+import PropTypes from 'prop-types'
+
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
@@ -87,6 +89,8 @@ export default function PropertyForm (props) {
   const classes = useStyles()
   const { register, errors, handleSubmit, setValue, control } = useForm()
 
+  const { location: routeLocation } = props
+
   // on edit, page refresh persistance
   const location = useLocation()
   const { propData } = location
@@ -152,7 +156,7 @@ export default function PropertyForm (props) {
   // local (images view)
   const [imgRefs, setImgRefs] = useState([])
 
-  const [updateImages, setUpdateImages] = useState(!location)
+  const [updateImages, setUpdateImages] = useState(!routeLocation)
 
   // stepper state
   const activeStep = useSelector((state) => state.general.activeStep)
@@ -652,4 +656,8 @@ export default function PropertyForm (props) {
       </form>
     </FormLayout>
   )
+}
+
+PropertyForm.propTypes = {
+  location: PropTypes.object,
 }
