@@ -90,9 +90,7 @@ export function AgentForm() {
             { merge: true }
           );
 
-          history.goBack();
-          const { app } = await import("../base");
-          await app.auth().signOut();
+          history.push("/Home/Menu");
         }
       );
     });
@@ -173,9 +171,7 @@ export function AgentForm() {
     await ref.set(user, { merge: true });
 
     if (imgFiles.length === 0) {
-      // history.goBack()
-      const { app } = await import("../base");
-      await app.auth().signOut();
+      history.push("/Home/Menu");
     }
 
     await uploadImages(ref);
