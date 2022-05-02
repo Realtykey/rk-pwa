@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
@@ -11,7 +10,6 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import Container from '@material-ui/core/Container'
 
-import { setUserAction, fetchUserDataThunk } from './../redux'
 import { useAlert } from '../components/globals/Alert'
 
 function Copyright () {
@@ -54,9 +52,7 @@ const useStyles = makeStyles((theme) => ({
 function SignIn () {
   const classes = useStyles()
   const history = useHistory()
-  const dispatch = useDispatch()
   const alert = useAlert()
-  const setUser = (currentUser) => dispatch(setUserAction(currentUser))
 
   const handleLogin = useCallback(async (event) => {
     event.preventDefault()
@@ -65,11 +61,7 @@ function SignIn () {
     const { app } = await import('./../base')
 
     try {
-      const result = await app
-        .auth()
-        .signInWithEmailAndPassword(email.value, password.value)
-      setUser(result.user)
-      fetchUserDataThunk(result.user.uid)
+      await app.auth().signInWithEmailAndPassword(email.value, password.value)
       history.push('/Home')
     } catch (exception) {
       let authErrorMessage
@@ -161,7 +153,12 @@ function SignIn () {
               </Link> */}
             </Grid>
             <Grid item>
-              <Link data-cy="register-link" className={classes.link} to="/SignUp" variant="body2">
+              <Link
+                data-cy="register-link"
+                className={classes.link}
+                to="/SignUp"
+                variant="body2"
+              >
                 {'No tienes una cuenta? Registrarse'}
               </Link>
             </Grid>
