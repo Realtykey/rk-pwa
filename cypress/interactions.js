@@ -64,8 +64,11 @@ const createProperty = () => {
     cy.get('[data-cy=title]').type(
       'Casa rentera en la carolina cerca de la tribuna de los shyris'
     )
-    cy.get('[data-cy=property-type]').select('Terreno')
+    cy.get('[data-cy=property-type]').select('Casa')
     cy.get('[data-cy=operation]').select('Alquiler')
+    cy.get('input[name$="dormitories"]').type(5)
+    cy.get('input[name$="parkings"]').type(5)
+    cy.get('input[name$="bathrooms"]').type(5)
     cy.get('input[name$="area"]').type(200)
 
     cy.get('textarea[name$="description"]')
