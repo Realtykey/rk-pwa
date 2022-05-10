@@ -35,9 +35,10 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff'
   },
   children: (props) => {
+    const { open } = props
     return {
       marginTop: 64,
-      filter: props.open ? 'none' : 'blur(4px)'
+      filter: open ? 'none' : 'blur(4px)'
     }
   }
 }))
