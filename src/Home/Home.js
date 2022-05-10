@@ -33,21 +33,25 @@ const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: '#fff'
+  },
+  content: (props) => {
+    return {
+      marginTop: 64,
+      filter: props?.userData ? 'none' : 'blur(4px)'
+    }
   }
 }))
 
-const content = {
-  marginTop: 64
-}
+const BackdropWrapper = (props) => {
+  const { children, userData } = props
 
-const BackdropWrapper = ({ children }) => {
+  const classes = useStyles(props)
+
   const { currentUser } = useContext(AuthContext)
+
   const dispatch = useDispatch()
   const fetchUserData = (uid) => dispatch(fetchUserDataThunk(uid))
 
-  const { userData } = useSelector((state) => state.general)
-
-  const classes = useStyles()
 
   const fetchUser = async (uid) => {
     fetchUserData(uid)
@@ -59,12 +63,12 @@ const BackdropWrapper = ({ children }) => {
   }, [currentUser])
 
   return (
-    <div style={userData ? {} : { filter: 'blur(4px)' }}>
-      {children}
+    <>
+      <div className={classes.content}>{children}</div>
       <Backdrop className={classes.backdrop} open={!userData}>
         <CircularProgress color="inherit" />
       </Backdrop>
-    </div>
+    </>
   )
 }
 
@@ -74,46 +78,42 @@ BackdropWrapper.propTypes = {
 function Home (props) {
   const classes = useStyles()
   const { match } = props
+  const { userData } = useSelector((state) => state.general)
 
   return (
     <Grid className={classes.root}>
       <RealtyAppBar match={match} />
-      <BackdropWrapper>
-        <div style={content}>
-          <Switch>
-            <Route path={`${match.path}/Publish/:type`} component={Publish} />
-            <Route
-              path={`${match.path}/PublicArea/:type`}
-              component={PublicArea}
-            />
+      <BackdropWrapper userData={userData}>
+        <Switch>
+          <Route path={`${match.path}/Publish/:type`} component={Publish} />
+          <Route
+            path={`${match.path}/PublicArea/:type`}
+            component={PublicArea}
+          />
 
-            <Route
-              path={`${match.path}/PropertyForm`}
-              component={PropertyForm}
-            />
-            <Route path={`${match.path}/RequestForm`} component={RequestForm} />
+          <Route path={`${match.path}/PropertyForm`} component={PropertyForm} />
+          <Route path={`${match.path}/RequestForm`} component={RequestForm} />
 
-            <Route path={`${match.path}/AgentForm`} component={AgentForm} />
+          <Route path={`${match.path}/AgentForm`} component={AgentForm} />
 
-            <Route path={`${match.path}/Menu`} component={Menu} />
+          <Route path={`${match.path}/Menu`} component={Menu} />
 
-            <Route path={`${match.path}/MatchView`} component={MatchView} />
+          <Route path={`${match.path}/MatchView`} component={MatchView} />
 
-            <Route path={`${match.path}/MyPanel`} component={MyPanel} />
+          <Route path={`${match.path}/MyPanel`} component={MyPanel} />
 
-            <Route path={`${match.path}/propform`} component={PropertyForm} />
+          <Route path={`${match.path}/propform`} component={PropertyForm} />
 
-            <Route path={`${match.path}/reqForm`} component={RequestForm} />
+          <Route path={`${match.path}/reqForm`} component={RequestForm} />
 
-            <Route path={`${match.url}/WorkOnProgress`}>
-              <div>
-                <BuildIcon />
-                Work in progress..
-              </div>
-            </Route>
-            <Route component={Menu}></Route>
-          </Switch>
-        </div>
+          <Route path={`${match.url}/WorkOnProgress`}>
+            <div>
+              <BuildIcon />
+              Work in progress..
+            </div>
+          </Route>
+          <Route component={Menu}></Route>
+        </Switch>
       </BackdropWrapper>
     </Grid>
   )
