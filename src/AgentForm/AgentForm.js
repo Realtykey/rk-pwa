@@ -85,7 +85,7 @@ export function AgentForm () {
             { merge: true }
           )
 
-          history.push('/Home/Menu')
+          document.location.reload()
         }
       )
     })
@@ -167,12 +167,11 @@ export function AgentForm () {
     await ref.set(user, { merge: true })
 
     if (imgFiles.length === 0) {
-      history.push('/Home/Menu')
+      document.location.reload()
+      return
     }
 
     await uploadImages(ref)
-
-    alert.setMessage('Guardado correctamente')
   }
 
   const classes = useStyles()
