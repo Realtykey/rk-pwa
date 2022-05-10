@@ -1,133 +1,133 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from 'react'
 
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import { makeStyles } from '@material-ui/core/styles'
+import Container from '@material-ui/core/Container'
 
-import IconButton from "@material-ui/core/IconButton";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
+import IconButton from '@material-ui/core/IconButton'
+import PhotoCamera from '@material-ui/icons/PhotoCamera'
 
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import TextField from '@material-ui/core/TextField'
 
-import Button from "@material-ui/core/Button";
+import Button from '@material-ui/core/Button'
 
-import { AuthContext } from "../Auth.js";
-import { useForm } from "react-hook-form";
-import { useAlert } from "src/components/globals/Alert";
+import { AuthContext } from '../Auth.js'
+import { useForm } from 'react-hook-form'
+import { useAlert } from 'src/components/globals/Alert'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     paddingTop: 160,
-    color: "white",
+    color: 'white'
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 120
   },
   selectEmpty: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(2)
   },
   button: {
     marginTop: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
-}));
+    marginRight: theme.spacing(1)
+  }
+}))
 
-export function AgentForm() {
+export function AgentForm () {
   // select state
-  const { currentUser } = useContext(AuthContext);
-  const { handleSubmit, register, errors } = useForm();
-  const userData = useSelector((state) => state.general.userData);
-  const history = useHistory();
-  const alert = useAlert();
+  const { currentUser } = useContext(AuthContext)
+  const { handleSubmit, register, errors } = useForm()
+  const userData = useSelector((state) => state.general.userData)
+  const history = useHistory()
+  const alert = useAlert()
 
   // image local files
-  const [imgFiles, setImgFiles] = useState([]);
+  const [imgFiles, setImgFiles] = useState([])
   // local (images view)
-  const [imgRefs, setImgRefs] = useState([]);
+  const [imgRefs, setImgRefs] = useState([])
 
   const uploadImages = (docRef) => {
-    const progressBar = document.getElementById("progressBar");
+    const progressBar = document.getElementById('progressBar')
     Array.prototype.forEach.call(imgFiles, async (imgFile) => {
-      const { firebase } = await import("./../base");
+      const { firebase } = await import('./../base')
 
       // create storage ref
       const storageRef = firebase
         .storage()
-        .ref(`users/${currentUser.uid}/${imgFile.name}`);
+        .ref(`users/${currentUser.uid}/${imgFile.name}`)
       // upload file
-      const task = storageRef.put(imgFile);
+      const task = storageRef.put(imgFile)
 
       // update progress bar
       const unsuscribe = task.on(
-        "state_changed",
-        function progress(snap) {
+        'state_changed',
+        function progress (snap) {
           if (progressBar) {
-            const percentage = (snap.bytesTransferred / snap.totalBytes) * 100;
-            progressBar.value = percentage;
+            const percentage = (snap.bytesTransferred / snap.totalBytes) * 100
+            progressBar.value = percentage
           }
         },
-        function error(err) {
-          console.log(err);
+        function error (err) {
+          console.log(err)
         },
-        async function complete(err) {
-          console.log(err);
+        async function complete (err) {
+          console.log(err)
           // unsuscribe
-          unsuscribe();
+          unsuscribe()
 
           // Upload completed successfully, now we can get the download URL
-          const downloadUrl = await task.snapshot.ref.getDownloadURL();
+          const downloadUrl = await task.snapshot.ref.getDownloadURL()
 
           // update photos atribute (array) of the prop doc
           await docRef.set(
             {
-              photoUrl: downloadUrl,
+              photoUrl: downloadUrl
             },
             { merge: true }
-          );
+          )
 
-          history.push("/Home/Menu");
+          history.push('/Home/Menu')
         }
-      );
-    });
-  };
+      )
+    })
+  }
 
   useEffect(() => {
-    const fileButton = document.getElementById("fileButton");
-    fileButton.addEventListener("change", function (e) {
+    const fileButton = document.getElementById('fileButton')
+    fileButton.addEventListener('change', function (e) {
       // get file or files
-      const files = fileButton.files;
-      setImgFiles(files);
-      console.log(files);
-      const urls = [];
+      const files = fileButton.files
+      setImgFiles(files)
+      console.log(files)
+      const urls = []
       // extract images urls
       Array.prototype.forEach.call(files, (file) => {
-        const url = window.URL.createObjectURL(file).toString();
-        console.log(url);
-        urls.push(url);
-      });
+        const url = window.URL.createObjectURL(file).toString()
+        console.log(url)
+        urls.push(url)
+      })
 
-      console.log(urls);
+      console.log(urls)
       // images loaded
-      setImgRefs(urls);
-      console.log("urls array size " + urls);
-    });
-  }, []);
+      setImgRefs(urls)
+      console.log('urls array size ' + urls)
+    })
+  }, [])
   const ciExists = async (ci) => {
-    const { app } = await import("./../base");
-    const docRef = app.firestore().collection("users").where("ci", "==", ci);
+    const { app } = await import('./../base')
+    const docRef = app.firestore().collection('users').where('ci', '==', ci)
 
-    const snap = await docRef.get();
+    const snap = await docRef.get()
 
-    return snap?.docs?.length > 0;
-  };
+    return snap?.docs?.length > 0
+  }
 
   const submit = async (data) => {
-    const { app } = await import("./../base");
+    const { app } = await import('./../base')
 
     const {
       name,
@@ -137,16 +137,16 @@ export function AgentForm() {
       experience,
       licenseCode = null,
       province,
-      city,
-    } = data;
+      city
+    } = data
 
-    const exists = await ciExists(ci);
+    const exists = await ciExists(ci)
     if (exists) {
       if (ci === userData.ci) {
-        console.log("misma cédula");
+        console.log('misma cédula')
       } else {
-        alert.setMessage("Ya existe un usuario con ese número de cédula");
-        return;
+        alert.setMessage('Ya existe un usuario con ese número de cédula')
+        return
       }
     }
 
@@ -156,39 +156,39 @@ export function AgentForm() {
       lname,
       ci,
       phone,
-      address: "",
+      address: '',
       experience,
       licenseCode,
       province,
-      city,
-    };
+      city
+    }
 
     if (!userData?.role && licenseCode) {
-      user.role = "Agente inmobiliario";
+      user.role = 'Agente inmobiliario'
     }
 
-    const ref = app.firestore().collection("users").doc(currentUser.uid);
-    await ref.set(user, { merge: true });
+    const ref = app.firestore().collection('users').doc(currentUser.uid)
+    await ref.set(user, { merge: true })
 
     if (imgFiles.length === 0) {
-      history.push("/Home/Menu");
+      history.push('/Home/Menu')
     }
 
-    await uploadImages(ref);
+    await uploadImages(ref)
 
-    alert.setMessage("Guardado correctamente");
-  };
+    alert.setMessage('Guardado correctamente')
+  }
 
-  const classes = useStyles();
+  const classes = useStyles()
 
   useEffect(() => {
     for (const [key] of Object.entries(errors)) {
       if (errors[key]) {
-        alert.setMessage(errors[key].message);
-        return;
+        alert.setMessage(errors[key].message)
+        return
       }
     }
-  }, [errors]);
+  }, [errors])
 
   return (
     <Container className={classes.root}>
@@ -200,12 +200,12 @@ export function AgentForm() {
           <Grid
             item
             xs={12}
-            sm={userData?.role === "Agencia inmobiliaria" ? 12 : 6}
+            sm={userData?.role === 'Agencia inmobiliaria' ? 12 : 6}
           >
             <TextField
-              defaultValue={userData ? userData.name : ""}
+              defaultValue={userData ? userData.name : ''}
               inputRef={register({
-                required: "Debes ingresar tu nombre",
+                required: 'Debes ingresar tu nombre'
               })}
               autoComplete="fname"
               name="name"
@@ -213,19 +213,19 @@ export function AgentForm() {
               fullWidth
               id="firstName"
               label={
-                userData?.role === "Agencia inmobiliaria"
-                  ? "Nombre de agencia"
-                  : "Nombre"
+                userData?.role === 'Agencia inmobiliaria'
+                  ? 'Nombre de agencia'
+                  : 'Nombre'
               }
               autoFocus
             />
           </Grid>
-          {userData?.role !== "Agencia inmobiliaria" && (
+          {userData?.role !== 'Agencia inmobiliaria' && (
             <Grid item xs={12} sm={6}>
               <TextField
-                defaultValue={userData ? userData.lname : ""}
+                defaultValue={userData ? userData.lname : ''}
                 inputRef={register({
-                  required: "Debes ingresar tu apellido",
+                  required: 'Debes ingresar tu apellido'
                 })}
                 autoComplete="lname"
                 name="lname"
@@ -239,17 +239,17 @@ export function AgentForm() {
           )}
           <Grid item xs={12} sm={6}>
             <TextField
-              defaultValue={userData ? userData.ci : ""}
+              defaultValue={userData ? userData.ci : ''}
               inputRef={register({
-                required: "Cédula obligatoria",
+                required: 'Cédula obligatoria',
                 minLength: {
                   value: 10,
-                  message: "Tu cédula debe tener al menos 10 dígitos",
+                  message: 'Tu cédula debe tener al menos 10 dígitos'
                 },
                 maxLength: {
                   value: 10,
-                  message: "Tu cédula no puede tener mas de 10 dígitos",
-                },
+                  message: 'Tu cédula no puede tener mas de 10 dígitos'
+                }
               })}
               id="ci"
               name="ci"
@@ -260,17 +260,17 @@ export function AgentForm() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              defaultValue={userData ? userData.phone : ""}
+              defaultValue={userData ? userData.phone : ''}
               inputRef={register({
-                required: "Número de celular obligatorio",
+                required: 'Número de celular obligatorio',
                 minLength: {
                   value: 10,
-                  message: "Tu número debe tener al menos 10 dígitos",
+                  message: 'Tu número debe tener al menos 10 dígitos'
                 },
                 maxLength: {
                   value: 10,
-                  message: "Tu número no puede tener mas de 10 dígitos",
-                },
+                  message: 'Tu número no puede tener mas de 10 dígitos'
+                }
               })}
               type="number"
               id="phone"
@@ -280,21 +280,21 @@ export function AgentForm() {
               variant="outlined"
             />
           </Grid>
-          {userData?.role === "Agente inmobiliario" && (
+          {userData?.role === 'Agente inmobiliario' && (
             <Grid item xs={12} sm={6}>
               <TextField
-                defaultValue={userData ? userData.licenseCode : ""}
+                defaultValue={userData ? userData.licenseCode : ''}
                 inputRef={register({
                   required: userData?.licenseCode
-                    ? "Numero de licencia obligatorio"
-                    : false,
+                    ? 'Numero de licencia obligatorio'
+                    : false
                 })}
                 id="licenseCode"
                 name="licenseCode"
                 label="Numero de licencia"
                 type="text"
                 InputLabelProps={{
-                  shrink: true,
+                  shrink: true
                 }}
                 variant="outlined"
               />
@@ -302,9 +302,9 @@ export function AgentForm() {
           )}
           <Grid item xs={12} sm={6}>
             <TextField
-              defaultValue={userData ? userData.province : ""}
+              defaultValue={userData ? userData.province : ''}
               inputRef={register({
-                required: "Debes ingresar tu provincia",
+                required: 'Debes ingresar tu provincia'
               })}
               variant="outlined"
               fullWidth
@@ -316,9 +316,9 @@ export function AgentForm() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              defaultValue={userData ? userData.city : ""}
+              defaultValue={userData ? userData.city : ''}
               inputRef={register({
-                required: "Debes ingresar tu ciudad",
+                required: 'Debes ingresar tu ciudad'
               })}
               variant="outlined"
               fullWidth
@@ -333,15 +333,15 @@ export function AgentForm() {
               defaultValue={userData ? userData.experience : 0}
               inputRef={register({
                 required: userData?.experience
-                  ? "Debes ingresar tu experiencia"
-                  : false,
+                  ? 'Debes ingresar tu experiencia'
+                  : false
               })}
               name="experience"
               id="experience"
               label="Experiencia (años)"
               type="number"
               InputLabelProps={{
-                shrink: true,
+                shrink: true
               }}
               variant="outlined"
             />
@@ -366,7 +366,7 @@ export function AgentForm() {
             />
 
             <progress id="progressBar" value="0" max="100">
-              {" "}
+              {' '}
             </progress>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -382,7 +382,7 @@ export function AgentForm() {
         </Grid>
       </form>
     </Container>
-  );
+  )
 }
 
-export default AgentForm;
+export default AgentForm
