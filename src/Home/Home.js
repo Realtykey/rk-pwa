@@ -34,24 +34,44 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     color: '#fff'
   },
-  content: (props) => {
+  children: (props) => {
     return {
       marginTop: 64,
-      filter: props?.userData ? 'none' : 'blur(4px)'
+      filter: props.open ? 'none' : 'blur(4px)'
     }
   }
 }))
 
 const BackdropWrapper = (props) => {
-  const { children, userData } = props
+  const { children, open } = props
 
   const classes = useStyles(props)
 
+  return (
+    <>
+      <div className={classes.children}>{children}</div>
+      <Backdrop className={classes.backdrop} open={!open}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    </>
+  )
+}
+
+BackdropWrapper.propTypes = {
+  children: PropTypes.node.isRequired,
+  open: PropTypes.bool.isRequired
+}
+function Home (props) {
+  const { match } = props
+
+  const classes = useStyles()
+
   const { currentUser } = useContext(AuthContext)
+
+  const { userData } = useSelector((state) => state.general)
 
   const dispatch = useDispatch()
   const fetchUserData = (uid) => dispatch(fetchUserDataThunk(uid))
-
 
   const fetchUser = async (uid) => {
     fetchUserData(uid)
@@ -63,27 +83,9 @@ const BackdropWrapper = (props) => {
   }, [currentUser])
 
   return (
-    <>
-      <div className={classes.content}>{children}</div>
-      <Backdrop className={classes.backdrop} open={!userData}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-    </>
-  )
-}
-
-BackdropWrapper.propTypes = {
-  children: PropTypes.node.isRequired
-}
-function Home (props) {
-  const classes = useStyles()
-  const { match } = props
-  const { userData } = useSelector((state) => state.general)
-
-  return (
     <Grid className={classes.root}>
       <RealtyAppBar match={match} />
-      <BackdropWrapper userData={userData}>
+      <BackdropWrapper open={!!userData}>
         <Switch>
           <Route path={`${match.path}/Publish/:type`} component={Publish} />
           <Route
