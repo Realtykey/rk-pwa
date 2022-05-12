@@ -2,10 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import algoliasearch from 'algoliasearch/lite'
 
-import Grid from '@material-ui/core/Grid'
 import './search.css'
 import InfiniteHits from './InfiniteHits'
-import RangeInput from './CustomRangeInput'
 import CustomSearchBox from './CustomSearchBox'
 
 import { v4 as uuidv4 } from 'uuid'
@@ -46,26 +44,6 @@ export default function Search ({
           reset: 'reset'
         }}
       />
-      <form
-        onSubmit={(e) => e.preventDefault()}
-        id="ranges-form"
-        className="refinements"
-      >
-        <Grid container justify="center">
-          {/* eslint-disable-next-line react/prop-types */}
-          {rangeAtributes.map((attribute) => (
-            <Grid item xs={12} sm={6} md={3} lg={3} key={uuidv4()}>
-              <RangeInput
-                name={attribute.name}
-                label={attribute.label}
-                attribute={attribute.name}
-                min={1}
-                precision={0}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </form>
       <div className="refinements">
         {/* eslint-disable-next-line react/prop-types */}
         {refinementAttributes.map((attribute) => (

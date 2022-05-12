@@ -7,8 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ClearRefinements = ({ items, refine }) => {
   const clear = () => {
-    document.getElementById("ranges-form").reset();
-    console.log('custom cleaner')
     refine(items);
   }
   
