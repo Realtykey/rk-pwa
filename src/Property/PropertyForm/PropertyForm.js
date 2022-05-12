@@ -246,9 +246,7 @@ export default function PropertyForm (props) {
   }
 
   const submit = async (data) => {
-    console.log('data:', data)
-
-    let { percent, parkings, area, bathrooms, dormitories, price } = data
+    const { percent, parkings, area, bathrooms, dormitories, price } = data
 
     if (percent > 9) {
       alert.setMessage('La comisión no puede ser mayor a 9%.')
@@ -256,22 +254,22 @@ export default function PropertyForm (props) {
     }
 
     if (parkings) {
-      parkings = Number(parkings)
+      data.parkings = Number(parkings)
     }
 
     if (area) {
-      area = Number(area)
+      data.area = Number(area)
     }
 
     if (bathrooms) {
-      bathrooms = Number(bathrooms)
+      data.bathrooms = Number(bathrooms)
     }
 
     if (dormitories) {
-      dormitories = Number(dormitories)
+      data.dormitories = Number(dormitories)
     }
 
-    price = Number(price)
+    data.price = Number(price)
 
     if (imgFiles.length === 0 && !location) {
       alert.setMessage('Debes agregar una o varias fotos')
@@ -659,5 +657,5 @@ export default function PropertyForm (props) {
 }
 
 PropertyForm.propTypes = {
-  location: PropTypes.object,
+  location: PropTypes.object
 }
