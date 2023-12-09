@@ -62,7 +62,7 @@ export default function Menu () {
   return (
     <div style={root}>
       <div className={classes.layout}>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <Grid item align="center" xs={12} sm={4} md={4} lg={3}>
             <a style={link} onClick={pushMyPanel}>
               <MenuButton icon={faThLarge} background="#27233180" />

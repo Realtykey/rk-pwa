@@ -115,7 +115,7 @@ export default function MatchCompletion () {
   return (
     <div style={root}>
       <form onSubmit={handleSubmit(submitComment)}>
-        <Grid container spacing={3} direction="column" justify="flex-start">
+        <Grid container spacing={3} direction="column" justifyContent="flex-start">
           <Grid item xs={12} sm={12} md={12}>
             <Typography style={{ color: 'white' }} variant="h6" gutterBottom>
               {'Califica tu experiencia con ' + partnerData.name}
@@ -125,7 +125,7 @@ export default function MatchCompletion () {
           <Grid
             container
             align="center"
-            justify="center"
+            justifyContent="center"
             item
             xs={12}
             sm={12}

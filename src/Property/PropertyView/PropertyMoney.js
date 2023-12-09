@@ -34,7 +34,7 @@ export default function PropertyMoney(props) {
                 spacing={1}
                 container
                 direction="row"
-                justify="flex-start"
+                justifyContent="flex-start"
                 alignItems="center"
 
             >

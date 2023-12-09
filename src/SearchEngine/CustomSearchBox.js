@@ -18,7 +18,7 @@ const SearchBox = ({ rangeAtributes, refine }) => {
     return (
         <>
             <form onSubmit={submit}  noValidate action="" role="search">
-                <Grid container justify="center">
+                <Grid container justifyContent="center">
                     <Grid xs={2} md={2} sm={2} lg={2} align="right" item>
                         <CustomClearRefinements
                             rangeAtributes={rangeAtributes}

@@ -101,7 +101,7 @@ export default function PersonalArea () {
           <Grid
             container
             className={classes.cardGrid}
-            justify="center"
+            justifyContent="center"
             item
             key={prop.id}
             xs={12}

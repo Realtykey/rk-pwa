@@ -360,7 +360,7 @@ function SignUp () {
           >
             Registrarse
           </Button>
-          <Grid container justify="flex-end">
+          <Grid container justifyContent="flex-end">
             <Grid item>
               <Link className={classes.link} to="/SignIn" variant="body2">
                 {'¿Ya tienes una cuenta?'}
