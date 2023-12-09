@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import GridList from '@material-ui/core/GridList'
-import GridListTile from '@material-ui/core/GridListTile'
+import ImageList from '@material-ui/core/ImageList';
+import ImageListItem from '@material-ui/core/ImageListItem'
 import PropTypes from 'prop-types'
 
 const useStyles = makeStyles(() => ({
@@ -33,27 +33,27 @@ export default function ImagesPreview (props) {
 
   return (
     <div align="left" className={classes.root}>
-      <GridList className={classes.gridList} cols={3}>
+      <ImageList className={classes.gridList} cols={3}>
         {urls &&
           urls.map((url, index) => {
             return urls.length > 1
               ? (
-              <GridListTile
+              <ImageListItem
                 key={url}
                 cols={index === 0 || index === 1 ? 1.5 : 1}
                 rows={index === 0 || index === 1 ? 1.3 : 0.7}
                 className={classes.shadedTile}
               >
                 <img alt="prop tile" src={url} />
-              </GridListTile>
+              </ImageListItem>
                 )
               : (
-              <GridListTile key={url} cols={3} rows={3}>
+              <ImageListItem key={url} cols={3} rows={3}>
                 <img alt="prop tile" className={classes.shadedImg} src={url} />
-              </GridListTile>
+              </ImageListItem>
                 )
           })}
-      </GridList>
+      </ImageList>
     </div>
   )
 }
