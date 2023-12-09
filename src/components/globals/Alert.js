@@ -58,9 +58,11 @@ export default function Alert () {
   return (
     <Dialog
       PaperComponent={PaperComponent}
-      disableBackdropClick
       open={message !== ''}
-      onClose={onClose}
+      onClose={(event, reason) => {
+        if (reason === 'backdropClick') return; 
+        onClose(event, reason);
+      }}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
