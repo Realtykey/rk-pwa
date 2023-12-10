@@ -45,11 +45,10 @@ export default function Search ({
         }}
       />
       <div className="refinements">
-        {/* eslint-disable-next-line react/prop-types */}
-        {refinementAttributes.map((attribute) => (
+        {refinementAttributes.map((attribute, index) => (
           <MenuSelect
             translations={{ seeAllOption: attribute.label }}
-            key={uuidv4()}
+            key={index}
             attribute={attribute.name}
           />
         ))}
