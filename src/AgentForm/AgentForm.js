@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
 import { useAlert } from 'src/components/globals/Alert'
 import { AuthContext } from '../Auth.js'
 import User from 'src/lib/user'
@@ -37,13 +36,10 @@ export function AgentForm () {
   // select state
   const { currentUser } = useContext(AuthContext)
   const { userData } = useSelector((state) => state.general)
-  const history = useHistory()
   const alert = useAlert()
 
   // image local files
   const [imgFiles, setImgFiles] = useState([])
-  // local (images view)
-  const [imgRefs, setImgRefs] = useState([])
 
   const uploadImages = (docRef) => {
     const progressBar = document.getElementById('progressBar')
@@ -108,7 +104,7 @@ export function AgentForm () {
 
       console.log(urls)
       // images loaded
-      setImgRefs(urls)
+
       console.log('urls array size ' + urls)
     })
   }
