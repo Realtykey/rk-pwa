@@ -71,3 +71,9 @@
 9. - [ ] Actualizar flujo creacion, guardado, edicion del perfil de usuario.
 10. - [ ] Label del boton confirmar debe decir PUBLICAR y REQUERIR en formularios de propiedad y requerimiento respectivamente.
 11. - [ ] Agregar mensae validacion de inputs tipo modal en formularios.
+
+# NOTES
+
+nvm use v10.16.3
+npm install
+npm start
