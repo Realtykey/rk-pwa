@@ -142,7 +142,7 @@ export default function AgentItem (props) {
               value={experience}
             />
           </Grid>
-          <Grid item container justifyContent="flex-end" xs={tinyRange ? 4 : 2} sm md lg xl>
+          <Grid item container justify="flex-end" xs={tinyRange ? 4 : 2} sm md lg xl>
             <SellsCount />
           </Grid>
         </Grid>
@@ -221,7 +221,7 @@ export default function AgentItem (props) {
     <Card className={classes.root}>
       <CardContent className={classes.cardContent}>
         <Grid container direction={!xsDown ? 'row' : 'column'} spacing={2}>
-          <Grid item container justifyContent="center" xs={12} sm={4} md={4} lg={4}>
+          <Grid item container justify="center" xs={12} sm={4} md={4} lg={4}>
             <Grid className={classes.avatar}>
               <Avatar
                 // eslint-disable-next-line react/no-children-prop

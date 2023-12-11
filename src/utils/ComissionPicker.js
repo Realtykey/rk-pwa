@@ -36,7 +36,7 @@ export default function ComissionPicker({ pickPercent, hidePicker }) {
     const percentages = getPercentages();
 
     return (
-        <Grid container justifyContent="center">
+        <Grid container justify="center">
             {
                 percentages.map(item => {
                     return (

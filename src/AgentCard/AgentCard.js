@@ -129,7 +129,7 @@ export default function AgentCard (props) {
                   spacing={2}
                   container
                   direction="column"
-                  justifyContent="flex-start"
+                  justify="flex-start"
                   alignItems="center"
                 >
                   <Grid item>

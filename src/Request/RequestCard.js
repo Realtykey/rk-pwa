@@ -166,7 +166,7 @@ export default function RequestCard(props) {
               spacing={2}
               container
               direction="row"
-              justifyContent="flex-start"
+              justify="flex-start"
               alignItems="center"
               item
             >
@@ -229,7 +229,7 @@ export default function RequestCard(props) {
 
           </Grid>
 
-          <Grid item justifyContent="flex-end" container >
+          <Grid item justify="flex-end" container >
 
             <IconButton
               className={clsx(classes.expand, {

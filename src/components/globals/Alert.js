@@ -71,7 +71,7 @@ export default function Alert () {
           display="flex"
           marginBottom={1}
           alignItems="center"
-          justifyContent="center"
+          justify="center"
         >
           <FontAwesomeIcon
             color="#ffa733"

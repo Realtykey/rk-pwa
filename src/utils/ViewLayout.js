@@ -30,7 +30,7 @@ export default function ({ name, list, detail, iterable, showDetails }) {
         <div style={root}>
             {iterable.length > 0 ? <>
                 <Hidden only={['xs','sm']}>
-                    <Grid justifyContent="center" container>
+                    <Grid justify="center" container>
                         <Grid align="center" md={4} lg={4} item>
                             {list}
                         </Grid>
@@ -41,7 +41,7 @@ export default function ({ name, list, detail, iterable, showDetails }) {
                 </Hidden>
 
                 <Hidden only={['md', 'lg', 'xl']}>
-                    <Grid justifyContent="center" container>
+                    <Grid justify="center" container>
                         <Box display={showDetails ? 'inline' : 'none'}>
                             <Grid container item xs={12} sm={12} align="center">{detail}</Grid>
                         </Box>
