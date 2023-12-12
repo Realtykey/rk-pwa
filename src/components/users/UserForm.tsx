@@ -11,7 +11,7 @@ import { useAlert } from "src/components/globals/Alert";
 import { db } from "src/base";
 
 import User from "src/models/User";
-import AvatarInput from "./AvatarInput";
+import AvatarInput from "src/components/users/AvatarInput";
 
 const useStyles = makeStyles((theme) => ({
   root: {
