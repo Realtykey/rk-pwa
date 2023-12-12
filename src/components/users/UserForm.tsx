@@ -1,14 +1,18 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-
-import { Button, Grid, IconButton, TextField } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-
-import { useForm } from "react-hook-form";
+import React from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 
-import User from "src/lib/user";
+import FilePicker from "src/components/globals/FilePicker/FilePicker";
+
+import { Avatar, Button, Grid, IconButton, TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+import { useAlert } from "src/components/globals/Alert";
+
+import { db } from "src/base";
+
+import User from "src/models/User";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,32 +32,125 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UserForm(props) {
-  const { onPhotoSelect, userData } = props;
-  const { handleSubmit, register, errors } = useForm();
-  const classes = useStyles();
+interface UserFormProps {
+  currentUser: firebase.User;
+  userData: User;
+}
 
-  useEffect(() => {
-    for (const [key] of Object.entries(errors)) {
-      if (errors[key]) {
-        alert.setMessage(errors[key].message);
+type UserFields = {
+  name: User["name"];
+  lname: User["lname"];
+  ci: User["ci"];
+  phone: User["phone"];
+  experience: User["experience"];
+  licenseCode: User["licenseCode"];
+  province: User["province"];
+  city: User["city"];
+  image: File;
+};
+
+export default function UserForm({ currentUser, userData }: UserFormProps) {
+  const { handleSubmit, register, control, errors } = useForm<UserFields>();
+
+  const classes = useStyles();
+  const alert = useAlert();
+
+  const ciExists = async (ci: string) => {
+    const docRef = db.collection("users").where("ci", "==", ci);
+
+    const snap = await docRef.get();
+
+    return snap?.docs?.length > 0;
+  };
+
+  const onSubmit: SubmitHandler<UserFields> = async (data) => {
+    const exists = await ciExists(data.ci);
+    if (exists) {
+      if (data.ci === userData.ci) {
+        console.log("misma cédula");
+      } else {
+        alert.setMessage("Ya existe un usuario con ese número de cédula");
         return;
       }
     }
-  }, [errors]);
-
-  useEffect(() => {
-    onPhotoSelect();
-  }, []);
-
-  const onSubmit = (data) => {
-    console.log("data", data);
-    // props.onSubmit(data);
+    const response = await User.save(
+      {
+        uid: currentUser.uid,
+        name: data.name,
+        lname: data.lname,
+        ci: data.ci,
+        phone: data.phone,
+        experience: data.experience,
+        licenseCode: data.licenseCode,
+        province: data.province,
+        city: data.city,
+        role: userData.role,
+      },
+      data.image as File
+    );
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
+        <Grid
+          container
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          xl={12}
+          justify="center"
+        >
+          <Controller
+            control={control}
+            name="image"
+            render={({ onChange, value }) => (
+              <FilePicker
+                value={value}
+                onChange={onChange}
+                accept="image"
+                render={(file) => (
+                  <>
+                    {file ? (
+                      <>
+                        <img
+                          width={100}
+                          height={100}
+                          style={{ borderRadius: "100%" }}
+                          src={URL.createObjectURL(file)}
+                        />
+                      </>
+                    ) : (
+                      <div
+                        style={{
+                          position: "relative",
+                          width: 100,
+                          height: 100,
+                        }}
+                      >
+                        <Avatar style={{ width: "100%", height: "100%" }} />
+                        <IconButton
+                          style={{
+                            position: "absolute",
+                            bottom: -10,
+                            right: -10,
+                            color: "white",
+                          }}
+                          color="primary"
+                          component="span"
+                        >
+                          <PhotoCamera fontSize="default" />
+                        </IconButton>
+                      </div>
+                    )}
+                  </>
+                )}
+              />
+            )}
+          />
+        </Grid>
         <Grid
           item
           xs={12}
@@ -75,6 +172,8 @@ export default function UserForm(props) {
                 : "Nombre"
             }
             autoFocus
+            error={!!errors.name}
+            helperText={errors.name?.message}
           />
         </Grid>
         {userData.role !== "Agencia inmobiliaria" && (
@@ -91,6 +190,8 @@ export default function UserForm(props) {
               id="lname"
               label="Apellido"
               autoFocus
+              error={!!errors.lname}
+              helperText={errors.lname?.message}
             />
           </Grid>
         )}
@@ -113,6 +214,8 @@ export default function UserForm(props) {
             label="Cédula"
             autoComplete="billing address-line1"
             variant="outlined"
+            error={!!errors.ci}
+            helperText={errors.ci?.message}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -135,6 +238,8 @@ export default function UserForm(props) {
             label="Celular"
             autoComplete="billing address-line1"
             variant="outlined"
+            error={!!errors.phone}
+            helperText={errors.phone?.message}
           />
         </Grid>
         {userData.role === "Agente inmobiliario" && (
@@ -154,6 +259,8 @@ export default function UserForm(props) {
                 shrink: true,
               }}
               variant="outlined"
+              error={!!errors.licenseCode}
+              helperText={errors.licenseCode?.message}
             />
           </Grid>
         )}
@@ -169,6 +276,8 @@ export default function UserForm(props) {
             label="Provincia"
             name="province"
             autoComplete="province"
+            error={!!errors.province}
+            helperText={errors.province?.message}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -183,6 +292,8 @@ export default function UserForm(props) {
             label="Ciudad"
             name="city"
             autoComplete="city"
+            error={!!errors.city}
+            helperText={errors.city?.message}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -201,30 +312,9 @@ export default function UserForm(props) {
               shrink: true,
             }}
             variant="outlined"
+            error={!!errors.experience}
+            helperText={errors.experience?.message}
           />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <label htmlFor="fileButton">
-            <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="span"
-            >
-              <PhotoCamera />
-            </IconButton>
-          </label>
-
-          <input
-            hidden="hidden"
-            accept="image/*"
-            className={classes.input}
-            id="fileButton"
-            type="file"
-          />
-
-          <progress id="progressBar" value="0" max="100">
-            {" "}
-          </progress>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Button
@@ -240,9 +330,3 @@ export default function UserForm(props) {
     </form>
   );
 }
-
-UserForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  onPhotoSelect: PropTypes.func.isRequired,
-  userData: PropTypes.shape(User).isRequired,
-};

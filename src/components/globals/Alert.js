@@ -13,7 +13,7 @@ import Paper from '@material-ui/core/Paper'
 
 const AlertContext = React.createContext({
   message: '',
-  setMessage: () => {},
+  setMessage: (message) => {},
   onClose: () => {}
 })
 

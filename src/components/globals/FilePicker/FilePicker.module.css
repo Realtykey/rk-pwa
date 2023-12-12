@@ -1,0 +1,10 @@
+.container input[type="file"] {
+  display: none;
+}
+.container {
+  display: flex;
+  max-width:max-content;
+  height: fit-content;
+  cursor: pointer;
+  user-select: none;
+}

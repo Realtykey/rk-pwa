@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
-export default {
+export const UserProps = {
   uid: PropTypes.string,
   address: PropTypes.string,
   ci: PropTypes.string,
@@ -19,4 +19,4 @@ export default {
   sectors: PropTypes.array,
   sells: PropTypes.number,
   status: PropTypes.string,
-}
+};
