@@ -29,7 +29,9 @@ export default function FilePicker(props: FilePickerProps) {
       <input
         type="file"
         accept={formats[accept]}
-        onChange={(e) => onChange(e.target.files?.item(0) || null)}
+        onChange={(e) => {
+          if (e.target.files?.item(0)) onChange(e.target.files?.item(0));
+        }}
       />
       {render?.(value)}
     </label>

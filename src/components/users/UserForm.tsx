@@ -1,11 +1,9 @@
 import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
-
 import FilePicker from "src/components/globals/FilePicker/FilePicker";
 
-import { Avatar, Button, Grid, IconButton, TextField } from "@material-ui/core";
+import { Button, Grid, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { useAlert } from "src/components/globals/Alert";
@@ -13,6 +11,7 @@ import { useAlert } from "src/components/globals/Alert";
 import { db } from "src/base";
 
 import User from "src/models/User";
+import AvatarInput from "./AvatarInput";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -106,47 +105,13 @@ export default function UserForm({ currentUser, userData }: UserFormProps) {
           <Controller
             control={control}
             name="image"
+            rules={{ required: "Debes subir una imagen" }}
             render={({ onChange, value }) => (
               <FilePicker
                 value={value}
                 onChange={onChange}
                 accept="image"
-                render={(file) => (
-                  <>
-                    {file ? (
-                      <>
-                        <img
-                          width={100}
-                          height={100}
-                          style={{ borderRadius: "100%" }}
-                          src={URL.createObjectURL(file)}
-                        />
-                      </>
-                    ) : (
-                      <div
-                        style={{
-                          position: "relative",
-                          width: 100,
-                          height: 100,
-                        }}
-                      >
-                        <Avatar style={{ width: "100%", height: "100%" }} />
-                        <IconButton
-                          style={{
-                            position: "absolute",
-                            bottom: -10,
-                            right: -10,
-                            color: "white",
-                          }}
-                          color="primary"
-                          component="span"
-                        >
-                          <PhotoCamera fontSize="default" />
-                        </IconButton>
-                      </div>
-                    )}
-                  </>
-                )}
+                render={(file) => <AvatarInput value={file} />}
               />
             )}
           />
