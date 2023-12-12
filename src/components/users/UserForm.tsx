@@ -1,30 +1,16 @@
 import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
-import FilePicker from "src/components/globals/FilePicker/FilePicker";
-
 import { Button, Grid, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
+import AvatarInput from "src/components/users/AvatarInput";
+import FilePicker from "src/components/globals/FilePicker/FilePicker";
 import { useAlert } from "src/components/globals/Alert";
 
-import { db } from "src/base";
-
 import User from "src/models/User";
-import AvatarInput from "src/components/users/AvatarInput";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    paddingTop: 160,
-    color: "white",
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
   button: {
     marginTop: theme.spacing(1),
     marginRight: theme.spacing(1),
@@ -49,21 +35,25 @@ type UserFields = {
 };
 
 export default function UserForm({ currentUser, userData }: UserFormProps) {
-  const { handleSubmit, register, control, errors } = useForm<UserFields>();
+  const { handleSubmit, register, control, errors } = useForm<UserFields>({
+    defaultValues: {
+      name: userData.name,
+      lname: userData.lname,
+      ci: userData.ci,
+      phone: userData.phone,
+      experience: userData.experience,
+      licenseCode: userData.licenseCode,
+      province: userData.province,
+      city: userData.city,
+    },
+  });
 
   const classes = useStyles();
   const alert = useAlert();
 
-  const ciExists = async (ci: string) => {
-    const docRef = db.collection("users").where("ci", "==", ci);
-
-    const snap = await docRef.get();
-
-    return snap?.docs?.length > 0;
-  };
-
   const onSubmit: SubmitHandler<UserFields> = async (data) => {
-    const exists = await ciExists(data.ci);
+    const { exists } = await User.exists(data.ci);
+
     if (exists) {
       if (data.ci === userData.ci) {
         console.log("misma cédula");
@@ -72,7 +62,8 @@ export default function UserForm({ currentUser, userData }: UserFormProps) {
         return;
       }
     }
-    const response = await User.save(
+
+    await User.save(
       {
         uid: currentUser.uid,
         name: data.name,
@@ -144,7 +135,6 @@ export default function UserForm({ currentUser, userData }: UserFormProps) {
         {userData.role !== "Agencia inmobiliaria" && (
           <Grid item xs={12} sm={6}>
             <TextField
-              defaultValue={userData.lname}
               inputRef={register({
                 required: "Debes ingresar tu apellido",
               })}
@@ -162,7 +152,6 @@ export default function UserForm({ currentUser, userData }: UserFormProps) {
         )}
         <Grid item xs={12} sm={6}>
           <TextField
-            defaultValue={userData.ci}
             inputRef={register({
               required: "Cédula obligatoria",
               minLength: {
@@ -185,7 +174,6 @@ export default function UserForm({ currentUser, userData }: UserFormProps) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            defaultValue={userData.phone}
             inputRef={register({
               required: "Número de celular obligatorio",
               minLength: {
@@ -210,7 +198,6 @@ export default function UserForm({ currentUser, userData }: UserFormProps) {
         {userData.role === "Agente inmobiliario" && (
           <Grid item xs={12} sm={6}>
             <TextField
-              defaultValue={userData.licenseCode}
               inputRef={register({
                 required: userData.licenseCode
                   ? "Numero de licencia obligatorio"
@@ -231,7 +218,6 @@ export default function UserForm({ currentUser, userData }: UserFormProps) {
         )}
         <Grid item xs={12} sm={6}>
           <TextField
-            defaultValue={userData.province}
             inputRef={register({
               required: "Debes ingresar tu provincia",
             })}
@@ -247,7 +233,6 @@ export default function UserForm({ currentUser, userData }: UserFormProps) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            defaultValue={userData.city}
             inputRef={register({
               required: "Debes ingresar tu ciudad",
             })}
@@ -263,7 +248,6 @@ export default function UserForm({ currentUser, userData }: UserFormProps) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            defaultValue={userData.experience}
             inputRef={register({
               required: userData.experience
                 ? "Debes ingresar tu experiencia"

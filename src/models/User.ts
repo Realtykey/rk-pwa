@@ -119,4 +119,19 @@ export default class User implements UserProps {
       return { user: null, error };
     }
   };
+
+  static exists = async (ci: string) => {
+    try {
+      const docRef = User.collection().where("ci", "==", ci);
+
+      const snap = await docRef.get();
+
+      const exists = snap.docs.length > 0;
+
+      return { exists, error: null };
+    } catch (error) {
+      console.error(error);
+      return { user: null, error };
+    }
+  };
 }

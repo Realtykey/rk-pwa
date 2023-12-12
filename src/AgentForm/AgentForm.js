@@ -24,9 +24,9 @@ export default function AgentForm() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
-    paddingTop: 160,
+    paddingTop: 64,
     color: "white",
   },
 }));
