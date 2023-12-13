@@ -102,17 +102,11 @@ export default class User implements UserProps {
     return User.collection().doc();
   }
 
-  static save = async (user: Partial<User>, image: File) => {
+  static save = async (user: Partial<User>) => {
     try {
       const ref = User.collection().doc(user.uid);
       await ref.set(user, { merge: true });
 
-      if (image) {
-        const path = `users/${user.uid}/${image.name}`;
-        const url = await FBStorage.upload(image, path);
-
-        if (url) await ref.set({ photoUrl: url }, { merge: true });
-      }
       return { user, error: null };
     } catch (error) {
       console.error(error);
@@ -132,6 +126,33 @@ export default class User implements UserProps {
     } catch (error) {
       console.error(error);
       return { user: null, error };
+    }
+  };
+
+  static uploadPhoto = async (uid: string, image: File) => {
+    try {
+      const ref = User.collection().doc(uid);
+
+      const path = `users/${uid}/${image.name}`;
+      const url = await FBStorage.upload(image, path);
+
+      await ref.set({ photoUrl: url }, { merge: true });
+
+      return { image, error: null };
+    } catch (error) {
+      console.error(error);
+      return { image: null, error };
+    }
+  };
+
+  static getPhoto = async (photoUrl: string) => {
+    try {
+      const image = await FBStorage.download(photoUrl);
+
+      return { image, error: null };
+    } catch (error) {
+      console.error(error);
+      return { image: null, error };
     }
   };
 }

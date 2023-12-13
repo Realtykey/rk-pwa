@@ -14,7 +14,12 @@ export default function AgentForm() {
 
   return (
     <Container className={classes.root}>
-      <Typography color="inherit" variant="h6" gutterBottom>
+      <Typography
+        style={{ textAlign: "center" }}
+        color="inherit"
+        variant="h6"
+        gutterBottom
+      >
         Información personal
       </Typography>
       {currentUser && userData && (

@@ -1,6 +1,6 @@
 import { storage } from "src/base";
 
-// import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 export default class FBStorage {
   static async upload(file: File, path: string) {
@@ -24,6 +24,18 @@ export default class FBStorage {
       return url as string;
     } catch (error: any) {
       console.error(error);
+      throw error;
+    }
+  }
+
+  static async download(url: string): Promise<void | File> {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      return new File([blob], uuidv4());
+    } catch (error) {
+      console.error("error", error);
+      throw error;
     }
   }
 }
