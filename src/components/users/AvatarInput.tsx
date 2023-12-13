@@ -14,21 +14,28 @@ export default function AvatarInput(props: AvatarInputProps) {
 
   return (
     <div style={styles.container}>
-      {value ? (
-        <img
-          width={100}
-          height={100}
-          style={{ borderRadius: "100%" }}
-          src={URL.createObjectURL(value)}
-        />
-      ) : (
-        <div style={styles.view}>
-          <Avatar style={{ width: "100%", height: "100%" }} />
-          <IconButton style={styles.button} color="primary" component="span">
-            <PhotoCamera fontSize="default" />
-          </IconButton>
-        </div>
-      )}
+      <div style={styles.view}>
+        {value ? (
+          <>
+            <img
+              width={100}
+              height={100}
+              style={{ borderRadius: "100%" }}
+              src={URL.createObjectURL(value)}
+            />
+            <IconButton style={styles.button} color="primary" component="span">
+              <PhotoCamera fontSize="default" />
+            </IconButton>
+          </>
+        ) : (
+          <>
+            <Avatar style={{ width: "100%", height: "100%" }} />
+            <IconButton style={styles.button} color="primary" component="span">
+              <PhotoCamera fontSize="default" />
+            </IconButton>
+          </>
+        )}
+      </div>
       {!value && (
         <FormHelperText>Debes subir una foto de perfil</FormHelperText>
       )}

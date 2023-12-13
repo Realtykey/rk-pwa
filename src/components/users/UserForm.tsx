@@ -78,7 +78,7 @@ export default function UserForm({ currentUser, userData }: UserFormProps) {
       }
     }
 
-    await User.save({
+    const { user } = await User.save({
       uid: currentUser.uid,
       name: data.name,
       lname: data.lname,
@@ -90,6 +90,8 @@ export default function UserForm({ currentUser, userData }: UserFormProps) {
       city: data.city,
       role: userData.role,
     });
+
+    if (user) alert.setMessage("Actualizado correctamente");
   };
 
   return (
