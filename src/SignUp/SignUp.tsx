@@ -1,105 +1,105 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
+import { useHistory, Link } from "react-router-dom";
 
-import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import TextField from '@material-ui/core/TextField'
-import Grid from '@material-ui/core/Grid'
-import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
-import Container from '@material-ui/core/Container'
-import HomeWorkIcon from '@material-ui/icons/HomeWork'
-import { useHistory, Link } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
-import Switch from '@material-ui/core/Switch'
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import HomeWorkIcon from "@material-ui/icons/HomeWork";
+import { useForm } from "react-hook-form";
+import Switch from "@material-ui/core/Switch";
 
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import Person from '@material-ui/icons/Person'
-import Store from '@material-ui/icons/Store'
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Person from "@material-ui/icons/Person";
+import Store from "@material-ui/icons/Store";
 
-import ChipsInput from '../ChipsInput'
+import ChipsInput from "src/ChipsInput";
 
-function Copyright () {
-  const classes = useStyles()
+function Copyright() {
+  const classes = useStyles();
 
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link
         className={classes.link}
         color="inherit"
         to="https://material-ui.com/"
       >
         Valeria
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
-  )
+  );
 }
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3, 0, 2),
   },
   link: {
-    color: 'white'
-  }
-}))
+    color: "white",
+  },
+}));
 
 const saveUserDoc = async (userDoc) => {
-  const { app } = await import('./../base')
+  const { app } = await import("../base");
 
-  const ref = app.firestore().collection('users').doc(userDoc.uid)
+  const ref = app.firestore().collection("users").doc(userDoc.uid);
 
-  return ref.set(userDoc, { merge: true })
-}
+  return ref.set(userDoc, { merge: true });
+};
 
 const validateIdentification = async (ci) => {
-  const { app } = await import('./../base')
-  const docRef = app.firestore().collection('users').where('ci', '==', ci)
+  const { app } = await import("../base");
+  const docRef = app.firestore().collection("users").where("ci", "==", ci);
 
-  const snap = await docRef.get()
+  const snap = await docRef.get();
 
-  return !snap.empty
-}
+  return !snap.empty;
+};
 
-function SignUp () {
-  const classes = useStyles()
-  const history = useHistory()
-  const { handleSubmit, register } = useForm()
+function SignUp() {
+  const classes = useStyles();
+  const history = useHistory();
+  const { handleSubmit, register } = useForm();
 
-  const [license, setLicense] = useState(false)
+  const [license, setLicense] = useState(false);
 
-  const [selectedIndex, setSelectedIndex] = React.useState('')
+  const [selectedIndex, setSelectedIndex] = React.useState("");
 
   const [sectors, onSectorSelected] = useState({
-    north: { label: 'Norte', selected: false },
-    south: { label: 'Sur', selected: false },
-    center: { label: 'Centro', selected: false },
-    valleys: { label: 'Valles', selected: false }
-  })
+    north: { label: "Norte", selected: false },
+    south: { label: "Sur", selected: false },
+    center: { label: "Centro", selected: false },
+    valleys: { label: "Valles", selected: false },
+  });
 
   const handleListItemClick = (event, index) => {
-    setSelectedIndex(index)
-  }
+    setSelectedIndex(index);
+  };
 
   const submit = async (data) => {
     const {
@@ -112,59 +112,59 @@ function SignUp () {
       ci,
       experience,
       province,
-      city
-    } = data
+      city,
+    } = data;
 
-    const exists = await validateIdentification(ci)
+    const exists = await validateIdentification(ci);
     if (exists) {
-      alert('Ya existe un usuario con ese número de cédula')
-      return
+      alert("Ya existe un usuario con ese número de cédula");
+      return;
     }
 
     if (experience) {
       if (experience > 30) {
-        alert('No es posible ingresar mas de 30 años de experiencia')
-        return
+        alert("No es posible ingresar mas de 30 años de experiencia");
+        return;
       }
     }
 
     try {
-      const { app } = await import('./../base')
-      await app.auth().createUserWithEmailAndPassword(email, password)
+      const { app } = await import("../base");
+      await app.auth().createUserWithEmailAndPassword(email, password);
 
       const unsuscribe = app.auth().onAuthStateChanged((user) => {
         if (user) {
           const selectedSectors = Object.keys(sectors).filter(
             (key) => sectors[key].selected
-          )
+          );
           saveUserDoc({
             uid: user.uid,
             name,
             lname: lname ?? null, // agencys should have null lname
             email,
-            address: '',
+            address: "",
             phone,
-            photoUrl: '',
-            experience: '',
-            licenseCode: licenseCode ?? '',
+            photoUrl: "",
+            experience: "",
+            licenseCode: licenseCode ?? "",
             roles: [],
             role: selectedIndex,
             score: 0,
-            status: 'Miembro',
+            status: "Miembro",
             sells: 0,
             ci,
             province,
             city,
-            sectors: selectedSectors
-          })
-          unsuscribe()
-          history.push('/Home')
+            sectors: selectedSectors,
+          });
+          unsuscribe();
+          history.push("/Home");
         }
-      })
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -186,7 +186,7 @@ function SignUp () {
             <Grid
               item
               xs={12}
-              sm={selectedIndex !== 'Agencia inmobiliaria' ? 6 : 12}
+              sm={selectedIndex !== "Agencia inmobiliaria" ? 6 : 12}
             >
               <TextField
                 inputRef={register}
@@ -195,14 +195,14 @@ function SignUp () {
                 fullWidth
                 id="firstName"
                 label={
-                  selectedIndex === 'Agencia inmobiliaria'
-                    ? 'Nombre de agencia'
-                    : 'Nombre'
+                  selectedIndex === "Agencia inmobiliaria"
+                    ? "Nombre de agencia"
+                    : "Nombre"
                 }
                 autoFocus
               />
             </Grid>
-            {selectedIndex !== 'Agencia inmobiliaria' && (
+            {selectedIndex !== "Agencia inmobiliaria" && (
               <Grid item xs={12} sm={6}>
                 <TextField
                   inputRef={register({ required: true })}
@@ -275,13 +275,13 @@ function SignUp () {
               <ListItem
                 name="agent"
                 button
-                selected={selectedIndex === 'Agente inmobiliario'}
+                selected={selectedIndex === "Agente inmobiliario"}
                 onClick={(event) => {
-                  if (selectedIndex === 'Agente inmobiliario') {
-                    handleListItemClick(event, '')
-                    return
+                  if (selectedIndex === "Agente inmobiliario") {
+                    handleListItemClick(event, "");
+                    return;
                   }
-                  handleListItemClick(event, 'Agente inmobiliario')
+                  handleListItemClick(event, "Agente inmobiliario");
                 }}
               >
                 <ListItemIcon>
@@ -290,7 +290,7 @@ function SignUp () {
                 <ListItemText primary="Agente inmobiliario" />
               </ListItem>
 
-              {selectedIndex === 'Agente inmobiliario' && (
+              {selectedIndex === "Agente inmobiliario" && (
                 <Grid item xs={12}>
                   ¿Tienes licencia ACBIR?
                   <Switch
@@ -314,13 +314,13 @@ function SignUp () {
               <ListItem
                 name="agency"
                 button
-                selected={selectedIndex === 'Agencia inmobiliaria'}
+                selected={selectedIndex === "Agencia inmobiliaria"}
                 onClick={(event) => {
-                  if (selectedIndex === 'Agencia inmobiliaria') {
-                    handleListItemClick(event, '')
-                    return
+                  if (selectedIndex === "Agencia inmobiliaria") {
+                    handleListItemClick(event, "");
+                    return;
                   }
-                  handleListItemClick(event, 'Agencia inmobiliaria')
+                  handleListItemClick(event, "Agencia inmobiliaria");
                 }}
               >
                 <ListItemIcon>
@@ -363,7 +363,7 @@ function SignUp () {
           <Grid container justify="flex-end">
             <Grid item>
               <Link className={classes.link} to="/SignIn" variant="body2">
-                {'¿Ya tienes una cuenta?'}
+                {"¿Ya tienes una cuenta?"}
               </Link>
             </Grid>
           </Grid>
@@ -373,7 +373,7 @@ function SignUp () {
         <Copyright />
       </Box>
     </Container>
-  )
+  );
 }
 
-export default SignUp
+export default SignUp;
