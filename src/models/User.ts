@@ -1,20 +1,22 @@
 import { db } from "src/base";
 import FBStorage from "src/utils/storage";
 
+type Role = "agency" | "agent";
+
 interface UserProps {
   uid: string;
   address: string;
   ci: string;
   city: string;
   email: string;
-  experience: string;
+  experience?: number;
   licenseCode: string;
   lname: string;
   name: string;
   phone: string;
   photoUrl: string;
   province: string;
-  role: string;
+  role: Role;
   roles: string[];
   score: number;
   sectors: string[];
@@ -58,14 +60,14 @@ export default class User implements UserProps {
   ci: string;
   city: string;
   email: string;
-  experience: string;
+  experience: number;
   licenseCode: string;
   lname: string;
   name: string;
   phone: string;
   photoUrl: string;
   province: string;
-  role: string;
+  role: Role;
   roles: string[];
   score: number;
   sectors: string[];
@@ -102,6 +104,18 @@ export default class User implements UserProps {
     return User.collection().doc();
   }
 
+  static create = async (user: User) => {
+    try {
+      const ref = User.collection().doc(user.uid);
+      await ref.set(user, { merge: true });
+
+      return { user, error: null };
+    } catch (error) {
+      console.error(error);
+      return { user: null, error };
+    }
+  };
+
   static save = async (user: Partial<User>) => {
     try {
       const ref = User.collection().doc(user.uid);
@@ -133,7 +147,10 @@ export default class User implements UserProps {
     try {
       const ref = User.collection().doc(uid);
 
-      const path = `users/${uid}/${image.name}`;
+      const extension = image.name.split(".").pop();
+
+      const path = `users/${uid}/profile.${extension}`;
+
       const url = await FBStorage.upload(image, path);
 
       await ref.set({ photoUrl: url }, { merge: true });

@@ -116,11 +116,7 @@ export default function UserForm({ currentUser, userData }: UserFormProps) {
       </Grid>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={3}>
-          <Grid
-            item
-            xs={12}
-            sm={userData.role === "Agencia inmobiliaria" ? 12 : 6}
-          >
+          <Grid item xs={12} sm={userData.role === "agency" ? 12 : 6}>
             <TextField
               defaultValue={userData.name}
               inputRef={register({
@@ -132,16 +128,14 @@ export default function UserForm({ currentUser, userData }: UserFormProps) {
               fullWidth
               id="firstName"
               label={
-                userData.role === "Agencia inmobiliaria"
-                  ? "Nombre de agencia"
-                  : "Nombre"
+                userData.role === "agency" ? "Nombre de agencia" : "Nombre"
               }
               autoFocus
               error={!!errors.name}
               helperText={errors.name?.message}
             />
           </Grid>
-          {userData.role !== "Agencia inmobiliaria" && (
+          {userData.role !== "agency" && (
             <Grid item xs={12} sm={6}>
               <TextField
                 inputRef={register({
@@ -207,7 +201,7 @@ export default function UserForm({ currentUser, userData }: UserFormProps) {
               helperText={errors.phone?.message}
             />
           </Grid>
-          {userData.role === "Agente inmobiliario" && (
+          {userData.role === "agent" && (
             <Grid item xs={12} sm={6}>
               <TextField
                 inputRef={register({

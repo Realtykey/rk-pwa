@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { Link, useHistory } from "react-router-dom";
 
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Container from "@material-ui/core/Container";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Grid from "@material-ui/core/Grid";
+import Switch from "@material-ui/core/Switch";
+import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
 import HomeWorkIcon from "@material-ui/icons/HomeWork";
-import { useForm } from "react-hook-form";
-import Switch from "@material-ui/core/Switch";
 
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -20,7 +20,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Person from "@material-ui/icons/Person";
 import Store from "@material-ui/icons/Store";
 
-import ChipsInput from "src/ChipsInput";
+import ChipsInput, { ChipItem } from "src/ChipsInput";
+import AppAuth from "src/models/AppAuth";
+import User from "src/models/User";
 
 function Copyright() {
   const classes = useStyles();
@@ -64,15 +66,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const saveUserDoc = async (userDoc) => {
-  const { app } = await import("../base");
-
-  const ref = app.firestore().collection("users").doc(userDoc.uid);
-
-  return ref.set(userDoc, { merge: true });
-};
-
-const validateIdentification = async (ci) => {
+const validateIdentification = async (ci: string) => {
   const { app } = await import("../base");
   const docRef = app.firestore().collection("users").where("ci", "==", ci);
 
@@ -81,88 +75,76 @@ const validateIdentification = async (ci) => {
   return !snap.empty;
 };
 
+interface UserFields
+  extends Pick<
+    User,
+    | "name"
+    | "email"
+    | "lname"
+    | "ci"
+    | "phone"
+    | "experience"
+    | "licenseCode"
+    | "province"
+    | "city"
+    | "photoUrl"
+    | "role"
+  > {
+  password: string;
+  passwordConfirm: string;
+}
+
 function SignUp() {
   const classes = useStyles();
   const history = useHistory();
-  const { handleSubmit, register } = useForm();
+
+  const { handleSubmit, register, watch, control } = useForm<UserFields>();
 
   const [license, setLicense] = useState(false);
 
-  const [selectedIndex, setSelectedIndex] = React.useState("");
+  const fields = watch();
 
-  const [sectors, onSectorSelected] = useState({
-    north: { label: "Norte", selected: false },
-    south: { label: "Sur", selected: false },
-    center: { label: "Centro", selected: false },
-    valleys: { label: "Valles", selected: false },
-  });
+  const [sectors, setSectors] = useState<ChipItem[]>([]);
 
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
-  };
+  const submit: SubmitHandler<UserFields> = async (data) => {
+    const exists = await validateIdentification(data.ci);
 
-  const submit = async (data) => {
-    const {
-      name,
-      lname,
-      email,
-      password,
-      phone,
-      licenseCode,
-      ci,
-      experience,
-      province,
-      city,
-    } = data;
-
-    const exists = await validateIdentification(ci);
     if (exists) {
       alert("Ya existe un usuario con ese número de cédula");
       return;
     }
 
-    if (experience) {
-      if (experience > 30) {
-        alert("No es posible ingresar mas de 30 años de experiencia");
-        return;
-      }
+    if (data.experience > 30) {
+      alert("No es posible ingresar mas de 30 años de experiencia");
+      return;
     }
 
     try {
-      const { app } = await import("../base");
-      await app.auth().createUserWithEmailAndPassword(email, password);
-
-      const unsuscribe = app.auth().onAuthStateChanged((user) => {
-        if (user) {
-          const selectedSectors = Object.keys(sectors).filter(
-            (key) => sectors[key].selected
-          );
-          saveUserDoc({
-            uid: user.uid,
-            name,
-            lname: lname ?? null, // agencys should have null lname
-            email,
-            address: "",
-            phone,
-            photoUrl: "",
-            experience: "",
-            licenseCode: licenseCode ?? "",
-            roles: [],
-            role: selectedIndex,
-            score: 0,
-            status: "Miembro",
-            sells: 0,
-            ci,
-            province,
-            city,
-            sectors: selectedSectors,
-          });
-          unsuscribe();
-          history.push("/Home");
-        }
-      });
+      await AppAuth.register(
+        {
+          name: data.name,
+          lname: data.lname,
+          email: data.email,
+          ci: data.ci,
+          phone: data.phone,
+          experience: data.experience,
+          licenseCode: data.licenseCode,
+          province: data.province,
+          city: data.city,
+          photoUrl: data.photoUrl,
+          role: data.role,
+          sectors: sectors.map((sector) => sector.value),
+          address: "",
+          roles: [],
+          score: 0,
+          sells: 0,
+          status: "active",
+        },
+        data.password
+      );
+      // history.push("/Home");
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -183,26 +165,18 @@ function SignUp() {
 
         <form className={classes.form} onSubmit={handleSubmit(submit)}>
           <Grid container spacing={2}>
-            <Grid
-              item
-              xs={12}
-              sm={selectedIndex !== "Agencia inmobiliaria" ? 6 : 12}
-            >
+            <Grid item xs={12} sm={fields.role !== "agency" ? 6 : 12}>
               <TextField
                 inputRef={register}
                 name="name"
                 variant="outlined"
                 fullWidth
                 id="firstName"
-                label={
-                  selectedIndex === "Agencia inmobiliaria"
-                    ? "Nombre de agencia"
-                    : "Nombre"
-                }
+                label={fields.role === "agent" ? "Nombre de agencia" : "Nombre"}
                 autoFocus
               />
             </Grid>
-            {selectedIndex !== "Agencia inmobiliaria" && (
+            {fields.role !== "agency" && (
               <Grid item xs={12} sm={6}>
                 <TextField
                   inputRef={register({ required: true })}
@@ -267,67 +241,69 @@ function SignUp() {
                 name="ci"
               />
             </Grid>
-            <Grid item xs={12} sm={6} />
             <Grid item xs={12} sm={12}>
-              <ChipsInput onChipSelected={onSectorSelected} chips={sectors} />
+              <ChipsInput
+                values={sectors}
+                onChange={(newValues) => setSectors(newValues)}
+                options={[
+                  { label: "Norte", value: "north" },
+                  { label: "Sur", value: "south" },
+                  { label: "Centro", value: "center" },
+                  { label: "Valles", value: "valleys" },
+                ]}
+              />
             </Grid>
             <Grid item xs={12}>
-              <ListItem
-                name="agent"
-                button
-                selected={selectedIndex === "Agente inmobiliario"}
-                onClick={(event) => {
-                  if (selectedIndex === "Agente inmobiliario") {
-                    handleListItemClick(event, "");
-                    return;
-                  }
-                  handleListItemClick(event, "Agente inmobiliario");
-                }}
-              >
-                <ListItemIcon>
-                  <Person />
-                </ListItemIcon>
-                <ListItemText primary="Agente inmobiliario" />
-              </ListItem>
+              <Controller
+                name="role"
+                control={control}
+                render={({ onChange, value }) => (
+                  <>
+                    <ListItem
+                      button
+                      selected={value === "agent"}
+                      onClick={() => onChange("agent")}
+                    >
+                      <ListItemIcon>
+                        <Person />
+                      </ListItemIcon>
+                      <ListItemText primary="Agente inmobiliario" />
+                    </ListItem>
 
-              {selectedIndex === "Agente inmobiliario" && (
-                <Grid item xs={12}>
-                  ¿Tienes licencia ACBIR?
-                  <Switch
-                    checked={license}
-                    onChange={() => setLicense(!license)}
-                    name="checkedB"
-                  />
-                  {license === true && (
-                    <TextField
-                      inputRef={register({ required: true })}
-                      variant="outlined"
-                      fullWidth
-                      id="licenseCode"
-                      label="Reg. Nº"
-                      name="licenseCode"
-                    />
-                  )}
-                </Grid>
-              )}
+                    {fields.role === "agent" && (
+                      <Grid item xs={12}>
+                        ¿Tienes licencia ACBIR?
+                        <Switch
+                          checked={license}
+                          onChange={() => setLicense(!license)}
+                          name="checkedB"
+                        />
+                        {license === true && (
+                          <TextField
+                            inputRef={register({ required: true })}
+                            variant="outlined"
+                            fullWidth
+                            id="licenseCode"
+                            label="Reg. Nº"
+                            name="licenseCode"
+                          />
+                        )}
+                      </Grid>
+                    )}
 
-              <ListItem
-                name="agency"
-                button
-                selected={selectedIndex === "Agencia inmobiliaria"}
-                onClick={(event) => {
-                  if (selectedIndex === "Agencia inmobiliaria") {
-                    handleListItemClick(event, "");
-                    return;
-                  }
-                  handleListItemClick(event, "Agencia inmobiliaria");
-                }}
-              >
-                <ListItemIcon>
-                  <Store />
-                </ListItemIcon>
-                <ListItemText primary="Agencia inmobiliaria" />
-              </ListItem>
+                    <ListItem
+                      button
+                      selected={value === "agency"}
+                      onClick={() => onChange("agency")}
+                    >
+                      <ListItemIcon>
+                        <Store />
+                      </ListItemIcon>
+                      <ListItemText primary="Agencia inmobiliaria" />
+                    </ListItem>
+                  </>
+                )}
+              />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -362,7 +338,7 @@ function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link className={classes.link} to="/SignIn" variant="body2">
+              <Link className={classes.link} to="/SignIn">
                 {"¿Ya tienes una cuenta?"}
               </Link>
             </Grid>
